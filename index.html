@@ -230,6 +230,51 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   background:linear-gradient(180deg,rgba(20,40,30,.11),transparent); pointer-events:none;}
 .stack-media.contain img,.stack-media img{max-width:100%; max-height:100%; object-fit:contain;
   background:#fff; border-radius:12px; box-shadow:0 10px 30px rgba(20,40,30,.18); padding:6px;}
+
+/* stat callouts */
+.stat-row{display:flex; flex-wrap:wrap; gap:.7rem; margin:.2rem 0 1.1rem;}
+.stat-box{flex:1 1 0; min-width:92px; background:#fff; border:1px solid var(--line);
+  border-top:3px solid var(--accent,var(--green)); border-radius:12px;
+  padding:.6rem .7rem .65rem; box-shadow:0 4px 14px rgba(20,40,30,.06);}
+.stat-num{font-family:'Merriweather',serif; font-weight:800; color:var(--accent,var(--forest));
+  font-size:clamp(1.35rem,2.9vw,2.1rem); line-height:1;}
+.stat-lbl{font-size:clamp(.66rem,1.05vw,.8rem); color:var(--muted); line-height:1.25; margin-top:.3rem;}
+
+@media (max-width:820px){
+  .slide-inner.two-col{grid-template-columns:1fr; gap:1.2rem;}
+  .col-media{order:-1;} .col-media img{max-height:34vh;}
+  .bleed-grid{position:static; display:flex; flex-direction:column; height:100%;}
+  .bleed-media{min-height:34vh;} .bleed-media.contain{min-height:30vh;}
+  .bleed-media::before{display:none;}
+  .stack-grid{position:static;}
+  .stack-top{grid-template-columns:1fr; gap:.4rem;}
+  .stack-body .bullets,.stack-body .pairs{grid-template-columns:1fr;}
+  .stack-media{min-height:34vh;}
+  .grid.cols-2{grid-template-columns:1fr;}
+  .grid.cols-3,.grid.cols-4{grid-template-columns:1fr 1fr;}
+  .outline-grid,.obj-grid{grid-template-columns:1fr;}
+  .slide{justify-content:flex-start; overflow-y:auto;}
+}
+
+/* hand-drawn plates in place of photos (same style as the Eutrophication cards) */
+.bleed-media.draw,.stack-media.draw{display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(180deg,#fbf6ea,#f1e6cc);}
+.bleed-media.draw{padding:2.2rem 1.6rem 2rem 2.6rem;}
+.stack-media.draw{padding:.9rem 5.2rem 1.2rem;}
+.bleed-media.draw::before,.stack-media.draw::before{display:none;}
+.dr-svg{width:100%; height:100%; display:block;}
+.dr-lab{font-family:'Merriweather',serif; font-style:italic; font-weight:700; font-size:16px; fill:#3b3222;
+  paint-order:stroke; stroke:#fbf6ea; stroke-width:5px; stroke-linejoin:round;}
+.dr-lab.key{fill:#8a6a2f; font-weight:900; font-size:17px;}
+.dr-lab.aq{fill:#2f5f84;} .dr-lab.red{fill:#A4373A;}
+.dr-lab.light{fill:#fff; stroke:#4f86b0;}
+.dr-sm{font-family:'Inter',sans-serif; font-size:13px; font-weight:600; fill:#5e5340;
+  paint-order:stroke; stroke:#fbf6ea; stroke-width:4px; stroke-linejoin:round;}
+.dr-cap{font-family:'Merriweather',serif; font-style:italic; font-size:16.5px; fill:#6b604c;}
+.dr-tag{font-family:'Inter',sans-serif; font-size:12px; font-weight:800; letter-spacing:.14em; fill:#8a6a2f;}
+.dr-title{font-family:'Merriweather',serif; font-weight:900; font-size:19px; fill:#3b3222;}
+.dr-title.sm{font-size:16px;}
+.dr-pb{font-family:'Inter',sans-serif; font-size:7.5px; font-weight:800; fill:#fff;}
 /* ══ parchment plates: slides 10–11 (Dams; Pollution), set like Eutrophication and the game ══ */
 .slide.plate{background:linear-gradient(158deg,#faf7f0,#f1ebdd);}
 .slide.plate .eyebrow{color:#8a6a2f;} .slide.plate .eyebrow::before{background:#8a6a2f;}
@@ -276,51 +321,6 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .plate .pl-media::after{content:''; position:absolute; inset:14px; border:1px solid rgba(255,250,240,.7); pointer-events:none; z-index:3;}
 @media(max-width:900px){ .plate .pl-pair{grid-template-columns:1fr;} .plate .pl-vs{text-align:center;} }
 
-/* stat callouts */
-.stat-row{display:flex; flex-wrap:wrap; gap:.7rem; margin:.2rem 0 1.1rem;}
-.stat-box{flex:1 1 0; min-width:92px; background:#fff; border:1px solid var(--line);
-  border-top:3px solid var(--accent,var(--green)); border-radius:12px;
-  padding:.6rem .7rem .65rem; box-shadow:0 4px 14px rgba(20,40,30,.06);}
-.stat-num{font-family:'Merriweather',serif; font-weight:800; color:var(--accent,var(--forest));
-  font-size:clamp(1.35rem,2.9vw,2.1rem); line-height:1;}
-.stat-lbl{font-size:clamp(.66rem,1.05vw,.8rem); color:var(--muted); line-height:1.25; margin-top:.3rem;}
-
-@media (max-width:820px){
-  .slide-inner.two-col{grid-template-columns:1fr; gap:1.2rem;}
-  .col-media{order:-1;} .col-media img{max-height:34vh;}
-  .bleed-grid{position:static; display:flex; flex-direction:column; height:100%;}
-  .bleed-media{min-height:34vh;} .bleed-media.contain{min-height:30vh;}
-  .bleed-media::before{display:none;}
-  .stack-grid{position:static;}
-  .stack-top{grid-template-columns:1fr; gap:.4rem;}
-  .stack-body .bullets,.stack-body .pairs{grid-template-columns:1fr;}
-  .stack-media{min-height:34vh;}
-  .grid.cols-2{grid-template-columns:1fr;}
-  .grid.cols-3,.grid.cols-4{grid-template-columns:1fr 1fr;}
-  .outline-grid,.obj-grid{grid-template-columns:1fr;}
-  .slide{justify-content:flex-start; overflow-y:auto;}
-}
-
-/* hand-drawn plates in place of photos (same style as the Eutrophication cards) */
-.bleed-media.draw,.stack-media.draw{display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(180deg,#fbf6ea,#f1e6cc);}
-.bleed-media.draw{padding:2.2rem 1.6rem 2rem 2.6rem;}
-.stack-media.draw{padding:.9rem 5.2rem 1.2rem;}
-.bleed-media.draw::before,.stack-media.draw::before{display:none;}
-.dr-svg{width:100%; height:100%; display:block;}
-.dr-lab{font-family:'Merriweather',serif; font-style:italic; font-weight:700; font-size:16px; fill:#3b3222;
-  paint-order:stroke; stroke:#fbf6ea; stroke-width:5px; stroke-linejoin:round;}
-.dr-lab.key{fill:#8a6a2f; font-weight:900; font-size:17px;}
-.dr-lab.aq{fill:#2f5f84;} .dr-lab.red{fill:#A4373A;}
-.dr-lab.light{fill:#fff; stroke:#4f86b0;}
-.dr-sm{font-family:'Inter',sans-serif; font-size:13px; font-weight:600; fill:#5e5340;
-  paint-order:stroke; stroke:#fbf6ea; stroke-width:4px; stroke-linejoin:round;}
-.dr-cap{font-family:'Merriweather',serif; font-style:italic; font-size:16.5px; fill:#6b604c;}
-.dr-tag{font-family:'Inter',sans-serif; font-size:12px; font-weight:800; letter-spacing:.14em; fill:#8a6a2f;}
-.dr-title{font-family:'Merriweather',serif; font-weight:900; font-size:19px; fill:#3b3222;}
-.dr-title.sm{font-size:16px;}
-.dr-pb{font-family:'Inter',sans-serif; font-size:7.5px; font-weight:800; fill:#fff;}
-
 .slide.ac-tool{background:linear-gradient(158deg,#faf7f0,#f1ebdd); --accent:#8a6a2f;}
 .slide.ac-tool .embed-head{background:transparent; border-bottom:1px solid rgba(120,100,60,.32);}
 .slide.ac-tool .embed-title{color:#3b3222;}
@@ -331,14 +331,19 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   padding:.55rem clamp(3.4rem,4.8vw,4.6rem) clamp(3.5rem,7vh,4.1rem);}
 .slide.ac-tool .embed-frame{background:#fffdf6; border:1px solid rgba(120,100,60,.26); border-radius:12px;}
 
-.slide.ac-live,.slide.ac-live.guess,.slide.ac-live.ranking{background:linear-gradient(158deg,#faf7f0,#f1ebdd); --accent:#8a6a2f;}
+.slide.ac-live,.slide.ac-live.guess,.slide.ac-live.ranking,.slide.ac-live.wordcloud{background:linear-gradient(158deg,#faf7f0,#f1ebdd); --accent:#8a6a2f;}
 .slide.ac-live .heading{color:#3b3222;}
 .slide.ac-live .eyebrow{color:#8a6a2f;}
 .slide.ac-live .eyebrow::before{background:#8a6a2f;}
-.slide.ac-live .gu-sub,.slide.ac-live .rk-sub{color:#7a7260;}
-.slide.ac-live .gu-root,.slide.ac-live .rk-root{padding-bottom:clamp(3.4rem,7.5vh,4.1rem);}
+.slide.ac-live .gu-sub,.slide.ac-live .rk-sub,.slide.ac-live .wc-sub{color:#7a7260;}
+.slide.ac-live .wc-input{background:#fffdf6; border-color:rgba(120,100,60,.3);}
+.slide.ac-live .wc-input:focus{border-color:#8a6a2f;}
+.slide.ac-live .wc-submit{background:#8a6a2f;}
+.slide.ac-live .wc-total strong{color:#3b3222;}
+.slide.ac-live .wc-reset{background:#fdfbf5; border-color:rgba(120,100,60,.38); color:#3b3222;}
+.slide.ac-live .gu-root,.slide.ac-live .rk-root,.slide.ac-live .wc-root{padding-bottom:clamp(3.4rem,7.5vh,4.1rem);}
 .slide.ac-live .gu-rows,.slide.ac-live .gu-foot,.slide.ac-live .gu-toolbar,.slide.ac-live .gu-strips,
-.slide.ac-live .gu-grid,.slide.ac-live .rk-list,.slide.ac-live .rk-foot,.slide.ac-live .rk-toolbar{
+.slide.ac-live .gu-grid,.slide.ac-live .rk-list,.slide.ac-live .wc-foot,.slide.ac-live .rk-foot,.slide.ac-live .rk-toolbar{
   width:100%; max-width:min(900px, calc(100% - 6rem)); margin-left:auto; margin-right:auto;}
 .slide.ac-live .gu-row,.slide.ac-live .rk-item,.slide.ac-live .gu-strip,.slide.ac-live .gu-card{
   background:#fffdf6; border-color:rgba(120,100,60,.26); box-shadow:none;}
@@ -446,39 +451,61 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 @media (max-width:600px){ .news-collage{grid-template-columns:1fr;} }
 
 
-.slide.swu{background:
-  radial-gradient(1000px 460px at 50% -12%, #f4ede1, transparent),
-  linear-gradient(160deg,#efe7d5,#e1d7c0);}
-.swu-inner{max-width:1120px;}
-.swu-grid{display:grid; grid-template-columns:1fr 1fr; gap:0; margin-top:1.1rem;
-  background:#faf6ea; border:1px solid #ddceac; border-radius:6px; overflow:hidden;
-  box-shadow:0 10px 26px rgba(60,45,20,.14);
-  background-image:radial-gradient(rgba(120,100,60,.055) 1px, transparent 1px); background-size:4px 4px;}
-.swu-col{padding:clamp(1.1rem,2.6vw,1.9rem) clamp(1.1rem,2.4vw,1.9rem); text-align:center;
-  display:flex; flex-direction:column; align-items:center;}
-.swu-col.sus{border-right:1px solid #e2d5b7;}
-.swu-label{font-family:'Inter',sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:.14em;
-  font-size:clamp(.62rem,1vw,.75rem); color:#5b6b63; padding-bottom:.4rem; margin-bottom:.75rem;
-  border-bottom:2px solid #1A3C34;}
-.swu-col.sus .swu-label{color:#2f6d4f;} .swu-col.unsus .swu-label{color:#9a3b3b;}
-.swu-ic{width:clamp(140px,17vw,190px); height:auto; margin-bottom:.5rem;}
-.swu-name{font-family:'Merriweather',Georgia,serif; font-weight:800; color:#2a2114;
-  font-size:clamp(.98rem,1.7vw,1.2rem); margin-bottom:.28rem;}
-.swu-line{font-family:'Merriweather',Georgia,serif; color:#4a4130;
-  font-size:clamp(.8rem,1.24vw,.94rem); line-height:1.36; margin-bottom:.7rem; max-width:32ch;}
-.swu-num{font-family:'Merriweather',Georgia,serif; font-weight:900; line-height:.95;
-  font-size:clamp(2.1rem,4.8vw,3.1rem); color:#2f6d4f;}
-.swu-col.unsus .swu-num{color:#9a3b3b;}
-.swu-unit{font-family:'Inter',sans-serif; font-size:clamp(.68rem,1.05vw,.8rem); color:#6b5f45;
-  margin-top:.3rem; font-weight:600; max-width:24ch;}
-.swu-why{font-family:'Merriweather',Georgia,serif; font-style:italic; color:#4a4130;
-  font-size:clamp(.76rem,1.18vw,.9rem); line-height:1.4; margin-top:.8rem; padding-top:.6rem;
-  border-top:1px solid #e2d5b7; max-width:36ch;}
-.swu-cite{margin-top:.55rem; font-family:'Inter',sans-serif; font-size:clamp(.56rem,.86vw,.66rem);
-  line-height:1.38; color:#8a7d60; max-width:40ch;}
-.swu-cite i{font-style:italic;}
-@media (max-width:800px){ .swu-grid{grid-template-columns:1fr;}
-  .swu-col.sus{border-right:none; border-bottom:1px solid #e2d5b7;} }
+.wb-grid{position:absolute; inset:0; display:grid; grid-template-columns:.9fr 1.1fr;
+  gap:clamp(1rem,2.4vw,2rem);
+  /* the right side clears the deck's › arrow so it never sits on the chart's buttons */
+  padding:clamp(1rem,2.6vh,1.8rem) clamp(4.2rem,5.8vw,5.4rem) clamp(2rem,4vh,2.6rem) clamp(1.4rem,3.2vw,3rem);}
+.wb-text{display:flex; flex-direction:column; justify-content:center; min-width:0;}
+.wb-text .lead{margin-bottom:.7rem;}
+.wb-panel{display:flex; flex-direction:column; justify-content:center; gap:clamp(.3rem,.9vh,.55rem); min-width:0;
+  background:linear-gradient(160deg,#f5f9fb,#e7f0f5); border:1px solid #d3e2ea; border-radius:16px;
+  padding:clamp(.6rem,1.6vh,1rem) clamp(.7rem,1.5vw,1.1rem);}
+.wb-kicker{font-size:clamp(.66rem,1.05vw,.8rem); font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:#1C7293;}
+.wb-svg{width:100%; height:auto; max-height:36vh; display:block;}
+.wb-ptitle{font:800 13px 'Inter',sans-serif; letter-spacing:.04em; fill:#4a6070; text-transform:uppercase;}
+.wb-wedge{stroke:#fff; stroke-width:1.6; cursor:pointer; opacity:.62; transition:opacity .2s, stroke .2s;}
+.wb-wedge:hover{opacity:.9;}
+.wb-wedge.on{opacity:1; stroke:#16324a; stroke-width:2.4;}
+.wb-link{stroke:#3a9fb0; stroke-width:1.6; stroke-dasharray:5 4; fill:none;}
+.wb-pct{font:800 13px 'Inter',sans-serif; fill:#fff; pointer-events:none;
+  paint-order:stroke; stroke:rgba(0,0,0,.28); stroke-width:2.5px;}
+.wb-pct.out{fill:#16324a; stroke:#f5f9fb; stroke-width:4px;}
+.wb-hub{fill:#fff; stroke:#1C7293; stroke-width:2;}
+.wb-hubbig{font:900 22px 'Merriweather',serif; fill:#16324a;}
+.wb-hubbig.sm{font-size:18px;}
+.wb-hubsm{font:700 10.5px 'Inter',sans-serif; fill:#4a6070;}
+.wb-key{display:grid; grid-template-columns:repeat(3,1fr); gap:.3rem;}
+.wb-keyitem{display:flex; align-items:center; gap:.45rem; font:inherit; font-size:clamp(.64rem,1vw,.8rem);
+  font-weight:600; color:#3d4f5a; text-align:left; background:#fff; border:1px solid #d3e2ea;
+  border-radius:9px; padding:.3rem .5rem; cursor:pointer; transition:all .15s; line-height:1.2;}
+.wb-keyitem .sw{flex:none; width:13px; height:13px; border-radius:4px; background:var(--sc);}
+.wb-keyitem:hover{border-color:var(--sc);}
+.wb-keyitem.on{border-color:var(--sc); box-shadow:inset 4px 0 0 var(--sc); color:#16324a; font-weight:800;}
+.wb-card{background:#fff; border:1px solid #d3e2ea; border-left:5px solid var(--sc,#3a9fb0); border-radius:13px;
+  padding:.5rem .8rem; box-shadow:0 3px 12px rgba(20,40,60,.06);}
+.wb-card-top{display:flex; align-items:center; gap:.5rem; flex-wrap:wrap;}
+.wb-card-name{font-family:'Merriweather',serif; font-weight:800; color:#16324a; font-size:clamp(.88rem,1.4vw,1.05rem);}
+.wb-chipx{font-size:clamp(.56rem,.9vw,.68rem); font-weight:800; letter-spacing:.06em; color:#fff;
+  background:var(--sc,#3a9fb0); padding:.15em .6em; border-radius:20px;}
+.wb-card-desc{font-size:clamp(.68rem,1.08vw,.82rem); color:#3a4a53; line-height:1.35; margin:.15rem 0 .3rem;}
+.wb-vals{display:grid; grid-template-columns:repeat(3,1fr); gap:.3rem;}
+.wb-val{display:flex; flex-direction:column; padding:.2rem .3rem; border-radius:8px; background:#eef5f8; text-align:center;}
+.wb-val-k{font-size:clamp(.5rem,.8vw,.6rem); font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); line-height:1.15;}
+.wb-val-v{font-family:'Merriweather',serif; font-weight:800; color:#16324a; font-size:clamp(.78rem,1.25vw,.96rem);}
+.wb-val.b{background:#eaf3f1;} .wb-val.n{background:#f4f1ea;}
+.wb-parts{display:grid; grid-template-columns:1fr 1fr; gap:.12rem 1rem; margin-top:.4rem;}
+.wb-parts[hidden]{display:none;}
+.wb-part{display:grid; grid-template-columns:9.5em 1fr 3em; align-items:center; gap:.4rem;
+  font-size:clamp(.58rem,.9vw,.7rem); color:#3a4a53;}
+.wb-part-bar{height:7px; background:#e6eef2; border-radius:4px; overflow:hidden;}
+.wb-part-bar i{display:block; height:100%; background:var(--sc,#2e8f6e); border-radius:4px;}
+.wb-part-v{font-family:'Merriweather',serif; font-weight:800; color:#16324a; text-align:right;}
+.wb-cite{font-size:clamp(.56rem,.86vw,.66rem); color:var(--muted); line-height:1.35;}
+.wb-url{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; color:#1C7293;}
+@media (max-width:900px){
+  .wb-grid{position:static; grid-template-columns:1fr; overflow-y:auto; height:100%;}
+  .wb-key{grid-template-columns:1fr 1fr;}
+}
 
 
 /* ══════════ shared game chrome ══════════ */
@@ -1409,6 +1436,20 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   .wt-disc{display:none;}
 }
 
+/* exit survey: 1-5 stars. Inputs run 5..1 in the markup and the row is reversed, so
+   "~ label" lights every star up to the chosen one (and previews on hover). */
+.ev-sv-q.wt-sv-stars{display:block;}
+.wt-stars{display:inline-flex; flex-direction:row-reverse; gap:.1rem; margin-top:.15rem;}
+.ev-sv-q .wt-stars input{position:absolute; opacity:0; width:1px; height:1px; margin:0; pointer-events:none;}
+.ev-sv-q .wt-stars label{display:block; font-size:clamp(1.5rem,2.6vw,2rem); line-height:1; color:#ddd2b8;
+  cursor:pointer; padding:0 .06em; transition:color .12s, transform .12s;}
+.ev-sv-q .wt-stars label:hover{transform:scale(1.12);}
+.ev-sv-q .wt-stars input:checked ~ label,
+.ev-sv-q .wt-stars label:hover, .ev-sv-q .wt-stars label:hover ~ label{color:#c9a24a;}
+.ev-sv-q .wt-stars input:focus-visible + label{outline:2px solid #8a6a2f; outline-offset:2px; border-radius:4px;}
+.wt-stars-ends{display:flex; justify-content:space-between; max-width:clamp(9rem,15vw,12rem);
+  font-size:clamp(.6rem,.95vw,.72rem); color:#8a7d60; margin-top:.1rem;}
+
 
 /* announcements / upcoming assignments */
 .slide[data-type="announce"]{background:linear-gradient(160deg,#f7faf8,#eaf1ed);}
@@ -1512,6 +1553,41 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .at-close{margin-top:1rem; font-family:inherit; font-weight:700; color:var(--muted); background:#fff;
   border:1.5px solid var(--line); border-radius:11px; padding:.5rem 1.2rem; cursor:pointer;}
 .at-close:hover{border-color:var(--accent); color:var(--accent);}
+
+
+.slide.wordcloud{background:linear-gradient(160deg,#f4f8f6,#e8f1ec);}
+.wc-root{position:absolute; inset:0; display:flex; flex-direction:column;
+  padding:clamp(1.1rem,2.8vh,2rem) clamp(1.5rem,3.4vw,3.4rem) clamp(1rem,2.4vh,1.6rem);}
+.wc-head{margin-bottom:clamp(.4rem,1.2vh,.9rem);}
+.wc-head .heading{margin-bottom:.3rem;}
+.wc-sub{font-size:clamp(.85rem,1.35vw,1rem); color:var(--muted); max-width:72ch;}
+.wc-cloud{flex:1; min-height:0; display:flex; flex-wrap:wrap; align-content:center; justify-content:center;
+  align-items:center; gap:.1em .5em; overflow:hidden; text-align:center; padding:.4rem;}
+.wc-word{font-family:'Merriweather',serif; font-weight:800; line-height:1.02; letter-spacing:-.01em;
+  white-space:nowrap; transition:font-size .5s ease, opacity .5s ease;
+  animation:wc-pop .35s ease;}
+@keyframes wc-pop{0%{transform:scale(.5); opacity:0;}100%{transform:scale(1);}}
+.wc-word.mine{text-decoration:underline; text-decoration-thickness:.07em; text-underline-offset:.14em;}
+.wc-empty{font-family:'Inter',sans-serif; color:var(--muted); font-style:italic; font-weight:500;
+  font-size:clamp(1rem,1.6vw,1.2rem);}
+.wc-form{display:flex; gap:.6rem; max-width:580px; width:100%; margin:0 auto;}
+.wc-input{flex:1; min-width:0; font-family:inherit; font-size:clamp(.95rem,1.5vw,1.1rem);
+  padding:.72rem .95rem; border:2px solid var(--line); border-radius:11px; background:#fff; color:var(--ink);}
+.wc-input:focus{outline:none; border-color:var(--accent);}
+.wc-submit{flex:none; font-family:inherit; font-weight:800; font-size:clamp(.95rem,1.5vw,1.1rem);
+  padding:.72rem 1.7rem; border:none; border-radius:11px; background:var(--forest-mid); color:#fff; cursor:pointer;
+  transition:filter .15s, transform .08s;}
+.wc-submit:hover{filter:brightness(1.1);}
+.wc-submit:active{transform:translateY(1px);}
+.wc-foot{display:flex; align-items:center; gap:1rem; margin-top:clamp(.55rem,1.4vh,.95rem);
+  max-width:1060px; width:100%; margin-left:auto; margin-right:auto;}
+.wc-total{font-size:clamp(.82rem,1.3vw,.98rem); color:#33453d;}
+.wc-total strong{font-family:'Merriweather',serif; color:var(--forest); font-size:1.15em;}
+.wc-hint{font-size:clamp(.78rem,1.2vw,.9rem); color:var(--muted); font-style:italic;}
+.wc-reset{margin-left:auto; background:#fff; border:1.5px solid var(--line); color:var(--muted);
+  font-family:inherit; font-size:.82rem; font-weight:600; padding:.5rem .9rem; border-radius:9px; cursor:pointer;}
+.wc-reset:hover{border-color:var(--accent); color:var(--accent);}
+.slide.wordcloud.host .wc-form{display:none;}
 
 
 /* guess-the-number live-distribution slide */
@@ -1744,68 +1820,140 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
-<section class="slide swu" data-type="content" style="--accent:#52796F">
-  <div class="slide-inner col swu-inner">
-    <div class="eyebrow">Chapter 7 &middot; Sustainable vs. Unsustainable Use</div>
-    <h2 class="heading">Take Only What Nature Replaces</h2>
-    <div class="swu-grid">
-      <div class="swu-col sus">
-        <div class="swu-label">Sustainable</div>
-        <svg class="swu-ic" viewBox="0 0 170 118" role="img" aria-label="Cross-section: surplus surface water in a recharge basin soaks down into an aquifer, where a well can draw it back later.">
-          <defs><filter id="swu-r1" x="-4%" y="-4%" width="108%" height="108%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="1" seed="3" result="n"/>
-            <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/></filter></defs>
-          <g filter="url(#swu-r1)" fill="none" stroke="#6b4a2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M8 50 L162 50"/>
-            <path d="M20 50 q 24 20 48 0"/>
-            <path d="M26 50 L62 50" stroke="#4f93b6" stroke-width="3"/>
-            <g stroke="#4f93b6" stroke-width="1.6">
-              <path d="M34 58 L34 76"/><path d="M34 76 l-3 -4 M34 76 l3 -4"/>
-              <path d="M48 60 L48 78"/><path d="M48 78 l-3 -4 M48 78 l3 -4"/>
-            </g>
-            <path d="M8 82 L162 82" stroke-dasharray="2 3" stroke-width="1.2"/>
-            <path d="M10 92 L160 92" stroke="#4f93b6" stroke-width="1.4"/>
-            <path d="M8 100 L162 100" stroke-width="1.5"/>
-            <g fill="#6b4a2b" stroke="none"><circle cx="24" cy="88" r="1"/><circle cx="52" cy="97" r="1"/><circle cx="80" cy="90" r="1"/><circle cx="108" cy="97" r="1"/><circle cx="140" cy="89" r="1"/><circle cx="70" cy="98" r="1"/><circle cx="120" cy="90" r="1"/></g>
-            <path d="M132 44 L132 94"/>
-            <path d="M126 44 L138 44"/>
-            <g stroke="#2f7d4f" stroke-width="1.6"><path d="M144 60 L144 46"/><path d="M144 46 l-3 4 M144 46 l3 4"/></g>
-          </g>
-        </svg>
-        <div class="swu-name">Arizona Water Banking (since 1996)</div>
-        <div class="swu-line">In wet years, Arizona spreads surplus Colorado River water to soak into its aquifers.</div>
-        <div class="swu-num">4M+</div>
-        <div class="swu-unit">acre-feet stored underground for future droughts</div>
-        <div class="swu-why">Saving the surplus underground builds a reserve the state can draw on when the river runs short.</div>
-        <div class="swu-cite">Source: Arizona Water Banking Authority (2024), <i>Recovery Planning</i>: 4.41 million acre-feet of long-term storage credits accrued since 1996.</div>
+<section class="slide ac-live wordcloud" data-type="wordcloud" data-wc-id="ch7-water-word" style="--accent:#8a6a2f">
+  <div class="wc-root">
+    <div class="wc-head">
+      <div class="eyebrow">Chapter 7 · Warm-Up</div>
+      <h2 class="heading">What word/phrase comes to mind when you think about water?</h2>
+      <div class="wc-sub">Type a word or short phrase and press Enter. Everyone's answers build one shared cloud; the more often something is submitted, the bigger it grows.</div>
+    </div>
+    <div class="wc-cloud" data-wc-cloud><div class="wc-empty">Waiting for the first response…</div></div>
+    <form class="wc-form" data-wc-form>
+      <input class="wc-input" data-wc-input type="text" maxlength="32" autocomplete="off"
+             autocapitalize="none" spellcheck="false" placeholder="Type a word or phrase and press Enter" aria-label="Your word">
+      <button class="wc-submit" type="submit">Add</button>
+    </form>
+    <div class="wc-foot">
+      <span class="wc-total"><strong data-wc-total>0</strong> responses</span>
+      <span class="wc-hint" data-wc-hint>Type a word that comes to mind.</span>
+      <button class="wc-reset" type="button" data-wc-reset hidden>Reset responses</button>
+    </div>
+  </div>
+</section>
+<section class="slide wb-slide" data-type="content" style="--accent:#1C7293">
+  <div class="wb-grid">
+    <div class="wb-text">
+      <div class="eyebrow">7.1  ·  Where on Earth Is All the Water?</div>
+      <h2 class="heading">How Much of Earth&#8217;s Water Is Fresh?</h2>
+      <p class="lead">Earth holds about 332 million cubic miles of water. Almost all of it is salty; only about 2.5% is fresh, and most of that is frozen or underground.</p>
+      <div class="pairs">
+        <div class="pair"><div class="pair-head">Salt Water</div><div class="pair-desc">About 97.5% of Earth&#8217;s water is salty. The oceans hold 96.5%, and salty aquifers and lakes hold the rest. It must be desalinated before we can drink it.</div></div>
+        <div class="pair"><div class="pair-head">Fresh Water</div><div class="pair-desc">Just 2.5% is fresh. About 69% of that is frozen in glaciers and ice caps, and 30% is groundwater in aquifers.</div></div>
+        <div class="pair"><div class="pair-head">Rivers and Lakes</div><div class="pair-desc">The surface water we picture is a sliver: lakes hold about 0.26% of Earth&#8217;s fresh water, and rivers just 0.006%.</div></div>
       </div>
-      <div class="swu-col unsus">
-        <div class="swu-label">Unsustainable</div>
-        <svg class="swu-ic" viewBox="0 0 170 118" role="img" aria-label="Diagram: after decades of over-pumping, the land surface has dropped far below its former level, shown by a benchmark pole marked 1925 and now.">
-          <defs><filter id="swu-r2" x="-4%" y="-4%" width="108%" height="108%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="1" seed="8" result="n"/>
-            <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/></filter></defs>
-          <g filter="url(#swu-r2)" fill="none" stroke="#6b4a2b" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 44 L150 44" stroke-width="1.8" stroke-dasharray="5 4"/>
-            <path d="M14 66 L150 66" stroke-width="2.2"/>
-            <g stroke-width="1.4"><path d="M46 66 l-3 8 l4 0"/><path d="M80 66 l3 9 l-4 0"/><path d="M114 66 l-3 8 l4 0"/></g>
-            <g stroke="#9a3b3b" stroke-width="2.4"><path d="M136 46 L136 64"/><path d="M136 64 l-5 -7 M136 64 l5 -7"/></g>
-            <path d="M26 30 L26 92" stroke-width="2.4"/>
-            <path d="M20 44 L32 44" stroke-width="1.6"/>
-            <path d="M20 66 L32 66" stroke-width="1.6"/>
-          </g>
-          <g font-family="'Inter',sans-serif"><text x="34" y="43" font-size="8" fill="#8a6f45" font-style="italic">1925</text><text x="34" y="73" font-size="8" fill="#8a6f45">now</text></g>
-        </svg>
-        <div class="swu-name">Eloy, Central Arizona</div>
-        <div class="swu-line">Farms and towns pumped groundwater far faster than the desert could refill it.</div>
-        <div class="swu-num">12+ ft</div>
-        <div class="swu-unit">the land has sunk across south-central Arizona</div>
-        <div class="swu-why">Pumping past what nature replaced compacted the aquifer for good and cracked the ground with earth fissures.</div>
-        <div class="swu-cite">Source: Galloway, Jones &amp; Ingebritsen (1999), <i>Land Subsidence in the United States</i>, USGS Circular 1182: about 12.5 ft near Eloy by 1977, more than 15 ft by 1985.</div>
+    </div>
+    <div class="wb-panel" id="wb-root">
+      <span class="wb-kicker">Where Earth&#8217;s water is</span>
+      <svg class="wb-svg" viewBox="0 0 600 300" role="img" aria-label="Pie chart of all water on Earth, with the 2.5 percent fresh-water slice popped out into a second pie showing glaciers and ice caps 68.7 percent, groundwater 30.1 percent, and surface and other fresh water 1.2 percent.">
+        <defs>
+          <filter id="wbWobble" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.024" numOctaves="2" seed="6" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+        <text class="wb-ptitle" x="140" y="24" text-anchor="middle">All of Earth&#8217;s water</text>
+        <text class="wb-ptitle" x="462" y="40" text-anchor="middle">Just the fresh water</text>
+        <g data-wb-links></g>
+        <g filter="url(#wbWobble)" data-wb-wedges></g>
+        <g data-wb-pcts></g>
+        <circle class="wb-hub" cx="140" cy="160" r="47"/>
+        <text class="wb-hubbig" x="140" y="163" text-anchor="middle">97.5%</text>
+        <text class="wb-hubsm" x="140" y="180" text-anchor="middle">is salt water</text>
+        <circle class="wb-hub" cx="462" cy="160" r="37"/>
+        <text class="wb-hubbig sm" x="462" y="162" text-anchor="middle">2.5%</text>
+        <text class="wb-hubsm" x="462" y="177" text-anchor="middle">is fresh</text>
+      </svg>
+      <div class="wb-key"><button type="button" class="wb-keyitem" data-wb-s="ocean" style="--sc:#2f5f84"><i class="sw"></i><span>Oceans, seas & bays</span></button><button type="button" class="wb-keyitem" data-wb-s="saline" style="--sc:#8fa9bd"><i class="sw"></i><span>Salty groundwater & lakes</span></button><button type="button" class="wb-keyitem" data-wb-s="fresh" style="--sc:#3a9fb0"><i class="sw"></i><span>Fresh water</span></button><button type="button" class="wb-keyitem" data-wb-s="ice" style="--sc:#9cc9dc"><i class="sw"></i><span>Glaciers & ice caps</span></button><button type="button" class="wb-keyitem" data-wb-s="gw" style="--sc:#8a6e4b"><i class="sw"></i><span>Groundwater (fresh)</span></button><button type="button" class="wb-keyitem" data-wb-s="surf" style="--sc:#2e8f6e"><i class="sw"></i><span>Surface & other fresh water</span></button></div>
+      <div class="wb-card" data-wb-card>
+        <div class="wb-card-top"><span class="wb-card-name" data-wb-name></span><span class="wb-chipx">USGS</span></div>
+        <div class="wb-card-desc" data-wb-desc></div>
+        <div class="wb-vals">
+          <div class="wb-val"><span class="wb-val-k">Share of all water</span><span class="wb-val-v" data-wb-all></span></div>
+          <div class="wb-val b"><span class="wb-val-k">Share of fresh water</span><span class="wb-val-v" data-wb-fresh></span></div>
+          <div class="wb-val n"><span class="wb-val-k">Volume</span><span class="wb-val-v" data-wb-vol></span></div>
+        </div>
+        <div class="wb-parts" data-wb-parts hidden></div>
       </div>
+      <p class="wb-cite">Tap a slice or a label. Data: U.S. Geological Survey, Water Science School, &#8220;Where Is Earth&#8217;s Water?&#8221; <span class="wb-url">usgs.gov/special-topics/water-science-school</span>. Volumes from I. Shiklomanov (1993), &#8220;World Fresh Water Resources,&#8221; in P. H. Gleick (Ed.), <em>Water in Crisis: A Guide to the World&#8217;s Fresh Water Resources</em>, Oxford University Press.</p>
     </div>
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
+  <script>
+  (function(){
+    var root=document.getElementById("wb-root"); if(!root) return;
+    var S=[{"k": "ocean", "pie": "all", "col": "#2f5f84", "name": "Oceans, seas & bays", "all": "96.5%", "fresh": "Not fresh", "vol": "321 million mi³", "desc": "Salt water covering about 71% of Earth's surface. It must be desalinated before people can drink it or farm with it."}, {"k": "saline", "pie": "all", "col": "#8fa9bd", "name": "Salty groundwater & lakes", "all": "0.94%", "fresh": "Not fresh", "vol": "3.1 million mi³", "desc": "Brackish aquifers and salt lakes such as the Great Salt Lake and the Caspian Sea. Too salty to use without treatment."}, {"k": "fresh", "pie": "all", "col": "#3a9fb0", "name": "Fresh water", "all": "2.5%", "fresh": "100%", "vol": "8.4 million mi³", "desc": "Only about 2.5% of Earth's water is fresh, and most of that is frozen or underground. The second chart breaks it down."}, {"k": "ice", "pie": "fresh", "col": "#9cc9dc", "name": "Glaciers & ice caps", "all": "1.74%", "fresh": "68.7%", "vol": "5.8 million mi³", "desc": "Locked in the Antarctic and Greenland ice sheets, mountain glaciers, and permanent snow. Largely out of reach, though melting ice feeds rivers and raises sea level."}, {"k": "gw", "pie": "fresh", "col": "#8a6e4b", "name": "Groundwater (fresh)", "all": "0.76%", "fresh": "30.1%", "vol": "2.5 million mi³", "desc": "Fresh water filling the pores and cracks of aquifers. It is the fresh water people can most readily tap, and in many regions, including Arizona, it is pumped faster than it recharges."}, {"k": "surf", "pie": "fresh", "col": "#2e8f6e", "name": "Surface & other fresh water", "all": "0.03%", "fresh": "1.2%", "vol": "104,000 mi³", "desc": "Everything else: permafrost, lakes, soil moisture, the atmosphere, swamps, rivers, and living things. The rivers and lakes we picture are a tiny sliver.", "parts": [["Ground ice & permafrost", 69.0], ["Lakes", 20.9], ["Soil moisture", 3.8], ["Atmosphere", 3.0], ["Swamps & marshes", 2.6], ["Rivers", 0.49], ["Living things", 0.26]]}], NS="http://www.w3.org/2000/svg", TAU=2*Math.PI, GAP=0.006;
+    var P={all:{cx:140,cy:160,r0:53,r1:118,pop:"fresh",k:["ocean","saline","fresh"],v:[96.54,0.94,2.53]},
+           fresh:{cx:462,cy:160,r0:42,r1:96,pop:"surf",k:["ice","gw","surf"],v:[68.7,30.1,1.2]}};
+    var wg=root.querySelector("[data-wb-wedges]"), pg=root.querySelector("[data-wb-pcts]"), lg=root.querySelector("[data-wb-links]");
+    var q=function(s){ return root.querySelector(s); }, by={}, wedge={}, st="fresh";
+    S.forEach(function(s){ by[s.k]=s; });
+    function pt(cx,cy,a,r,dx){ return [cx+r*Math.cos(a)+(dx||0), cy+r*Math.sin(a)]; }
+    function path(p,a0,a1,dx){
+      var big=(a1-a0)>Math.PI?1:0, A=pt(p.cx,p.cy,a0,p.r1,dx), B=pt(p.cx,p.cy,a1,p.r1,dx),
+          C=pt(p.cx,p.cy,a1,p.r0,dx), D=pt(p.cx,p.cy,a0,p.r0,dx), f=function(v){ return v[0].toFixed(1)+","+v[1].toFixed(1); };
+      return "M"+f(A)+" A"+p.r1+","+p.r1+" 0 "+big+" 1 "+f(B)+" L"+f(C)+" A"+p.r0+","+p.r0+" 0 "+big+" 0 "+f(D)+" Z";
+    }
+    function label(x,y,txt,cls){ var t=document.createElementNS(NS,"text"); t.setAttribute("x",x.toFixed(1)); t.setAttribute("y",y.toFixed(1));
+      t.setAttribute("text-anchor","middle"); t.setAttribute("class",cls); t.textContent=txt; pg.appendChild(t); return t; }
+    var span={};
+    Object.keys(P).forEach(function(name){
+      var p=P[name], tot=p.v.reduce(function(a,b){ return a+b; },0);
+      /* the popped-out slice is centred on the right (angle 0); the rest run clockwise from it */
+      var fp=p.v[p.k.indexOf(p.pop)]/tot*TAU, a=fp/2, order=p.k.filter(function(k){ return k!==p.pop; });
+      span[p.pop]=[-fp/2, fp/2];
+      order.forEach(function(k){ var f=p.v[p.k.indexOf(k)]/tot*TAU; span[k]=[a,a+f]; a+=f; });
+      p.k.forEach(function(k){
+        var s=span[k], dx=(k===p.pop)?11:0, g=Math.min(GAP,(s[1]-s[0])/4), w=document.createElementNS(NS,"path");
+        w.setAttribute("d", path(p, s[0]+g, s[1]-g, dx)); w.setAttribute("class","wb-wedge"); w.setAttribute("fill",by[k].col);
+        w.addEventListener("click",function(){ pick(k); }); wg.appendChild(w); wedge[k]=w;
+        var m=(s[0]+s[1])/2, share=p.v[p.k.indexOf(k)]/tot;
+        if(share>0.2){ var c=pt(p.cx,p.cy,m,(p.r0+p.r1)/2); label(c[0],c[1]+4,share<0.995?(Math.round(share*1000)/10)+"%":"","wb-pct"); }
+      });
+    });
+    /* the fresh slice's percentage sits in the funnel; the 1.2% sits beside its popped slice */
+    label(300,164,"2.5%","wb-pct out");
+    label(P.fresh.cx+P.fresh.r1+29,P.fresh.cy+5,"1.2%","wb-pct out");
+    /* dashed connectors from the popped slice's outer corners to the second pie */
+    var f=span.fresh, a=P.all, b=P.fresh;
+    [[f[0],-2.2],[f[1],2.2]].forEach(function(e){
+      var s=pt(a.cx,a.cy,e[0],a.r1,11), t=pt(b.cx,b.cy,e[1],b.r1), l=document.createElementNS(NS,"line");
+      l.setAttribute("x1",s[0].toFixed(1)); l.setAttribute("y1",s[1].toFixed(1)); l.setAttribute("x2",t[0].toFixed(1)); l.setAttribute("y2",t[1].toFixed(1));
+      l.setAttribute("class","wb-link"); lg.appendChild(l);
+    });
+    function pick(k){
+      st=k; var s=by[k];
+      Object.keys(wedge).forEach(function(x){
+        var on = x===k || (k==="fresh" && by[x].pie==="fresh");
+        wedge[x].classList.toggle("on", on);
+      });
+      Array.prototype.forEach.call(root.querySelectorAll(".wb-keyitem"),function(btn){ btn.classList.toggle("on", btn.getAttribute("data-wb-s")===k); });
+      q("[data-wb-card]").style.setProperty("--sc", s.col);
+      q("[data-wb-name]").textContent=s.name; q("[data-wb-desc]").textContent=s.desc;
+      q("[data-wb-all]").textContent=s.all; q("[data-wb-fresh]").textContent=s.fresh; q("[data-wb-vol]").textContent=s.vol;
+      var parts=q("[data-wb-parts]");
+      if(s.parts){
+        var max=s.parts[0][1];
+        parts.innerHTML=s.parts.map(function(r){
+          return '<div class="wb-part"><span class="wb-part-k">'+r[0]+'</span><span class="wb-part-bar"><i style="width:'+Math.max(1.5,r[1]/max*100).toFixed(1)+'%"></i></span><span class="wb-part-v">'+r[1]+'%</span></div>';
+        }).join("");
+        parts.hidden=false;
+      } else { parts.hidden=true; parts.innerHTML=""; }
+    }
+    Array.prototype.forEach.call(root.querySelectorAll(".wb-keyitem"),function(btn){
+      btn.addEventListener("click",function(){ pick(btn.getAttribute("data-wb-s")); }); });
+    pick("fresh");
+  })();
+  </script>
 </section>
 <section class="slide dense" data-type="content" style="--accent:#1C7293">
   <div class="bleed-grid">
@@ -1823,18 +1971,6 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   <div class="embed-wrap">
     <iframe class="embed-frame" data-src="water-cycle/index.html?embed=1" title="Explore the Water Cycle" loading="lazy"></iframe>
   </div>
-</section>
-<section class="slide" data-type="content" style="--accent:#A4373A">
-  <div class="bleed-grid">
-    <div class="bleed-text">
-<div class="eyebrow">7.3 · How Do Humans Impact Fresh Water? — Flint, Michigan</div>
-<h2 class="heading">When Cost-Cutting Poisoned a City</h2>
-<p class="lead">To cut costs while waiting for a new pipeline, Flint switched its water source in 2014 — a decision with severe consequences.</p>
-<ul class="bullets"><li>The new, more corrosive water source released lead from aging pipes and plumbing fixtures.</li><li>Dangerous levels of lead turned up in water sampled from homes and schools across Flint.</li><li>Lead exposure causes irreversible neurological damage — especially harmful to children's developing brains.</li></ul>
-    </div>
-    <div class="bleed-media draw" data-plate="flint"><svg class="dr-svg" viewBox="0 0 600 700" role="img" aria-label="Flint, Michigan: water drawn from the Flint River goes through a treatment plant and aging water mains to homes; a magnified pipe shows corrosive water pitting the pipe wall and lead flakes entering the flow." preserveAspectRatio="xMidYMid meet"><defs><filter id="dr2-r" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="5" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter><pattern id="dr2-aq" width="16" height="12" patternUnits="userSpaceOnUse"><rect width="16" height="12" fill="#a9cfe0"/><circle cx="4" cy="4" r="1.6" fill="#d9c49c"/><circle cx="12" cy="9" r="1.3" fill="#d9c49c"/></pattern><pattern id="dr2-dry" width="16" height="12" patternUnits="userSpaceOnUse"><rect width="16" height="12" fill="#e4d6b8"/><circle cx="4" cy="4" r="1.6" fill="#cdb68c"/><circle cx="12" cy="9" r="1.3" fill="#cdb68c"/></pattern><pattern id="dr2-soil" width="22" height="14" patternUnits="userSpaceOnUse"><rect width="22" height="14" fill="#d8b98a"/><circle cx="5" cy="4" r="1.3" fill="#b8966a"/><circle cx="15" cy="10" r="1.7" fill="#bd9c6f"/></pattern><pattern id="dr2-clay" width="30" height="10" patternUnits="userSpaceOnUse"><rect width="30" height="10" fill="#b98b6a"/><path d="M0,5 H30" stroke="#a37655" stroke-width="1.4"/></pattern><pattern id="dr2-rock" width="44" height="18" patternUnits="userSpaceOnUse"><rect width="44" height="18" fill="#a88d62"/><path d="M0,9 H44 M12,0 V9 M32,9 V18" stroke="#937850" stroke-width="1.2"/></pattern><marker id="dr2-ab" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4f86b0"/></marker><marker id="dr2-ak" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3b3222"/></marker><marker id="dr2-ar" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a5a2a"/></marker><marker id="dr2-ag" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6f9440"/></marker></defs><g filter="url(#dr2-r)" stroke-linejoin="round" stroke-linecap="round"><path d="M-5,40 C60,50 90,120 60,170 C40,210 70,250 140,270 L110,290 C40,270 10,220 25,170 C45,120 30,70 -5,70 Z" fill="#6fa3c7" stroke="#3b3222" stroke-width="2"/><path d="M20,90 q8,-4 16,0 M40,200 q8,-4 16,0" stroke="#eaf4f9" stroke-width="2" fill="none"/><rect x="170" y="130" width="110" height="60" fill="#d9cfbb" stroke="#3b3222" stroke-width="2"/><path d="M165,130 L225,104 L285,130 Z" fill="#8f6b43" stroke="#3b3222" stroke-width="2"/><ellipse cx="315" cy="178" rx="30" ry="10" fill="#cdc5b2" stroke="#3b3222" stroke-width="2"/><rect x="285" y="148" width="60" height="30" fill="#cdc5b2" stroke="#3b3222" stroke-width="2"/><ellipse cx="315" cy="148" rx="30" ry="10" fill="#86b59c" stroke="#3b3222" stroke-width="2"/><path d="M70,172 C110,176 140,170 170,170" stroke="#8d8a82" stroke-width="7" fill="none"/><path d="M-5,285 H605" stroke="#3b3222" stroke-width="2.4"/><rect x="-5" y="285" width="610" height="90" fill="url(#dr2-soil)"/><path d="M280,190 V318 H470 V270" stroke="#8d8a82" stroke-width="9" fill="none"/><path d="M280,190 V318 H470 V270" stroke="#6b6860" stroke-width="2" fill="none" stroke-dasharray="3 9"/><rect x="430" y="232.5" width="80.0" height="52.5" fill="#f0dcbc" stroke="#3b3222" stroke-width="2"/><path d="M421.25,232.5 L470.0,195.0 L518.75,232.5 Z" fill="#b5533c" stroke="#3b3222" stroke-width="2"/><rect x="461.25" y="257.5" width="17.5" height="27.5" fill="#7a5a38" stroke="#3b3222" stroke-width="1.5"/><rect x="440.0" y="245.0" width="15.0" height="13.75" fill="#a9cfe0" stroke="#3b3222" stroke-width="1.5"/><path d="M560,285 v-16.0" stroke="#6b4f2e" stroke-width="3.2"/><circle cx="552.0" cy="263.0" r="10.0" fill="#7f9f45" stroke="#3b3222" stroke-width="1.8"/><circle cx="568.0" cy="265.0" r="9.0" fill="#6f9440" stroke="#3b3222" stroke-width="1.8"/><circle cx="560.0" cy="254.0" r="12.0" fill="#8fb050" stroke="#3b3222" stroke-width="1.8"/><path d="M390,285 v-12.8" stroke="#6b4f2e" stroke-width="2.6"/><circle cx="383.6" cy="267.4" r="8.0" fill="#7f9f45" stroke="#3b3222" stroke-width="1.8"/><circle cx="396.4" cy="269.0" r="7.2" fill="#6f9440" stroke="#3b3222" stroke-width="1.8"/><circle cx="390.0" cy="260.2" r="9.6" fill="#8fb050" stroke="#3b3222" stroke-width="1.8"/><circle cx="300" cy="510" r="150" fill="#fbf4e4" stroke="#3b3222" stroke-width="2.6"/><path d="M150,455 H450 V565 H150 Z" fill="#8f8b84" stroke="#3b3222" stroke-width="2"/><path d="M150,475 H450 V545 H150 Z" fill="#8fbcd6" stroke="#3b3222" stroke-width="1.6"/><path d="M180,475 q5,9 10,2 q5,8 10,-2" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M184,545 q5,-8 10,-1 q5,-7 8,1" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M230,475 q5,9 10,2 q5,8 10,-2" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M234,545 q5,-8 10,-1 q5,-7 8,1" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M290,475 q5,9 10,2 q5,8 10,-2" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M294,545 q5,-8 10,-1 q5,-7 8,1" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M340,475 q5,9 10,2 q5,8 10,-2" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M344,545 q5,-8 10,-1 q5,-7 8,1" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M400,475 q5,9 10,2 q5,8 10,-2" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M404,545 q5,-8 10,-1 q5,-7 8,1" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/></g><circle cx="300" cy="510" r="150" fill="none" stroke="#3b3222" stroke-width="2.6"/><path d="M345,318 L240,368" stroke="#3b3222" stroke-width="1.4" stroke-dasharray="4 4"/><circle cx="210" cy="495" r="7" fill="#7d7f86" stroke="#3b3222" stroke-width="1.2"/><text x="210" y="498.5" text-anchor="middle" class="dr-pb">Pb</text><circle cx="262" cy="520" r="7" fill="#7d7f86" stroke="#3b3222" stroke-width="1.2"/><text x="262" y="523.5" text-anchor="middle" class="dr-pb">Pb</text><circle cx="318" cy="492" r="7" fill="#7d7f86" stroke="#3b3222" stroke-width="1.2"/><text x="318" y="495.5" text-anchor="middle" class="dr-pb">Pb</text><circle cx="372" cy="525" r="7" fill="#7d7f86" stroke="#3b3222" stroke-width="1.2"/><text x="372" y="528.5" text-anchor="middle" class="dr-pb">Pb</text><circle cx="425" cy="500" r="7" fill="#7d7f86" stroke="#3b3222" stroke-width="1.2"/><text x="425" y="503.5" text-anchor="middle" class="dr-pb">Pb</text><circle cx="240" cy="530" r="7" fill="#7d7f86" stroke="#3b3222" stroke-width="1.2"/><text x="240" y="533.5" text-anchor="middle" class="dr-pb">Pb</text><circle cx="395" cy="488" r="7" fill="#7d7f86" stroke="#3b3222" stroke-width="1.2"/><text x="395" y="491.5" text-anchor="middle" class="dr-pb">Pb</text><path d="M175,510 H225" stroke="#4f86b0" stroke-width="3" marker-end="url(#dr2-ab)"/><path d="M430,510 H445" stroke="#4f86b0" stroke-width="3" marker-end="url(#dr2-ab)"/><text x="30" y="30" text-anchor="start" class="dr-lab">Flint River</text><text x="225" y="94" text-anchor="middle" class="dr-lab key">2014 source switch</text><text x="225" y="224" text-anchor="middle" class="dr-lab">treatment plant</text><text x="372" y="348" text-anchor="middle" class="dr-lab">aging water mains</text><text x="300" y="440" text-anchor="middle" class="dr-lab key">corrosive water eats the pipe wall</text><text x="300" y="590" text-anchor="middle" class="dr-lab red">lead flakes into the flow</text><text x="300" y="688" text-anchor="middle" class="dr-cap">Cheaper water plus old lead pipes meant lead at the tap.</text></svg></div>
-  </div>
-  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
 <section class="slide" data-type="content" style="--accent:#A4373A">
   <div class="stack-grid">
@@ -1891,6 +2027,18 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
+<section class="slide" data-type="content" style="--accent:#A4373A">
+  <div class="bleed-grid">
+    <div class="bleed-text">
+<div class="eyebrow">7.3 · How Do Humans Impact Fresh Water? — Flint, Michigan</div>
+<h2 class="heading">When Cost-Cutting Poisoned a City</h2>
+<p class="lead">To cut costs while waiting for a new pipeline, Flint switched its water source in 2014 — a decision with severe consequences.</p>
+<ul class="bullets"><li>The new, more corrosive water source released lead from aging pipes and plumbing fixtures.</li><li>Dangerous levels of lead turned up in water sampled from homes and schools across Flint.</li><li>Lead exposure causes irreversible neurological damage — especially harmful to children's developing brains.</li></ul>
+    </div>
+    <div class="bleed-media draw" data-plate="flint"><svg class="dr-svg" viewBox="0 0 600 700" role="img" aria-label="Flint, Michigan: water drawn from the Flint River goes through a treatment plant and aging water mains to homes; a magnified pipe shows corrosive water pitting the pipe wall and lead flakes entering the flow." preserveAspectRatio="xMidYMid meet"><defs><filter id="dr2-r" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="5" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter><pattern id="dr2-aq" width="16" height="12" patternUnits="userSpaceOnUse"><rect width="16" height="12" fill="#a9cfe0"/><circle cx="4" cy="4" r="1.6" fill="#d9c49c"/><circle cx="12" cy="9" r="1.3" fill="#d9c49c"/></pattern><pattern id="dr2-dry" width="16" height="12" patternUnits="userSpaceOnUse"><rect width="16" height="12" fill="#e4d6b8"/><circle cx="4" cy="4" r="1.6" fill="#cdb68c"/><circle cx="12" cy="9" r="1.3" fill="#cdb68c"/></pattern><pattern id="dr2-soil" width="22" height="14" patternUnits="userSpaceOnUse"><rect width="22" height="14" fill="#d8b98a"/><circle cx="5" cy="4" r="1.3" fill="#b8966a"/><circle cx="15" cy="10" r="1.7" fill="#bd9c6f"/></pattern><pattern id="dr2-clay" width="30" height="10" patternUnits="userSpaceOnUse"><rect width="30" height="10" fill="#b98b6a"/><path d="M0,5 H30" stroke="#a37655" stroke-width="1.4"/></pattern><pattern id="dr2-rock" width="44" height="18" patternUnits="userSpaceOnUse"><rect width="44" height="18" fill="#a88d62"/><path d="M0,9 H44 M12,0 V9 M32,9 V18" stroke="#937850" stroke-width="1.2"/></pattern><marker id="dr2-ab" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4f86b0"/></marker><marker id="dr2-ak" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3b3222"/></marker><marker id="dr2-ar" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a5a2a"/></marker><marker id="dr2-ag" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6f9440"/></marker></defs><g filter="url(#dr2-r)" stroke-linejoin="round" stroke-linecap="round"><path d="M-5,40 C60,50 90,120 60,170 C40,210 70,250 140,270 L110,290 C40,270 10,220 25,170 C45,120 30,70 -5,70 Z" fill="#6fa3c7" stroke="#3b3222" stroke-width="2"/><path d="M20,90 q8,-4 16,0 M40,200 q8,-4 16,0" stroke="#eaf4f9" stroke-width="2" fill="none"/><rect x="170" y="130" width="110" height="60" fill="#d9cfbb" stroke="#3b3222" stroke-width="2"/><path d="M165,130 L225,104 L285,130 Z" fill="#8f6b43" stroke="#3b3222" stroke-width="2"/><ellipse cx="315" cy="178" rx="30" ry="10" fill="#cdc5b2" stroke="#3b3222" stroke-width="2"/><rect x="285" y="148" width="60" height="30" fill="#cdc5b2" stroke="#3b3222" stroke-width="2"/><ellipse cx="315" cy="148" rx="30" ry="10" fill="#86b59c" stroke="#3b3222" stroke-width="2"/><path d="M70,172 C110,176 140,170 170,170" stroke="#8d8a82" stroke-width="7" fill="none"/><path d="M-5,285 H605" stroke="#3b3222" stroke-width="2.4"/><rect x="-5" y="285" width="610" height="90" fill="url(#dr2-soil)"/><path d="M280,190 V318 H470 V270" stroke="#8d8a82" stroke-width="9" fill="none"/><path d="M280,190 V318 H470 V270" stroke="#6b6860" stroke-width="2" fill="none" stroke-dasharray="3 9"/><rect x="430" y="232.5" width="80.0" height="52.5" fill="#f0dcbc" stroke="#3b3222" stroke-width="2"/><path d="M421.25,232.5 L470.0,195.0 L518.75,232.5 Z" fill="#b5533c" stroke="#3b3222" stroke-width="2"/><rect x="461.25" y="257.5" width="17.5" height="27.5" fill="#7a5a38" stroke="#3b3222" stroke-width="1.5"/><rect x="440.0" y="245.0" width="15.0" height="13.75" fill="#a9cfe0" stroke="#3b3222" stroke-width="1.5"/><path d="M560,285 v-16.0" stroke="#6b4f2e" stroke-width="3.2"/><circle cx="552.0" cy="263.0" r="10.0" fill="#7f9f45" stroke="#3b3222" stroke-width="1.8"/><circle cx="568.0" cy="265.0" r="9.0" fill="#6f9440" stroke="#3b3222" stroke-width="1.8"/><circle cx="560.0" cy="254.0" r="12.0" fill="#8fb050" stroke="#3b3222" stroke-width="1.8"/><path d="M390,285 v-12.8" stroke="#6b4f2e" stroke-width="2.6"/><circle cx="383.6" cy="267.4" r="8.0" fill="#7f9f45" stroke="#3b3222" stroke-width="1.8"/><circle cx="396.4" cy="269.0" r="7.2" fill="#6f9440" stroke="#3b3222" stroke-width="1.8"/><circle cx="390.0" cy="260.2" r="9.6" fill="#8fb050" stroke="#3b3222" stroke-width="1.8"/><circle cx="300" cy="510" r="150" fill="#fbf4e4" stroke="#3b3222" stroke-width="2.6"/><path d="M150,455 H450 V565 H150 Z" fill="#8f8b84" stroke="#3b3222" stroke-width="2"/><path d="M150,475 H450 V545 H150 Z" fill="#8fbcd6" stroke="#3b3222" stroke-width="1.6"/><path d="M180,475 q5,9 10,2 q5,8 10,-2" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M184,545 q5,-8 10,-1 q5,-7 8,1" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M230,475 q5,9 10,2 q5,8 10,-2" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M234,545 q5,-8 10,-1 q5,-7 8,1" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M290,475 q5,9 10,2 q5,8 10,-2" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M294,545 q5,-8 10,-1 q5,-7 8,1" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M340,475 q5,9 10,2 q5,8 10,-2" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M344,545 q5,-8 10,-1 q5,-7 8,1" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M400,475 q5,9 10,2 q5,8 10,-2" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/><path d="M404,545 q5,-8 10,-1 q5,-7 8,1" fill="#a26c3a" stroke="#3b3222" stroke-width="1.2"/></g><circle cx="300" cy="510" r="150" fill="none" stroke="#3b3222" stroke-width="2.6"/><path d="M345,318 L240,368" stroke="#3b3222" stroke-width="1.4" stroke-dasharray="4 4"/><circle cx="210" cy="495" r="7" fill="#7d7f86" stroke="#3b3222" stroke-width="1.2"/><text x="210" y="498.5" text-anchor="middle" class="dr-pb">Pb</text><circle cx="262" cy="520" r="7" fill="#7d7f86" stroke="#3b3222" stroke-width="1.2"/><text x="262" y="523.5" text-anchor="middle" class="dr-pb">Pb</text><circle cx="318" cy="492" r="7" fill="#7d7f86" stroke="#3b3222" stroke-width="1.2"/><text x="318" y="495.5" text-anchor="middle" class="dr-pb">Pb</text><circle cx="372" cy="525" r="7" fill="#7d7f86" stroke="#3b3222" stroke-width="1.2"/><text x="372" y="528.5" text-anchor="middle" class="dr-pb">Pb</text><circle cx="425" cy="500" r="7" fill="#7d7f86" stroke="#3b3222" stroke-width="1.2"/><text x="425" y="503.5" text-anchor="middle" class="dr-pb">Pb</text><circle cx="240" cy="530" r="7" fill="#7d7f86" stroke="#3b3222" stroke-width="1.2"/><text x="240" y="533.5" text-anchor="middle" class="dr-pb">Pb</text><circle cx="395" cy="488" r="7" fill="#7d7f86" stroke="#3b3222" stroke-width="1.2"/><text x="395" y="491.5" text-anchor="middle" class="dr-pb">Pb</text><path d="M175,510 H225" stroke="#4f86b0" stroke-width="3" marker-end="url(#dr2-ab)"/><path d="M430,510 H445" stroke="#4f86b0" stroke-width="3" marker-end="url(#dr2-ab)"/><text x="30" y="30" text-anchor="start" class="dr-lab">Flint River</text><text x="225" y="94" text-anchor="middle" class="dr-lab key">2014 source switch</text><text x="225" y="224" text-anchor="middle" class="dr-lab">treatment plant</text><text x="372" y="348" text-anchor="middle" class="dr-lab">aging water mains</text><text x="300" y="440" text-anchor="middle" class="dr-lab key">corrosive water eats the pipe wall</text><text x="300" y="590" text-anchor="middle" class="dr-lab red">lead flakes into the flow</text><text x="300" y="688" text-anchor="middle" class="dr-cap">Cheaper water plus old lead pipes meant lead at the tap.</text></svg></div>
+  </div>
+  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
+</section>
 <section class="slide eutro" data-type="content" style="--accent:#8a6a2f">
   <div class="slide-inner col eu-inner">
     <div class="eyebrow">7.3 &middot; Water Pollution</div>
@@ -1909,6 +2057,19 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     <p class="eu-sub">Too much of a good thing: how fertilizer can starve a lake of oxygen.</p>
     <div class="eu-row"><svg class="eu-card" viewBox="0 0 300 400" role="img" aria-label="Stage 1, runoff: rain washes fertilizer down a farm field into a pond."><defs><filter id="eu1-r" x="-4%" y="-4%" width="108%" height="108%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter><filter id="eu1-w" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".02" numOctaves="3" seed="9"/><feDisplacementMap in="SourceGraphic" scale="10"/><feGaussianBlur stdDeviation=".8"/></filter></defs><rect x="6" y="6" width="288" height="388" rx="16" fill="#fbf5e6" stroke="#3b3222" stroke-width="2.2" filter="url(#eu1-r)"/><rect x="18" y="18" width="264" height="364" rx="10" fill="none" stroke="#8a6a2f" stroke-width="1.3"/><rect x="23" y="23" width="254" height="354" rx="8" fill="none" stroke="#8a6a2f" stroke-width=".6"/><path d="M30,24 L36,30 L30,36 L24,30 Z" fill="#8a6a2f"/><path d="M270,24 L276,30 L270,36 L264,30 Z" fill="#8a6a2f"/><path d="M30,364 L36,370 L30,376 L24,370 Z" fill="#8a6a2f"/><path d="M270,364 L276,370 L270,376 L264,370 Z" fill="#8a6a2f"/><text x="150" y="50" text-anchor="middle" class="eu-sc">STAGE 1</text><path d="M96,60 H204" stroke="#8a6a2f" stroke-width=".8"/><path d="M30,208 C84,160 150,178 196,262 L196,300 L30,300 Z" fill="#b9c98c" opacity=".6" filter="url(#eu1-w)"/><ellipse cx="228" cy="274" rx="48" ry="20" fill="#9ec4db" opacity=".85" filter="url(#eu1-w)"/><g filter="url(#eu1-r)" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M136,112 C126,112 124,98 136,95 C138,83 160,80 164,93 C176,87 192,97 186,110 Z" fill="#fbf5e6" stroke="#3b3222" stroke-width="2"/><path d="M144,122 l-6,13 M158,122 l-6,13 M172,122 l-6,13" stroke="#5b8fb8" stroke-width="1.8"/><path d="M72,122 C74,115 110,115 112,122 L118,176 C118,182 66,182 66,176 Z" fill="#e8d6ae" stroke="#3b3222" stroke-width="2"/><path d="M76,122 C82,117 104,117 108,122" stroke="#3b3222" stroke-width="1.6"/><path d="M85,117 l-3,-9 M92,116 l0,-10 M99,117 l3,-9" stroke="#3b3222" stroke-width="1.5"/><path d="M34,206 C84,160 150,178 196,262" stroke="#3b3222" stroke-width="2.4"/><path d="M44.7,197.3 v-14 M44.7,191.3 q-8,-2 -10,-10 M44.7,188.3 q8,-2 10,-10" stroke="#4f7a3a" stroke-width="1.8"/><path d="M133.5,192.8 v-14 M133.5,186.8 q-8,-2 -10,-10 M133.5,183.8 q8,-2 10,-10" stroke="#4f7a3a" stroke-width="1.8"/><path d="M148.5,202.8 v-14 M148.5,196.8 q-8,-2 -10,-10 M148.5,193.8 q8,-2 10,-10" stroke="#4f7a3a" stroke-width="1.8"/><circle cx="118.5" cy="193.2" r="2.8" fill="#d9a441" stroke="#3b3222" stroke-width=".9"/><circle cx="125.4" cy="198.1" r="2.8" fill="#d9a441" stroke="#3b3222" stroke-width=".9"/><circle cx="162.9" cy="220.9" r="2.8" fill="#d9a441" stroke="#3b3222" stroke-width=".9"/><circle cx="169.0" cy="232.9" r="2.8" fill="#d9a441" stroke="#3b3222" stroke-width=".9"/><path d="M138.5,186.8 L148.3,192.9 L157.9,200.4 L167.3,209.3 L176.5,219.5 L185.4,231.0 L194.0,243.9 L214,263" stroke="#4f86b0" stroke-width="2.4"/><path d="M214,263 l-10,-3 M214,263 l-4,-9" stroke="#4f86b0" stroke-width="2.2"/><path d="M162.2,195.2 L169.0,201.1 L175.6,207.7 L182.2,215.0 L188.6,222.9 L194.9,231.6 L201.0,240.9 L234,265" stroke="#4f86b0" stroke-width="2.4"/><path d="M234,265 l-10,-3 M234,265 l-4,-9" stroke="#4f86b0" stroke-width="2.2"/><ellipse cx="228" cy="272" rx="42" ry="15" stroke="#3b3222" stroke-width="1.8"/><path d="M206,276 q9,-4 18,0 M236,281 q9,-4 18,0" stroke="#5b8fb8" stroke-width="1.4"/></g><text x="92" y="155" text-anchor="middle" class="eu-lbl">N·P·K</text><text x="150" y="326" text-anchor="middle" class="eu-ct">Runoff</text><text x="150" y="352" text-anchor="middle" class="eu-sc" style="fill:#8a6a2f">EXCESS FERTILIZER</text></svg><svg class="eu-arr" viewBox="0 0 60 40" aria-hidden="true"><defs><filter id="eua1" x="-10%" y="-20%" width="120%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="1.8"/></filter></defs><g filter="url(#eua1)" fill="none" stroke="#8a6a2f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6,24 C20,12 36,12 50,20"/><path d="M50,20 l-11,-3 M50,20 l-6,9"/></g></svg><svg class="eu-card" viewBox="0 0 300 400" role="img" aria-label="Stage 2, nutrients: a magnified view of the water shows nitrogen and phosphorus building up."><defs><filter id="eu2-r" x="-4%" y="-4%" width="108%" height="108%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter><filter id="eu2-w" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".02" numOctaves="3" seed="9"/><feDisplacementMap in="SourceGraphic" scale="10"/><feGaussianBlur stdDeviation=".8"/></filter></defs><rect x="6" y="6" width="288" height="388" rx="16" fill="#fbf5e6" stroke="#3b3222" stroke-width="2.2" filter="url(#eu2-r)"/><rect x="18" y="18" width="264" height="364" rx="10" fill="none" stroke="#8a6a2f" stroke-width="1.3"/><rect x="23" y="23" width="254" height="354" rx="8" fill="none" stroke="#8a6a2f" stroke-width=".6"/><path d="M30,24 L36,30 L30,36 L24,30 Z" fill="#8a6a2f"/><path d="M270,24 L276,30 L270,36 L264,30 Z" fill="#8a6a2f"/><path d="M30,364 L36,370 L30,376 L24,370 Z" fill="#8a6a2f"/><path d="M270,364 L276,370 L270,376 L264,370 Z" fill="#8a6a2f"/><text x="150" y="50" text-anchor="middle" class="eu-sc">STAGE 2</text><path d="M96,60 H204" stroke="#8a6a2f" stroke-width=".8"/><circle cx="146" cy="170" r="84" fill="#a9cde0" opacity=".6" filter="url(#eu2-w)"/><g filter="url(#eu2-r)" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M80,142 q12,-5 24,0 t24,0 M120,242 q12,-5 24,0 t24,0" stroke="#6f9ec0" stroke-width="1.3"/><circle cx="112" cy="124" r="11" fill="#cfe2ad" stroke="#3b3222" stroke-width="1.4"/><circle cx="186" cy="150" r="11" fill="#cfe2ad" stroke="#3b3222" stroke-width="1.4"/><circle cx="104" cy="206" r="11" fill="#cfe2ad" stroke="#3b3222" stroke-width="1.4"/><circle cx="172" cy="214" r="11" fill="#cfe2ad" stroke="#3b3222" stroke-width="1.4"/><circle cx="158" cy="110" r="11" fill="#efd79a" stroke="#3b3222" stroke-width="1.4"/><circle cx="92" cy="164" r="11" fill="#efd79a" stroke="#3b3222" stroke-width="1.4"/><circle cx="146" cy="170" r="11" fill="#efd79a" stroke="#3b3222" stroke-width="1.4"/><circle cx="204" cy="194" r="11" fill="#efd79a" stroke="#3b3222" stroke-width="1.4"/><circle cx="146" cy="170" r="84" stroke="#3b3222" stroke-width="3.2"/><circle cx="146" cy="170" r="77" stroke="#3b3222" stroke-width="1" opacity=".5"/><path d="M207,231 L248,272" stroke="#3b3222" stroke-width="14"/><path d="M209,233 L246,270" stroke="#8a6a2f" stroke-width="8"/></g><text x="112" y="128" text-anchor="middle" class="eu-np">N</text><text x="186" y="154" text-anchor="middle" class="eu-np">N</text><text x="104" y="210" text-anchor="middle" class="eu-np">N</text><text x="172" y="218" text-anchor="middle" class="eu-np">N</text><text x="158" y="114" text-anchor="middle" class="eu-np">P</text><text x="92" y="168" text-anchor="middle" class="eu-np">P</text><text x="146" y="174" text-anchor="middle" class="eu-np">P</text><text x="204" y="198" text-anchor="middle" class="eu-np">P</text><text x="150" y="326" text-anchor="middle" class="eu-ct">Nutrients</text><text x="150" y="352" text-anchor="middle" class="eu-sc" style="fill:#8a6a2f">NITROGEN + PHOSPHORUS</text></svg><svg class="eu-arr" viewBox="0 0 60 40" aria-hidden="true"><defs><filter id="eua2" x="-10%" y="-20%" width="120%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="2" seed="5"/><feDisplacementMap in="SourceGraphic" scale="1.8"/></filter></defs><g filter="url(#eua2)" fill="none" stroke="#8a6a2f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6,24 C20,12 36,12 50,20"/><path d="M50,20 l-11,-3 M50,20 l-6,9"/></g></svg><svg class="eu-card" viewBox="0 0 300 400" role="img" aria-label="Stage 3, algal bloom: a thick mat of algae covers the surface and blocks sunlight."><defs><filter id="eu3-r" x="-4%" y="-4%" width="108%" height="108%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter><filter id="eu3-w" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".02" numOctaves="3" seed="9"/><feDisplacementMap in="SourceGraphic" scale="10"/><feGaussianBlur stdDeviation=".8"/></filter></defs><rect x="6" y="6" width="288" height="388" rx="16" fill="#fbf5e6" stroke="#3b3222" stroke-width="2.2" filter="url(#eu3-r)"/><rect x="18" y="18" width="264" height="364" rx="10" fill="none" stroke="#8a6a2f" stroke-width="1.3"/><rect x="23" y="23" width="254" height="354" rx="8" fill="none" stroke="#8a6a2f" stroke-width=".6"/><path d="M30,24 L36,30 L30,36 L24,30 Z" fill="#8a6a2f"/><path d="M270,24 L276,30 L270,36 L264,30 Z" fill="#8a6a2f"/><path d="M30,364 L36,370 L30,376 L24,370 Z" fill="#8a6a2f"/><path d="M270,364 L276,370 L270,376 L264,370 Z" fill="#8a6a2f"/><text x="150" y="50" text-anchor="middle" class="eu-sc">STAGE 3</text><path d="M96,60 H204" stroke="#8a6a2f" stroke-width=".8"/><rect x="34" y="178" width="232" height="112" fill="#a9cde0" opacity=".55" filter="url(#eu3-w)"/><path d="M34,156 C90,142 200,142 266,156 L266,190 L34,190 Z" fill="#8fbe6e" opacity=".55" filter="url(#eu3-w)"/><circle cx="226" cy="98" r="28" fill="#f0c27a" opacity=".6" filter="url(#eu3-w)"/><g filter="url(#eu3-r)" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="226" cy="98" r="16" fill="#e0a95a" stroke="#3b3222" stroke-width="2"/><path d="M249.0,98.0 L257.0,98.0 M244.6,111.5 L251.1,116.2 M233.1,119.9 L235.6,127.5 M218.9,119.9 L216.4,127.5 M207.4,111.5 L200.9,116.2 M203.0,98.0 L195.0,98.0 M207.4,84.5 L200.9,79.8 M218.9,76.1 L216.4,68.5 M233.1,76.1 L235.6,68.5 M244.6,84.5 L251.1,79.8" stroke="#c98a3a" stroke-width="2.6"/><path d="M208,120 L182,152 M220,126 L204,152 M198,116 L160,152" stroke="#c98a3a" stroke-width="1.4" stroke-dasharray="3 4"/><path d="M34,180 H266" stroke="#4f7fa3" stroke-width="1.6"/><path d="M34,180 C44,162 58,162 66,172 C74,156 92,158 98,170 C108,154 128,156 132,168 C142,152 162,154 166,168 C176,154 196,156 200,170 C210,156 228,158 234,172 C244,160 262,164 266,180 Z" fill="#7ea45f" stroke="#3b3222" stroke-width="1.8"/><circle cx="50" cy="172" r="4" fill="#a8c98a" stroke="#3b3222" stroke-width=".8"/><circle cx="80" cy="166" r="4" fill="#a8c98a" stroke="#3b3222" stroke-width=".8"/><circle cx="112" cy="163" r="4" fill="#a8c98a" stroke="#3b3222" stroke-width=".8"/><circle cx="146" cy="161" r="4" fill="#a8c98a" stroke="#3b3222" stroke-width=".8"/><circle cx="180" cy="163" r="4" fill="#a8c98a" stroke="#3b3222" stroke-width=".8"/><circle cx="214" cy="165" r="4" fill="#a8c98a" stroke="#3b3222" stroke-width=".8"/><circle cx="248" cy="171" r="4" fill="#a8c98a" stroke="#3b3222" stroke-width=".8"/><circle cx="64" cy="176" r="4" fill="#a8c98a" stroke="#3b3222" stroke-width=".8"/><circle cx="128" cy="173" r="4" fill="#a8c98a" stroke="#3b3222" stroke-width=".8"/><circle cx="196" cy="173" r="4" fill="#a8c98a" stroke="#3b3222" stroke-width=".8"/><circle cx="232" cy="176" r="4" fill="#a8c98a" stroke="#3b3222" stroke-width=".8"/><circle cx="96" cy="175" r="4" fill="#a8c98a" stroke="#3b3222" stroke-width=".8"/><circle cx="162" cy="174" r="4" fill="#a8c98a" stroke="#3b3222" stroke-width=".8"/><path d="M90,184 V214" stroke="#5c7f45" stroke-width="1"/><circle cx="90" cy="190" r="3.2" fill="#8fbe6e" stroke="#3b3222" stroke-width=".8"/><circle cx="90" cy="198" r="3.2" fill="#8fbe6e" stroke="#3b3222" stroke-width=".8"/><circle cx="90" cy="206" r="3.2" fill="#8fbe6e" stroke="#3b3222" stroke-width=".8"/><circle cx="90" cy="214" r="3.2" fill="#8fbe6e" stroke="#3b3222" stroke-width=".8"/><path d="M150,184 V222" stroke="#5c7f45" stroke-width="1"/><circle cx="150" cy="190" r="3.2" fill="#8fbe6e" stroke="#3b3222" stroke-width=".8"/><circle cx="150" cy="198" r="3.2" fill="#8fbe6e" stroke="#3b3222" stroke-width=".8"/><circle cx="150" cy="206" r="3.2" fill="#8fbe6e" stroke="#3b3222" stroke-width=".8"/><circle cx="150" cy="214" r="3.2" fill="#8fbe6e" stroke="#3b3222" stroke-width=".8"/><circle cx="150" cy="222" r="3.2" fill="#8fbe6e" stroke="#3b3222" stroke-width=".8"/><path d="M212,184 V206" stroke="#5c7f45" stroke-width="1"/><circle cx="212" cy="190" r="3.2" fill="#8fbe6e" stroke="#3b3222" stroke-width=".8"/><circle cx="212" cy="198" r="3.2" fill="#8fbe6e" stroke="#3b3222" stroke-width=".8"/><circle cx="212" cy="206" r="3.2" fill="#8fbe6e" stroke="#3b3222" stroke-width=".8"/><path d="M56,254 q12,-5 24,0 M166,268 q12,-5 24,0 M104,244 q10,-4 20,0" stroke="#6f9ec0" stroke-width="1.3"/></g><text x="150" y="326" text-anchor="middle" class="eu-ct">Algal bloom</text><text x="150" y="352" text-anchor="middle" class="eu-sc" style="fill:#2D6A4F">ALGAE GROW UNCHECKED</text></svg><svg class="eu-arr" viewBox="0 0 60 40" aria-hidden="true"><defs><filter id="eua3" x="-10%" y="-20%" width="120%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="2" seed="6"/><feDisplacementMap in="SourceGraphic" scale="1.8"/></filter></defs><g filter="url(#eua3)" fill="none" stroke="#8a6a2f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6,24 C20,12 36,12 50,20"/><path d="M50,20 l-11,-3 M50,20 l-6,9"/></g></svg><svg class="eu-card" viewBox="0 0 300 400" role="img" aria-label="Stage 4, dead zone: dead algae sink and decay, dissolved oxygen falls, and fish die."><defs><filter id="eu4-r" x="-4%" y="-4%" width="108%" height="108%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter><filter id="eu4-w" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".02" numOctaves="3" seed="9"/><feDisplacementMap in="SourceGraphic" scale="10"/><feGaussianBlur stdDeviation=".8"/></filter></defs><rect x="6" y="6" width="288" height="388" rx="16" fill="#fbf5e6" stroke="#3b3222" stroke-width="2.2" filter="url(#eu4-r)"/><rect x="18" y="18" width="264" height="364" rx="10" fill="none" stroke="#8a6a2f" stroke-width="1.3"/><rect x="23" y="23" width="254" height="354" rx="8" fill="none" stroke="#8a6a2f" stroke-width=".6"/><path d="M30,24 L36,30 L30,36 L24,30 Z" fill="#8a6a2f"/><path d="M270,24 L276,30 L270,36 L264,30 Z" fill="#8a6a2f"/><path d="M30,364 L36,370 L30,376 L24,370 Z" fill="#8a6a2f"/><path d="M270,364 L276,370 L270,376 L264,370 Z" fill="#8a6a2f"/><text x="150" y="50" text-anchor="middle" class="eu-sc">STAGE 4</text><path d="M96,60 H204" stroke="#8a6a2f" stroke-width=".8"/><rect x="34" y="100" width="232" height="176" fill="#b8b49c" opacity=".55" filter="url(#eu4-w)"/><ellipse cx="150" cy="262" rx="118" ry="24" fill="#d6a39a" opacity=".6" filter="url(#eu4-w)"/><g filter="url(#eu4-r)" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M34,100 H266" stroke="#4f7fa3" stroke-width="1.6"/><path d="M34,100 C60,108 90,94 120,104 C150,112 180,96 210,104 C236,110 256,100 266,102 L266,108 L34,108 Z" fill="#8f8a55" stroke="#3b3222" stroke-width="1.2"/><path d="M78,118 V196" stroke="#7c6a3e" stroke-width="1.3" stroke-dasharray="2 5"/><path d="M78,200 l-5,-7 M78,200 l5,-7" stroke="#7c6a3e" stroke-width="1.4"/><ellipse cx="72" cy="128" rx="4.5" ry="2.4" fill="#7c6a3e" transform="rotate(20 72 128)"/><ellipse cx="83" cy="152" rx="4" ry="2.3" fill="#7c6a3e" transform="rotate(-25 83 152)"/><ellipse cx="74" cy="176" rx="4.5" ry="2.4" fill="#7c6a3e" transform="rotate(10 74 176)"/><path d="M126,118 V196" stroke="#7c6a3e" stroke-width="1.3" stroke-dasharray="2 5"/><path d="M126,200 l-5,-7 M126,200 l5,-7" stroke="#7c6a3e" stroke-width="1.4"/><ellipse cx="120" cy="128" rx="4.5" ry="2.4" fill="#7c6a3e" transform="rotate(20 120 128)"/><ellipse cx="131" cy="152" rx="4" ry="2.3" fill="#7c6a3e" transform="rotate(-25 131 152)"/><ellipse cx="122" cy="176" rx="4.5" ry="2.4" fill="#7c6a3e" transform="rotate(10 122 176)"/><path d="M172,118 V196" stroke="#7c6a3e" stroke-width="1.3" stroke-dasharray="2 5"/><path d="M172,200 l-5,-7 M172,200 l5,-7" stroke="#7c6a3e" stroke-width="1.4"/><ellipse cx="166" cy="128" rx="4.5" ry="2.4" fill="#7c6a3e" transform="rotate(20 166 128)"/><ellipse cx="177" cy="152" rx="4" ry="2.3" fill="#7c6a3e" transform="rotate(-25 177 152)"/><ellipse cx="168" cy="176" rx="4.5" ry="2.4" fill="#7c6a3e" transform="rotate(10 168 176)"/><path d="M208,148 V198" stroke="#b5533c" stroke-width="2.4"/><path d="M208,200 l-6,-8 M208,200 l6,-8" stroke="#b5533c" stroke-width="2.4"/><rect x="226" y="132" width="20" height="108" rx="10" fill="#fbf5e6" stroke="#3b3222" stroke-width="2"/><rect x="230" y="214" width="12" height="22" rx="6" fill="#b5533c" stroke="none"/><path d="M246,150 h6 M246,168 h6 M246,186 h6 M246,204 h6 M246,222 h6" stroke="#3b3222" stroke-width="1.2"/><path d="M34,274 C80,266 120,280 160,272 C200,264 236,278 266,270" stroke="#3b3222" stroke-width="2.2"/><rect x="58" y="256" width="13" height="5" rx="2.5" fill="#c9a77a" stroke="#3b3222" stroke-width=".8" transform="rotate(-20 64 258)"/><rect x="92" y="262" width="13" height="5" rx="2.5" fill="#c9a77a" stroke="#3b3222" stroke-width=".8" transform="rotate(15 98 264)"/><rect x="206" y="258" width="13" height="5" rx="2.5" fill="#c9a77a" stroke="#3b3222" stroke-width=".8" transform="rotate(-10 212 260)"/><g transform="rotate(-8 150 254)"><path d="M126,254 C136,242 164,242 174,254 C164,264 136,264 126,254 Z" fill="#e6ddc4" stroke="#3b3222" stroke-width="1.8"/><path d="M174,254 l14,-9 l0,18 z" fill="#e6ddc4" stroke="#3b3222" stroke-width="1.6"/><circle cx="136" cy="252" r="2.2" stroke="#3b3222" stroke-width="1.2"/><path d="M142,247 q-4,7 0,14" stroke="#3b3222" stroke-width="1.2"/></g></g><text x="236" y="126" text-anchor="middle" class="eu-lbl">O&#8322;</text><text x="150" y="326" text-anchor="middle" class="eu-ct">Dead zone</text><text x="150" y="352" text-anchor="middle" class="eu-sc" style="fill:#A4373A">OXYGEN DEPLETED</text></svg></div>
     <p class="eu-cap">Excess fertilizer runoff leads to increased levels of nitrogen and phosphorus, which fuel algae growth and, as the algae die and decay, oxygen depletion in the water.<span class="eu-src">Sources: U.S. EPA, <i>Nutrient Pollution</i>; NOAA National Ocean Service, <i>What Is Eutrophication?</i></span></p>
+  </div>
+  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
+</section>
+<section class="slide" data-type="content" style="--accent:#BC8A2E">
+  <div class="bleed-grid">
+    <div class="bleed-text">
+<div class="eyebrow">7.4 · Can We Improve Access to Fresh Water?</div>
+<h2 class="heading">Water Scarcity and Conservation</h2>
+<p class="lead">More than 2 billion people suffer from water scarcity. The UN's goal of water security means reliable access to safe, affordable water for everyone.</p>
+<div class="stat-row"><div class="stat-box"><div class="stat-num">2 billion+</div><div class="stat-lbl">people who suffer from water scarcity</div></div></div>
+<ul class="bullets"><li>In parts of Africa, over half the population lacks safe drinking water — some walk three hours a day to collect it.</li><li>California's 2015 drought led to mandatory 25% water cuts.</li><li>In Cape Town, wealthier residents kept home water tanks while poorer residents waited in long lines at public distribution centers.</li><li>Some Middle Eastern nations without adequate fresh water have invested heavily in desalination.</li></ul>
+    </div>
+    <div class="bleed-media cover"><img loading="lazy" decoding="async" data-src="media/image12.jpg" alt=""></div>
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
@@ -1969,19 +2130,6 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     <iframe class="embed-frame" data-src="apps/water-sectors.html?embed=1" title="Where Do We Use the Most Water?" loading="lazy"></iframe>
   </div>
 </section>
-<section class="slide" data-type="content" style="--accent:#BC8A2E">
-  <div class="bleed-grid">
-    <div class="bleed-text">
-<div class="eyebrow">7.4 · Can We Improve Access to Fresh Water?</div>
-<h2 class="heading">Water Scarcity and Conservation</h2>
-<p class="lead">More than 2 billion people suffer from water scarcity. The UN's goal of water security means reliable access to safe, affordable water for everyone.</p>
-<div class="stat-row"><div class="stat-box"><div class="stat-num">2 billion+</div><div class="stat-lbl">people who suffer from water scarcity</div></div></div>
-<ul class="bullets"><li>In parts of Africa, over half the population lacks safe drinking water — some walk three hours a day to collect it.</li><li>California's 2015 drought led to mandatory 25% water cuts.</li><li>In Cape Town, wealthier residents kept home water tanks while poorer residents waited in long lines at public distribution centers.</li><li>Some Middle Eastern nations without adequate fresh water have invested heavily in desalination.</li></ul>
-    </div>
-    <div class="bleed-media cover"><img loading="lazy" decoding="async" data-src="media/image12.jpg" alt=""></div>
-  </div>
-  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
-</section>
 <section class="slide ac-live ranking" data-type="ranking" data-rk-id="ch7-food-water-rank" data-rk-answer='[1, 0, 2, 3, 5, 4]' data-rk-values='["~1,100 gal/lb", "~1,800 gal/lb", "~600 gal/lb", "~470 gal/lb", "~40 gal/lb", "~300 gal/lb"]' style="--accent:#8a6a2f">
   <div class="rk-root">
     <div class="rk-head">
@@ -2000,6 +2148,19 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     </div>
   </div>
 </section>
+<section class="slide embed ac-tool" data-type="embed" style="--accent:#BC8A2E">
+  <div class="embed-head">
+    <div class="embed-head-text">
+      <div class="eyebrow">7.4 · Water Usage</div>
+      <h2 class="embed-title">Water Usage Explorer: Household and Statewide</h2>
+      <div class="embed-sub">Change how a household uses water and watch the Residential slice of Arizona's statewide use respond. The presets can be combined.</div>
+    </div>
+    
+  </div>
+  <div class="embed-wrap">
+    <iframe class="embed-frame" data-src="apps/water-usage.html?embed=1" title="Water Usage Explorer: Household and Statewide" loading="lazy"></iframe>
+  </div>
+</section>
 <section class="slide" data-type="content" style="--accent:#BC8A2E">
   <div class="bleed-grid">
     <div class="bleed-text">
@@ -2008,6 +2169,89 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 <ul class="bullets"><li>Not watering lawns and reducing landscape irrigation have large cumulative impacts at the city scale.</li><li>Regulating agricultural irrigation — with “smart” systems that release small, targeted amounts only when needed — can be even more effective.</li><li>Farmers can switch to less thirsty crops, and water recycling treats residential water for reuse in agriculture or industry.</li><li>Harvesting rainwater and desalination are additional solutions to water scarcity.</li></ul>
     </div>
     <div class="bleed-media draw" data-plate="cons"><svg class="dr-svg" viewBox="0 0 600 704" role="img" aria-label="Six ways to conserve water: a desert yard with cactus and rocks, drip lines watering plants at the roots with a smart controller, drought-tolerant grain, a recycling pond piping treated water to a field, a rain barrel under a roof gutter, and a desalination plant turning seawater into fresh water." preserveAspectRatio="xMidYMid meet"><defs><filter id="dr6-r" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter><pattern id="dr6-aq" width="16" height="12" patternUnits="userSpaceOnUse"><rect width="16" height="12" fill="#a9cfe0"/><circle cx="4" cy="4" r="1.6" fill="#d9c49c"/><circle cx="12" cy="9" r="1.3" fill="#d9c49c"/></pattern><pattern id="dr6-dry" width="16" height="12" patternUnits="userSpaceOnUse"><rect width="16" height="12" fill="#e4d6b8"/><circle cx="4" cy="4" r="1.6" fill="#cdb68c"/><circle cx="12" cy="9" r="1.3" fill="#cdb68c"/></pattern><pattern id="dr6-soil" width="22" height="14" patternUnits="userSpaceOnUse"><rect width="22" height="14" fill="#d8b98a"/><circle cx="5" cy="4" r="1.3" fill="#b8966a"/><circle cx="15" cy="10" r="1.7" fill="#bd9c6f"/></pattern><pattern id="dr6-clay" width="30" height="10" patternUnits="userSpaceOnUse"><rect width="30" height="10" fill="#b98b6a"/><path d="M0,5 H30" stroke="#a37655" stroke-width="1.4"/></pattern><pattern id="dr6-rock" width="44" height="18" patternUnits="userSpaceOnUse"><rect width="44" height="18" fill="#a88d62"/><path d="M0,9 H44 M12,0 V9 M32,9 V18" stroke="#937850" stroke-width="1.2"/></pattern><marker id="dr6-ab" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4f86b0"/></marker><marker id="dr6-ak" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3b3222"/></marker><marker id="dr6-ar" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a5a2a"/></marker><marker id="dr6-ag" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6f9440"/></marker></defs><rect x="8" y="8" width="288" height="218" rx="14" fill="#fffaf0" stroke="#c9b893" stroke-width="1.6"/><text x="24" y="196" text-anchor="start" class="dr-title sm">Xeriscape yards</text><text x="24" y="214" text-anchor="start" class="dr-sm">native plants, no lawn</text><g filter="url(#dr6-r)" stroke-linejoin="round" stroke-linecap="round" transform="translate(8,8)"><path d="M14,150 H274" stroke="#3b3222" stroke-width="2"/><rect x="14" y="150" width="260" height="10" fill="#e2c393"/><path d="M80,150 v-60 M80,120 h-18 v-20 M80,112 h16 v-22" stroke="#557f45" stroke-width="9" fill="none"/><ellipse cx="140" cy="144" rx="18" ry="9" fill="#b9a988" stroke="#3b3222" stroke-width="1.6"/><ellipse cx="165" cy="146" rx="10" ry="6" fill="#a8987a" stroke="#3b3222" stroke-width="1.4"/><path d="M205,150 q-12,-30 -4,-50 M205,150 q0,-34 12,-46 M205,150 q10,-26 26,-34" stroke="#7f9f45" stroke-width="3" fill="none"/><circle cx="217" cy="102" r="5" fill="#d9824a" stroke="#3b3222" stroke-width="1.2"/></g><rect x="312" y="8" width="288" height="218" rx="14" fill="#fffaf0" stroke="#c9b893" stroke-width="1.6"/><text x="328" y="196" text-anchor="start" class="dr-title sm">Smart drip irrigation</text><text x="328" y="214" text-anchor="start" class="dr-sm">only when roots need it</text><g filter="url(#dr6-r)" stroke-linejoin="round" stroke-linecap="round" transform="translate(312,8)"><rect x="14" y="150" width="260" height="14" fill="url(#dr6-soil)" stroke="#3b3222" stroke-width="1.6"/><path d="M20,142 H270" stroke="#4a4436" stroke-width="5"/><path d="M70,150 v-40 M70,128 q-14,-4 -18,-16 q14,2 18,16 M70,120 q12,-6 18,-18 q-4,14 -18,18" stroke="#6f9440" stroke-width="2.4" fill="#8fb050"/><path d="M78,146 q-3,5 0,8 q3,-3 0,-8 z" fill="#4f86b0" stroke="#3b3222" stroke-width="1"/><path d="M140,150 v-40 M140,128 q-14,-4 -18,-16 q14,2 18,16 M140,120 q12,-6 18,-18 q-4,14 -18,18" stroke="#6f9440" stroke-width="2.4" fill="#8fb050"/><path d="M148,146 q-3,5 0,8 q3,-3 0,-8 z" fill="#4f86b0" stroke="#3b3222" stroke-width="1"/><path d="M210,150 v-40 M210,128 q-14,-4 -18,-16 q14,2 18,16 M210,120 q12,-6 18,-18 q-4,14 -18,18" stroke="#6f9440" stroke-width="2.4" fill="#8fb050"/><path d="M218,146 q-3,5 0,8 q3,-3 0,-8 z" fill="#4f86b0" stroke="#3b3222" stroke-width="1"/><rect x="220" y="24" width="46" height="34" rx="6" fill="#d9d2c3" stroke="#3b3222" stroke-width="1.8"/><circle cx="243" cy="41" r="9" fill="#8fbcd6" stroke="#3b3222" stroke-width="1.4"/><path d="M243,58 V142" stroke="#3b3222" stroke-width="1.4" stroke-dasharray="3 3"/></g><rect x="8" y="240" width="288" height="218" rx="14" fill="#fffaf0" stroke="#c9b893" stroke-width="1.6"/><text x="24" y="428" text-anchor="start" class="dr-title sm">Less thirsty crops</text><text x="24" y="446" text-anchor="start" class="dr-sm">more crop per drop</text><g filter="url(#dr6-r)" stroke-linejoin="round" stroke-linecap="round" transform="translate(8,240)"><path d="M14,150 H274" stroke="#3b3222" stroke-width="2"/><rect x="14" y="150" width="260" height="10" fill="#e2c393"/><path d="M60,150 v-62" stroke="#9a8a4a" stroke-width="2.4"/><ellipse cx="60" cy="80" rx="7" ry="14" fill="#c9a24a" stroke="#3b3222" stroke-width="1.4"/><path d="M60,120 q-12,-6 -16,-18 M60,110 q12,-4 16,-16" stroke="#7f9f45" stroke-width="2.4" fill="none"/><path d="M100,150 v-62" stroke="#9a8a4a" stroke-width="2.4"/><ellipse cx="100" cy="80" rx="7" ry="14" fill="#c9a24a" stroke="#3b3222" stroke-width="1.4"/><path d="M100,120 q-12,-6 -16,-18 M100,110 q12,-4 16,-16" stroke="#7f9f45" stroke-width="2.4" fill="none"/><path d="M140,150 v-62" stroke="#9a8a4a" stroke-width="2.4"/><ellipse cx="140" cy="80" rx="7" ry="14" fill="#c9a24a" stroke="#3b3222" stroke-width="1.4"/><path d="M140,120 q-12,-6 -16,-18 M140,110 q12,-4 16,-16" stroke="#7f9f45" stroke-width="2.4" fill="none"/><path d="M180,150 v-62" stroke="#9a8a4a" stroke-width="2.4"/><ellipse cx="180" cy="80" rx="7" ry="14" fill="#c9a24a" stroke="#3b3222" stroke-width="1.4"/><path d="M180,120 q-12,-6 -16,-18 M180,110 q12,-4 16,-16" stroke="#7f9f45" stroke-width="2.4" fill="none"/><path d="M235,80 C245,96 252,104 252,112 C252,122 245,128 235,128 C225,128 218,122 218,112 C218,104 225,96 235,80 Z" fill="#6fa3c7" stroke="#3b3222" stroke-width="1.8"/><path d="M226,112 h18" stroke="#fff" stroke-width="2.4"/></g><rect x="312" y="240" width="288" height="218" rx="14" fill="#fffaf0" stroke="#c9b893" stroke-width="1.6"/><text x="328" y="428" text-anchor="start" class="dr-title sm">Water recycling</text><text x="328" y="446" text-anchor="start" class="dr-sm">treated for reuse</text><g filter="url(#dr6-r)" stroke-linejoin="round" stroke-linecap="round" transform="translate(312,240)"><ellipse cx="90" cy="140" rx="60" ry="18" fill="#cdc5b2" stroke="#3b3222" stroke-width="2"/><ellipse cx="90" cy="138" rx="46" ry="12" fill="#86b59c"/><path d="M60,40 a30,30 0 1 1 30,30" stroke="#5f957a" stroke-width="4" fill="none" marker-end="url(#dr6-ag)"/><path d="M150,138 C190,138 200,110 230,110" stroke="#5f957a" stroke-width="5" fill="none" stroke-dasharray="8 6" marker-end="url(#dr6-ag)"/><path d="M220,150 h54 v-14 h-54 z" fill="#8fb050" stroke="#3b3222" stroke-width="1.6"/></g><rect x="8" y="472" width="288" height="218" rx="14" fill="#fffaf0" stroke="#c9b893" stroke-width="1.6"/><text x="24" y="660" text-anchor="start" class="dr-title sm">Rainwater harvesting</text><text x="24" y="678" text-anchor="start" class="dr-sm">catch the roof’s runoff</text><g filter="url(#dr6-r)" stroke-linejoin="round" stroke-linecap="round" transform="translate(8,472)"><path d="M14,150 H274" stroke="#3b3222" stroke-width="2"/><rect x="40" y="95.4" width="83.2" height="54.6" fill="#f0dcbc" stroke="#3b3222" stroke-width="2"/><path d="M30.9,95.4 L81.6,56.400000000000006 L132.3,95.4 Z" fill="#b5533c" stroke="#3b3222" stroke-width="2"/><rect x="72.5" y="121.4" width="18.2" height="28.6" fill="#7a5a38" stroke="#3b3222" stroke-width="1.5"/><rect x="50.4" y="108.4" width="15.600000000000001" height="14.3" fill="#a9cfe0" stroke="#3b3222" stroke-width="1.5"/><path d="M132,94 h40 v34" stroke="#8d8a82" stroke-width="5" fill="none"/><path d="M150,150 v-46 h54 v46 z" fill="#7a9ab0" stroke="#3b3222" stroke-width="2"/><path d="M150,118 h54 M150,134 h54" stroke="#3b3222" stroke-width="1.4"/><path d="M208.0,38.6 C199.2,38.6 199.2,28.7 208.0,28.7 C208.0,18.799999999999997 222.3,16.599999999999998 226.7,24.299999999999997 C231.1,14.399999999999999 248.7,16.599999999999998 248.7,27.6 C258.6,27.6 258.6,38.6 248.7,38.6 Z" fill="#fbf8f1" stroke="#3b3222" stroke-width="2"/><path d="M214,42 l-5,12" stroke="#4f86b0" stroke-width="2" stroke-linecap="round"/><path d="M225,42 l-5,12" stroke="#4f86b0" stroke-width="2" stroke-linecap="round"/><path d="M236,42 l-5,12" stroke="#4f86b0" stroke-width="2" stroke-linecap="round"/><path d="M247,42 l-5,12" stroke="#4f86b0" stroke-width="2" stroke-linecap="round"/></g><rect x="312" y="472" width="288" height="218" rx="14" fill="#fffaf0" stroke="#c9b893" stroke-width="1.6"/><text x="328" y="660" text-anchor="start" class="dr-title sm">Desalination</text><text x="328" y="678" text-anchor="start" class="dr-sm">fresh water from the sea</text><g filter="url(#dr6-r)" stroke-linejoin="round" stroke-linecap="round" transform="translate(312,472)"><path d="M14,130 q12,-8 24,0 t24,0 t24,0 L86,160 L14,160 Z" fill="#6fa3c7" stroke="#3b3222" stroke-width="1.8"/><rect x="104" y="80" width="80" height="70" fill="#d9d2c3" stroke="#3b3222" stroke-width="2"/><path d="M104,98 h80 M104,116 h80" stroke="#a99c80" stroke-width="1.6"/><path d="M144,80 v70" stroke="#3b3222" stroke-width="1.6" stroke-dasharray="4 3"/><path d="M86,130 H102" stroke="#4f86b0" stroke-width="4" marker-end="url(#dr6-ab)"/><path d="M186,110 H210" stroke="#4f86b0" stroke-width="4" marker-end="url(#dr6-ab)"/><path d="M238,84 C247,98 252,104 252,112 C252,122 246,128 238,128 C230,128 224,122 224,112 C224,104 229,98 238,84 Z" fill="#8fbcd6" stroke="#3b3222" stroke-width="1.8"/><path d="M150,150 l14,-18 l14,18 z" fill="#f6f2e8" stroke="#3b3222" stroke-width="1.4"/></g><text x="328" y="270" text-anchor="start" class="dr-lab"></text></svg></div>
+  </div>
+  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
+</section>
+<section class="slide dense" data-type="content" style="--accent:#52796F">
+  <div class="bleed-grid">
+    <div class="bleed-text">
+<div class="eyebrow">7.5 · How Do We Keep Fresh Water Clean?</div>
+<h2 class="heading">Treatment, Access, and Regulation</h2>
+<p class="lead">Even where treatment works well, gaps remain. In the US, more than 90% of people are served by a water system with no violations — yet some communities still face unsafe water.</p>
+<ul class="bullets"><li>Globally, 2.5 billion people lack sanitary wastewater systems, and 1.8 billion drink water contaminated with sewage.</li><li><strong>US framework:</strong> the Clean Water Act sets surface-water quality standards; the Safe Drinking Water Act sets public-supply standards.</li><li>Agricultural nonpoint-source pollution remains the most challenging to regulate.</li><li><u><strong>Vegetated buffer zones:</strong> strips of trees, shrubs, and grasses along streams trap sediment and absorb fertilizer runoff before it reaches the water, one of the most effective ways to protect water quality.</u></li><li><strong>New ideas:</strong> green roofs and the solar “watercone” that distills clean water using sunlight.</li></ul>
+<p class="note">Map: groundwater-level change in the High Plains (Ogallala) Aquifer — a vivid picture of how hard clean, reliable supply can be to sustain. Adapted from McGuire (2004).</p>
+    </div>
+    <div class="bleed-media contain"><img loading="lazy" decoding="async" data-src="media/image15.jpg" alt=""></div>
+  </div>
+  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
+</section>
+<section class="slide embed" data-type="embed" style="--accent:#5BA3C4">
+  <div class="embed-head">
+    <div class="embed-head-text">
+      <div class="eyebrow">7.6 · Glaciers and Sea-Level Rise</div>
+      <h2 class="embed-title">Sea-Level Rise and Shrinking Glaciers</h2>
+      <div class="embed-sub">Our World in Data — climate-change explorer (sea-level rise and individual glacier mass). Use the controls to change metric, glaciers, and time range.</div>
+    </div>
+    <a class="embed-open" href="https://ourworldindata.org/explorers/climate-change" target="_blank" rel="noopener">Our World in Data ↗</a>
+  </div>
+  <div class="embed-wrap">
+    <iframe class="embed-frame" data-src="https://ourworldindata.org/explorers/climate-change?time=earliest..1935-07-15&Metric=Sea+level+rise&Long-run+series=false&country=OWID_WRL~ATA~Gulkana+Glacier~Lemon+Creek+Glacier~OWID_NAM~South+Cascade+Glacier~Wolverine+Glacier~Hawaii~Arctic+Ocean~GRL&tab=line&hideControls=false" title="Sea-Level Rise and Shrinking Glaciers" loading="lazy" allow="web-share; clipboard-write"></iframe>
+  </div>
+</section>
+<section class="slide" data-type="content" style="--accent:#6D597A">
+  <div class="stack-grid">
+    <div class="stack-top">
+      <div class="stack-head">
+<div class="eyebrow">7.8 · How Can Humans Impact the Ocean?</div>
+<h2 class="heading">Garbage, Fossil-Fuel Pollution, and Runoff</h2>
+      </div>
+      <div class="stack-body">
+<p class="lead">Human activity harms the ocean in three big ways — plastic garbage that breaks into toxic microplastics, fossil-fuel pollution from spills and airborne mercury, and agricultural runoff that creates oxygen-starved “dead zones.”</p>
+      </div>
+    </div>
+    <div class="stack-media contain"><img loading="lazy" decoding="async" data-src="media/image18.jpg" alt=""></div>
+  </div>
+  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
+</section>
+<section class="slide" data-type="content" style="--accent:#6D597A">
+  <div class="stack-grid">
+    <div class="stack-top">
+      <div class="stack-head">
+<div class="eyebrow">7.8 · How Can Humans Impact the Ocean?</div>
+<h2 class="heading">Overfishing, Climate Change, and Acidification</h2>
+      </div>
+      <div class="stack-body">
+<p class="lead">Three more pressures push ocean ecosystems toward collapse: overfishing faster than stocks can recover, a warming climate that disrupts food webs, and acidification as the ocean absorbs CO₂ and forms carbonic acid that dissolves shells.</p>
+      </div>
+    </div>
+    <div class="stack-media contain"><img loading="lazy" decoding="async" data-src="media/image19.jpg" alt=""></div>
+  </div>
+  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
+</section>
+<section class="slide asu27" data-type="content">
+  <div class="asu27-topbar"></div>
+  <div class="slide-inner col asu27-inner">
+    <div class="asu27-head">
+      <div>
+        <div class="asu27-eyebrow"><span class="asu27-fork">&#9733;</span> 7.9 &middot; What Can I Do?</div>
+        <h2 class="asu27-title">Protecting Fresh and Salt Water</h2>
+      </div>
+      <img class="asu27-logo" data-src="media/asu-logo.png" alt="Arizona State University">
+    </div>
+    <p class="asu27-lead">ASU&rsquo;s Global Futures Water Institute is &ldquo;dedicated to forecasting and tackling water challenges at all scales, from local communities to national systems.&rdquo; In the desert Southwest, individual choices add up &mdash; here&rsquo;s where to start.</p>
+    <div class="asu27-stats">
+      <div class="asu27-stat"><div class="asu27-num">3% less</div><div class="asu27-lbl">water used in Arizona than in 1957 &mdash; with 555% more people (ASU Kyl Center)</div></div>
+      <div class="asu27-stat"><div class="asu27-num">~20%</div><div class="asu27-lbl">irrigation cut in an ASU&ndash;Phoenix landscape trial</div></div>
+      <div class="asu27-stat"><div class="asu27-num">12%</div><div class="asu27-lbl">of home water lost to leaks (EPA)</div></div>
+    </div>
+    <ul class="asu27-bullets">
+      <li><strong>Know your water:</strong> find where your water comes from and what&rsquo;s in it via the EPA&rsquo;s Consumer Confidence Report (CCR) for your provider.</li>
+      <li><strong>Rethink your yard:</strong> replace thirsty grass with desert-adapted (xeriscape) landscaping &mdash; ASU + City of Phoenix low-water designs and soil treatments have cut some park irrigation by ~20%.</li>
+      <li><strong>Cut indoor use:</strong> shorter showers, turn off the tap while brushing, run full loads, and install EPA WaterSense fixtures &mdash; fixing leaks alone saves about 12% of home water.</li>
+      <li><strong>Push for bigger change:</strong> ask college or city administrators about irrigation timing, low-water plants, and recycled water &mdash; institutional changes scale fastest.</li>
+      <li><strong>Learn &amp; advocate:</strong> follow the Kyl Center for Water Policy&rsquo;s Arizona Water Blueprint &mdash; Arizona uses 3% less water today than in 1957, despite 555% more people.</li>
+    </ul>
+    <div class="asu27-cite">Sources: ASU Global Futures Water Institute &amp; the Kyl Center for Water Policy (globalfutures.asu.edu/water-institute; morrisoninstitute.asu.edu/kyl-center-water-policy; ASU News). Household actions: U.S. EPA WaterSense (epa.gov/watersense).</div>
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
@@ -2030,7 +2274,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     </g>
   </g>
 </svg>
-        <p class="cg-sub">Spend 12 points on your city's water before anyone knows the weather. Then thirty years — and the headlines — arrive.</p>
+        <p class="cg-sub">Spend 12 points on your city's water before anyone knows the weather. Then thirty years, and the headlines, arrive.</p>
       </div>
       <div class="cg-clockwrap" data-clockwrap hidden>
         <div class="cg-phase">Design</div>
@@ -2063,28 +2307,22 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
         <div class="ev-again-eyebrow">Quick survey</div>
         <div class="ev-again-title">How did that go?</div>
         <form class="ev-sv-form" data-surveyform>
-          <fieldset class="ev-sv-q">
-            <legend>Did this game help to explain the Chapter 7 concepts?</legend>
-            <label><input type="radio" name="wt-h" value="1" required> Yes</label>
-            <label><input type="radio" name="wt-h" value="0"> No</label>
+          <fieldset class="ev-sv-q wt-sv-stars">
+            <legend>How fun was the game?</legend>
+            <div class="wt-stars" role="radiogroup" aria-label="How fun was the game? 1 to 5 stars"><input type="radio" id="wt-fun-5" name="wt-fun" value="5" required><label for="wt-fun-5" title="5 of 5">&#9733;</label><input type="radio" id="wt-fun-4" name="wt-fun" value="4"><label for="wt-fun-4" title="4 of 5">&#9733;</label><input type="radio" id="wt-fun-3" name="wt-fun" value="3"><label for="wt-fun-3" title="3 of 5">&#9733;</label><input type="radio" id="wt-fun-2" name="wt-fun" value="2"><label for="wt-fun-2" title="2 of 5">&#9733;</label><input type="radio" id="wt-fun-1" name="wt-fun" value="1"><label for="wt-fun-1" title="1 of 5">&#9733;</label></div>
+            <div class="wt-stars-ends"><span>Not fun</span><span>Very fun</span></div>
           </fieldset>
-          <fieldset class="ev-sv-q">
-            <legend>Did you enjoy the game?</legend>
-            <label><input type="radio" name="wt-e" value="1" required> Yes</label>
-            <label><input type="radio" name="wt-e" value="0"> No</label>
+          <fieldset class="ev-sv-q wt-sv-stars">
+            <legend>How much did it help you learn the concepts from this chapter?</legend>
+            <div class="wt-stars" role="radiogroup" aria-label="How much did it help you learn the concepts from this chapter? 1 to 5 stars"><input type="radio" id="wt-learn-5" name="wt-learn" value="5" required><label for="wt-learn-5" title="5 of 5">&#9733;</label><input type="radio" id="wt-learn-4" name="wt-learn" value="4"><label for="wt-learn-4" title="4 of 5">&#9733;</label><input type="radio" id="wt-learn-3" name="wt-learn" value="3"><label for="wt-learn-3" title="3 of 5">&#9733;</label><input type="radio" id="wt-learn-2" name="wt-learn" value="2"><label for="wt-learn-2" title="2 of 5">&#9733;</label><input type="radio" id="wt-learn-1" name="wt-learn" value="1"><label for="wt-learn-1" title="1 of 5">&#9733;</label></div>
+            <div class="wt-stars-ends"><span>Not at all</span><span>A lot</span></div>
           </fieldset>
-          <fieldset class="ev-sv-q col">
-            <legend>Should we&hellip;</legend>
-            <label><input type="radio" name="wt-f" value="0" required> Never do games like this</label>
-            <label><input type="radio" name="wt-f" value="1"> Do games like this on occasion</label>
-            <label><input type="radio" name="wt-f" value="2"> Do games like this every chapter</label>
-          </fieldset>
-          <label class="ev-sv-c">Anything else? <span>(optional)</span>
+          <label class="ev-sv-c">Comments <span>(optional)</span>
             <textarea data-surveycomment rows="3" maxlength="600" placeholder="Comments for your instructor"></textarea></label>
           <button class="cg-btn go big" type="submit">Send my answers</button>
         </form>
         <div class="ev-sv-done" data-surveydone hidden>
-          <div class="ev-sv-thanks">Thank you &mdash; your answers are in.</div>
+          <div class="ev-sv-thanks">Thank you. Your answers are in.</div>
           <div class="ev-again-tally" data-surveycount></div>
         </div>
       </div>
@@ -3861,17 +4099,18 @@ function againClose(){
 }
 
 /* ══ EXIT SURVEY — results go only to the instructor's inbox, never the projector ══ */
-var SVFREQ=['Never do games like this','Do games like this on occasion','Do games like this every chapter'];
+var SVQ=[['fun','How fun was the game?'],['learn','How much did it help you learn the concepts from this chapter?']];
 function svOpen(){ return !!state.surveyOpen; }
 function svAll(){ return state.survey||{}; }
 function svMine(){ return svAll()[PK]||null; }
 function svSummary(){
-  var v=svAll(), ks=Object.keys(v), out={n:ks.length, helpYes:0, helpNo:0, funYes:0, funNo:0, freq:[0,0,0], comments:[]};
+  var v=svAll(), ks=Object.keys(v), out={n:ks.length, comments:[]};
+  SVQ.forEach(function(qq){ out[qq[0]]={dist:[0,0,0,0,0], n:0, sum:0}; });
   ks.forEach(function(k){ var r=v[k]||{};
-    if(r.h===1) out.helpYes++; else if(r.h===0) out.helpNo++;
-    if(r.e===1) out.funYes++; else if(r.e===0) out.funNo++;
-    if(r.f>=0 && r.f<=2) out.freq[r.f]++;
+    SVQ.forEach(function(qq){ var x=parseInt(r[qq[0]],10), o=out[qq[0]];
+      if(x>=1 && x<=5){ o.dist[x-1]++; o.n++; o.sum+=x; } });
     if(r.c && String(r.c).trim()) out.comments.push(String(r.c).trim()); });
+  SVQ.forEach(function(qq){ var o=out[qq[0]]; o.avg = o.n? Math.round(o.sum/o.n*10)/10 : null; });
   return out;
 }
 function svPct(a,b){ var t=a+b; return t? Math.round(a/t*100)+'%' : '—'; }
@@ -3887,9 +4126,9 @@ function svSubmit(ev){
   if(!backend || HOST || !svOpen() || svMine()) return;
   var f=q('[data-surveyform]');
   function pick(n){ var el=f.querySelector('input[name="'+n+'"]:checked'); return el? parseInt(el.value,10) : null; }
-  var h=pick('wt-h'), e=pick('wt-e'), fr=pick('wt-f');
-  if(h===null||e===null||fr===null) return;
-  var o={survey:{}}; o.survey[PK]={h:h, e:e, f:fr, c:(q('[data-surveycomment]').value||'').slice(0,600)};
+  var fun=pick('wt-fun'), learn=pick('wt-learn');
+  if(fun===null||learn===null) return;
+  var o={survey:{}}; o.survey[PK]={fun:fun, learn:learn, c:(q('[data-surveycomment]').value||'').slice(0,600)};
   backend.mergeDocShard('polls',GID,o);
 }
 var svMsg='';
@@ -3901,11 +4140,13 @@ function svSummaryHtml(){
     +'<div class="ev-hint" data-surveymailmsg>'+(svMsg||'Nothing from the survey is shown on this screen.')+'</div>');
 }
 function svText(){
-  var d=svSummary(), L=['SOS 110 — Build a City’s Water Supply — exit survey','Responses: '+d.n,'',
-    'Did this game help to explain the Chapter 7 concepts?','  Yes '+d.helpYes+'   No '+d.helpNo+'   ('+svPct(d.helpYes,d.helpNo)+' yes)',
-    'Did you enjoy the game?','  Yes '+d.funYes+'   No '+d.funNo+'   ('+svPct(d.funYes,d.funNo)+' yes)','Should we...'];
-  SVFREQ.forEach(function(lab,i){ L.push('  '+d.freq[i]+'  '+lab); });
-  L.push(''); L.push('Comments ('+d.comments.length+')');
+  var d=svSummary(), L=['SOS 110: Build a City’s Water Supply, exit survey','Responses: '+d.n,''];
+  SVQ.forEach(function(qq){ var o=d[qq[0]];
+    L.push(qq[1]);
+    L.push('  Average: '+(o.avg===null? 'no answers' : o.avg.toFixed(1)+' of 5 stars ('+o.n+' answers)'));
+    L.push('  '+o.dist.map(function(c,i){ return (i+1)+'★ '+c; }).join('   '));
+    L.push(''); });
+  L.push('Comments ('+d.comments.length+')');
   d.comments.forEach(function(c){ L.push('  - '+c); });
   return L.join('\n');
 }
@@ -4064,102 +4305,6 @@ window.__deckLiveReady.then(function(live){
 
 })();</script>
 </section>
-<section class="slide embed ac-tool" data-type="embed" style="--accent:#BC8A2E">
-  <div class="embed-head">
-    <div class="embed-head-text">
-      <div class="eyebrow">7.4 · Water Usage</div>
-      <h2 class="embed-title">Water Usage Explorer: Household and Statewide</h2>
-      <div class="embed-sub">Change how a household uses water and watch the Residential slice of Arizona's statewide use respond. The presets can be combined.</div>
-    </div>
-    
-  </div>
-  <div class="embed-wrap">
-    <iframe class="embed-frame" data-src="apps/water-usage.html?embed=1" title="Water Usage Explorer: Household and Statewide" loading="lazy"></iframe>
-  </div>
-</section>
-<section class="slide dense" data-type="content" style="--accent:#52796F">
-  <div class="bleed-grid">
-    <div class="bleed-text">
-<div class="eyebrow">7.5 · How Do We Keep Fresh Water Clean?</div>
-<h2 class="heading">Treatment, Access, and Regulation</h2>
-<p class="lead">Even where treatment works well, gaps remain. In the US, more than 90% of people are served by a water system with no violations — yet some communities still face unsafe water.</p>
-<ul class="bullets"><li>Globally, 2.5 billion people lack sanitary wastewater systems, and 1.8 billion drink water contaminated with sewage.</li><li><strong>US framework:</strong> the Clean Water Act sets surface-water quality standards; the Safe Drinking Water Act sets public-supply standards.</li><li>Agricultural nonpoint-source pollution remains the most challenging to regulate.</li><li><u><strong>Vegetated buffer zones:</strong> strips of trees, shrubs, and grasses along streams trap sediment and absorb fertilizer runoff before it reaches the water, one of the most effective ways to protect water quality.</u></li><li><strong>New ideas:</strong> green roofs and the solar “watercone” that distills clean water using sunlight.</li></ul>
-<p class="note">Map: groundwater-level change in the High Plains (Ogallala) Aquifer — a vivid picture of how hard clean, reliable supply can be to sustain. Adapted from McGuire (2004).</p>
-    </div>
-    <div class="bleed-media contain"><img loading="lazy" decoding="async" data-src="media/image15.jpg" alt=""></div>
-  </div>
-  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
-</section>
-<section class="slide embed" data-type="embed" style="--accent:#5BA3C4">
-  <div class="embed-head">
-    <div class="embed-head-text">
-      <div class="eyebrow">7.6 · Glaciers and Sea-Level Rise</div>
-      <h2 class="embed-title">Sea-Level Rise and Shrinking Glaciers</h2>
-      <div class="embed-sub">Our World in Data — climate-change explorer (sea-level rise and individual glacier mass). Use the controls to change metric, glaciers, and time range.</div>
-    </div>
-    <a class="embed-open" href="https://ourworldindata.org/explorers/climate-change" target="_blank" rel="noopener">Our World in Data ↗</a>
-  </div>
-  <div class="embed-wrap">
-    <iframe class="embed-frame" data-src="https://ourworldindata.org/explorers/climate-change?time=earliest..1935-07-15&Metric=Sea+level+rise&Long-run+series=false&country=OWID_WRL~ATA~Gulkana+Glacier~Lemon+Creek+Glacier~OWID_NAM~South+Cascade+Glacier~Wolverine+Glacier~Hawaii~Arctic+Ocean~GRL&tab=line&hideControls=false" title="Sea-Level Rise and Shrinking Glaciers" loading="lazy" allow="web-share; clipboard-write"></iframe>
-  </div>
-</section>
-<section class="slide" data-type="content" style="--accent:#6D597A">
-  <div class="stack-grid">
-    <div class="stack-top">
-      <div class="stack-head">
-<div class="eyebrow">7.8 · How Can Humans Impact the Ocean?</div>
-<h2 class="heading">Garbage, Fossil-Fuel Pollution, and Runoff</h2>
-      </div>
-      <div class="stack-body">
-<p class="lead">Human activity harms the ocean in three big ways — plastic garbage that breaks into toxic microplastics, fossil-fuel pollution from spills and airborne mercury, and agricultural runoff that creates oxygen-starved “dead zones.”</p>
-      </div>
-    </div>
-    <div class="stack-media contain"><img loading="lazy" decoding="async" data-src="media/image18.jpg" alt=""></div>
-  </div>
-  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
-</section>
-<section class="slide" data-type="content" style="--accent:#6D597A">
-  <div class="stack-grid">
-    <div class="stack-top">
-      <div class="stack-head">
-<div class="eyebrow">7.8 · How Can Humans Impact the Ocean?</div>
-<h2 class="heading">Overfishing, Climate Change, and Acidification</h2>
-      </div>
-      <div class="stack-body">
-<p class="lead">Three more pressures push ocean ecosystems toward collapse: overfishing faster than stocks can recover, a warming climate that disrupts food webs, and acidification as the ocean absorbs CO₂ and forms carbonic acid that dissolves shells.</p>
-      </div>
-    </div>
-    <div class="stack-media contain"><img loading="lazy" decoding="async" data-src="media/image19.jpg" alt=""></div>
-  </div>
-  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
-</section>
-<section class="slide asu27" data-type="content">
-  <div class="asu27-topbar"></div>
-  <div class="slide-inner col asu27-inner">
-    <div class="asu27-head">
-      <div>
-        <div class="asu27-eyebrow"><span class="asu27-fork">&#9733;</span> 7.9 &middot; What Can I Do?</div>
-        <h2 class="asu27-title">Protecting Fresh and Salt Water</h2>
-      </div>
-      <img class="asu27-logo" data-src="media/asu-logo.png" alt="Arizona State University">
-    </div>
-    <p class="asu27-lead">ASU&rsquo;s Global Futures Water Institute is &ldquo;dedicated to forecasting and tackling water challenges at all scales, from local communities to national systems.&rdquo; In the desert Southwest, individual choices add up &mdash; here&rsquo;s where to start.</p>
-    <div class="asu27-stats">
-      <div class="asu27-stat"><div class="asu27-num">3% less</div><div class="asu27-lbl">water used in Arizona than in 1957 &mdash; with 555% more people (ASU Kyl Center)</div></div>
-      <div class="asu27-stat"><div class="asu27-num">~20%</div><div class="asu27-lbl">irrigation cut in an ASU&ndash;Phoenix landscape trial</div></div>
-      <div class="asu27-stat"><div class="asu27-num">12%</div><div class="asu27-lbl">of home water lost to leaks (EPA)</div></div>
-    </div>
-    <ul class="asu27-bullets">
-      <li><strong>Know your water:</strong> find where your water comes from and what&rsquo;s in it via the EPA&rsquo;s Consumer Confidence Report (CCR) for your provider.</li>
-      <li><strong>Rethink your yard:</strong> replace thirsty grass with desert-adapted (xeriscape) landscaping &mdash; ASU + City of Phoenix low-water designs and soil treatments have cut some park irrigation by ~20%.</li>
-      <li><strong>Cut indoor use:</strong> shorter showers, turn off the tap while brushing, run full loads, and install EPA WaterSense fixtures &mdash; fixing leaks alone saves about 12% of home water.</li>
-      <li><strong>Push for bigger change:</strong> ask college or city administrators about irrigation timing, low-water plants, and recycled water &mdash; institutional changes scale fastest.</li>
-      <li><strong>Learn &amp; advocate:</strong> follow the Kyl Center for Water Policy&rsquo;s Arizona Water Blueprint &mdash; Arizona uses 3% less water today than in 1957, despite 555% more people.</li>
-    </ul>
-    <div class="asu27-cite">Sources: ASU Global Futures Water Institute &amp; the Kyl Center for Water Policy (globalfutures.asu.edu/water-institute; morrisoninstitute.asu.edu/kyl-center-water-policy; ASU News). Household actions: U.S. EPA WaterSense (epa.gov/watersense).</div>
-  </div>
-  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
-</section>
 <section class="slide" data-type="grid" style="--accent:#2D6A4F">
   <div class="slide-inner col">
     <div class="eyebrow">Chapter 7 · Key Concepts</div>
@@ -4176,7 +4321,7 @@ window.__deckLiveReady.then(function(live){
 
 <div class="hud">
   <button onclick="prev()" title="Previous (left arrow)">&#8249;</button>
-  <span class="counter" id="counter">1 / 26</span>
+  <span class="counter" id="counter">1 / 27</span>
   <button onclick="next()" title="Next (right arrow)">&#8250;</button>
   <button onclick="toggleMenu()" title="Slide menu (O)">&#9776;</button>
   <button onclick="toggleFs()" title="Fullscreen (F)">&#9974;</button>
@@ -4185,7 +4330,7 @@ window.__deckLiveReady.then(function(live){
 <div class="menu" id="menu">
   <button class="menu-close" onclick="toggleMenu(false)" aria-label="Close menu">&times;</button>
   <h3>Chapter 7 &mdash; Jump to a slide</h3>
-  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Water in the News</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Sustainable vs. Unsustainable</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>7.1 The Hydrosphere</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>7.1 ▶ Water Cycle App</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>7.3 Flint, Michigan</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>7.3 Groundwater Depletion</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>7.3 Dams &amp; Diversions</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>7.3 Water Pollution</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>7.3 Eutrophication</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>7.4 Water Access</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>7.4 ▶ Guess: Water Use</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>7.4 ▶ Water-Use by Sector</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>7.4 Water Scarcity</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>7.4 ▶ Rank: Food Water</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>7.4 Water Conservation</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>7.4 ▶ Game: City Water Supply</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>7.4 ▶ Water Usage App</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>7.5 Keeping Water Clean</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>7.6 ▶ Sea-Level Rise</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>7.8 Ocean Pollution</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>7.8 Overfishing &amp; Acidification</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>7.9 What Can I Do?</button><button class="menu-item" data-go="25"><span class="menu-num">26</span>Key Concepts</button></div>
+  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Water in the News</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Word Cloud: Water</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>7.1 Earth's Water Supply</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>7.1 The Hydrosphere</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>7.1 ▶ Water Cycle App</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>7.3 Groundwater Depletion</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>7.3 Dams &amp; Diversions</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>7.3 Water Pollution</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>7.3 Flint, Michigan</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>7.3 Eutrophication</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>7.4 Water Scarcity</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>7.4 Water Access</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>7.4 ▶ Guess: Water Use</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>7.4 ▶ Water-Use by Sector</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>7.4 ▶ Rank: Food Water</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>7.4 ▶ Water Usage App</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>7.4 Water Conservation</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>7.5 Keeping Water Clean</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>7.6 ▶ Sea-Level Rise</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>7.8 Ocean Pollution</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>7.8 Overfishing &amp; Acidification</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>7.9 What Can I Do?</button><button class="menu-item" data-go="25"><span class="menu-num">26</span>7.4 ▶ Game: City Water Supply</button><button class="menu-item" data-go="26"><span class="menu-num">27</span>Key Concepts</button></div>
 </div>
 
 <script>
