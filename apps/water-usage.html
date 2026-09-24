@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Water Usage Explorer — Household & Statewide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#15201b; --forest:#1A3C34; --green:#2D6A4F; --green-light:#74C69D;
+  --pale:#F0F7F4; --line:#dde7e2; --muted:#5b6b63; --blue:#1C7293; --blue-light:#5BA3C4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  color:var(--ink); background:#fff; padding:clamp(.7rem,1.8vw,1.3rem);}
+.wrap{max-width:1180px; margin:0 auto;}
+h1{font-size:clamp(1.05rem,2.3vw,1.45rem); color:var(--forest); margin-bottom:.15rem;}
+.lead{font-size:.86rem; color:var(--muted); margin-bottom:.9rem; max-width:95ch;}
+.lead b{color:var(--blue);}
+
+.presets{display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem;}
+.presets button{font-family:inherit; font-weight:700; font-size:.82rem; cursor:pointer;
+  border:1px solid var(--line); background:var(--pale); color:var(--forest);
+  padding:.5rem .85rem; border-radius:9px; transition:.15s;}
+.presets button:hover{background:#e3f0ea; border-color:var(--green-light);}
+.presets button.reset{background:#fff; color:var(--muted);}
+
+.cols{display:grid; grid-template-columns:1fr 1fr; gap:clamp(1rem,2.6vw,2rem); align-items:start;}
+.card{background:#fff; border:1px solid var(--line); border-radius:16px;
+  padding:clamp(.9rem,2vw,1.5rem); box-shadow:0 8px 26px rgba(20,40,30,.07);}
+.card h2{font-size:1rem; color:var(--forest); margin-bottom:.1rem; display:flex; align-items:center; gap:.5rem;}
+.card .sub{font-size:.76rem; color:var(--muted); margin-bottom:.8rem;}
+.dot{width:10px;height:10px;border-radius:3px;flex:none;}
+
+.chartrow{display:flex; align-items:center; gap:1rem; margin-bottom:.6rem;}
+.chartbox{position:relative; flex:none; width:190px; height:190px;}
+.center-num{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; pointer-events:none;}
+.center-num .big{font-size:1.5rem; font-weight:900; color:var(--forest); line-height:1;}
+.center-num .sub{font-size:.66rem; color:var(--muted); font-weight:600; margin-top:.2rem;}
+svg .slice{transition:opacity .15s; cursor:default;}
+.legend{flex:1; display:flex; flex-direction:column; gap:.28rem; min-width:0;}
+.li{display:flex; align-items:center; gap:.5rem; font-size:.82rem;}
+.li .sw{width:12px;height:12px;border-radius:3px;flex:none;}
+.li .nm{flex:1; color:#2c3a34; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.li .vl{font-weight:800; color:var(--forest); font-variant-numeric:tabular-nums;}
+.li.linked .nm{color:var(--blue);}
+.li .tag{font-size:.62rem; background:#e1eef5; color:var(--blue); padding:.05rem .4rem; border-radius:5px; font-weight:700;}
+
+.sliders{margin-top:.4rem; display:flex; flex-direction:column; gap:.5rem;}
+.sl{display:grid; grid-template-columns:96px 1fr 60px; align-items:center; gap:.6rem;}
+.sl label{font-size:.78rem; font-weight:600; color:#2c3a34; display:flex; align-items:center; gap:.35rem;}
+.sl input[type=range]{width:100%; accent-color:var(--blue);}
+.sl .val{font-size:.78rem; font-weight:800; color:var(--blue); text-align:right; font-variant-numeric:tabular-nums;}
+
+.readout{margin-top:.7rem; background:var(--pale); border:1px solid var(--line); border-radius:12px; padding:.7rem .9rem; font-size:.82rem; line-height:1.5;}
+.readout .r{display:flex; justify-content:space-between; gap:1rem;}
+.readout .r b{color:var(--forest); font-variant-numeric:tabular-nums;}
+.delta{font-weight:800; font-variant-numeric:tabular-nums;}
+.delta.down{color:#2D6A4F;} .delta.up{color:#A4373A;} .delta.flat{color:var(--muted);}
+.bridge{margin:.2rem 0 .9rem; text-align:center; font-size:.8rem; color:var(--blue); font-weight:700;}
+.note{margin-top:.7rem; font-size:.8rem; color:#33453d; background:#eef6f1; border-left:3px solid var(--green); padding:.6rem .8rem; border-radius:0 8px 8px 0;}
+.cite{margin-top:1rem; font-size:.7rem; color:var(--muted); line-height:1.5; border-top:1px solid var(--line); padding-top:.7rem;}
+.cite a{color:var(--blue); text-decoration:none;} .cite a:hover{text-decoration:underline;}
+@media (max-width:780px){ .cols{grid-template-columns:1fr;} .chartbox{width:160px;height:160px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <style>body.embed h1{display:none}</style>
+  <script>if(new URLSearchParams(location.search).get('embed')==='1')document.body.classList.add('embed');</script>
+  <h1>Water Usage Explorer</h1>
+  <p class="lead">Adjust how much water a typical household uses on the left. Because homes are part of the state's <b>municipal</b> demand, your changes flow through and reshape <b>Arizona's statewide</b> water pie on the right. Watch the blue <b>"Residential (homes)"</b> slice respond.</p>
+
+  <div class="presets" id="presets">
+    <button data-preset="watersense">🚿 Install WaterSense fixtures</button>
+    <button data-preset="xeriscape">🌵 Xeriscape the yard</button>
+    <button data-preset="leaks">🔧 Fix all leaks</button>
+    <button data-preset="reset" class="reset">↺ Reset to average</button>
+  </div>
+
+  <div class="cols">
+    <!-- HOUSEHOLD -->
+    <div class="card">
+      <h2><span class="dot" style="background:var(--blue)"></span>Household water use</h2>
+      <div class="sub">Average use per person, gallons per day</div>
+      <div class="chartrow">
+        <div class="chartbox"><svg id="hhDonut" viewBox="0 0 190 190"></svg>
+          <div class="center-num" id="hhCenter"></div></div>
+        <div class="legend" id="hhLegend"></div>
+      </div>
+      <div class="sliders" id="hhSliders"></div>
+    </div>
+
+    <!-- STATEWIDE -->
+    <div class="card">
+      <h2><span class="dot" style="background:var(--green)"></span>Arizona statewide water use</h2>
+      <div class="sub">Share of total state withdrawals (~7.0 million acre-feet / year)</div>
+      <div class="chartrow">
+        <div class="chartbox"><svg id="swDonut" viewBox="0 0 190 190"></svg>
+          <div class="center-num" id="swCenter"></div></div>
+        <div class="legend" id="swLegend"></div>
+      </div>
+      <div class="readout" id="readout"></div>
+      <div class="note" id="note"></div>
+    </div>
+  </div>
+
+  <div class="cite" id="cite">
+    <strong>Sources & model:</strong>
+    Household category shares from the U.S. EPA WaterSense program / Water Research Foundation <em>Residential End Uses of Water</em> (indoor: toilet 24%, shower 20%, faucet 19%, clothes washer 17%, leaks 12%, other 8%; outdoor ≈ 30% of total household use) —
+    <a href="https://www.epa.gov/watersense/statistics-and-facts" target="_blank" rel="noopener">epa.gov/watersense</a>.
+    Arizona statewide shares (agriculture 72% · municipal 22% · industrial 6%, ~7.0 MAF/yr) from the
+    <a href="https://www.azwater.gov/" target="_blank" rel="noopener">Arizona Department of Water Resources</a>.
+    Residential is modeled as ~70% of municipal demand, based on the ADWR / AMWUA Phoenix Metro
+    <a href="https://www.azwater.gov/sites/default/files/2023-11/201902_CityofPhoenix_MultiCityWaterUseStudy_FinalPresentation.pdf" target="_blank" rel="noopener">Multi-City Water Use Study</a>
+    (single-family homes ≈ half of total city demand; residential overall ≈ two-thirds of municipal).
+    A teaching model — real per-capita and sector figures vary by year and region.
+</div>
+</div>
+
+<script>
+// ---- household model (gallons / person / day) ----
+const HH_BASE = [
+  {key:"outdoor", name:"Outdoor / yard", base:30, max:50, color:"#52796F"},
+  {key:"toilet",  name:"Toilet",         base:17, max:30, color:"#1C7293"},
+  {key:"shower",  name:"Shower & bath",  base:14, max:28, color:"#5BA3C4"},
+  {key:"faucet",  name:"Faucet",         base:13, max:26, color:"#2D6A4F"},
+  {key:"washer",  name:"Clothes washer", base:12, max:24, color:"#74C69D"},
+  {key:"leaks",   name:"Leaks",          base:8,  max:20, color:"#A4373A"},
+  {key:"other",   name:"Other",          base:6,  max:16, color:"#BC8A2E"},
+];
+const HH_TOTAL_BASE = HH_BASE.reduce((s,c)=>s+c.base,0); // 100
+
+// ---- statewide model (million acre-feet / year) ----
+const AGRI = 5.04, INDUS = 0.42;
+const OTHER_MUNI = 0.462;            // commercial/institutional municipal (fixed)
+const RESID_BASE = 1.078;           // residential municipal at baseline household use
+const TOTAL_BASE = AGRI + (RESID_BASE+OTHER_MUNI) + INDUS; // 7.0
+
+let hh = {}; HH_BASE.forEach(c=> hh[c.key]=c.base);
+
+const PRESETS = {
+  watersense: {toilet:11, shower:9, faucet:9, washer:9},
+  xeriscape:  {outdoor:8},
+  leaks:      {leaks:1},
+};
+
+// ---- donut helper ----
+const TAU=Math.PI*2, R=74, IR=46, C=95;
+function arc(a0,a1){
+  const big=(a1-a0)>Math.PI?1:0;
+  const p=(r,a)=>[C+r*Math.cos(a), C+r*Math.sin(a)];
+  const [x0,y0]=p(R,a0),[x1,y1]=p(R,a1),[xi1,yi1]=p(IR,a1),[xi0,yi0]=p(IR,a0);
+  return `M${x0} ${y0} A${R} ${R} 0 ${big} 1 ${x1} ${y1} L${xi1} ${yi1} A${IR} ${IR} 0 ${big} 0 ${xi0} ${yi0} Z`;
+}
+function donut(svg, segs){
+  let a=-Math.PI/2;
+  svg.innerHTML = segs.map(s=>{
+    const a1=a+TAU*s.frac; const d=arc(a, Math.max(a1,a+0.0001)); a=a1;
+    return `<path class="slice" d="${d}" fill="${s.color}"><title>${s.name}: ${s.label}</title></path>`;
+  }).join('');
+}
+
+function fmt(n,d=2){return n.toFixed(d);}
+function deltaSpan(now, base, unit){
+  const d = now-base, pct = base? (d/base*100):0;
+  const cls = Math.abs(pct)<0.5?'flat':(d<0?'down':'up');
+  const sign = d>0?'+':'';
+  return `<span class="delta ${cls}">${sign}${fmt(d,2)} ${unit} (${sign}${fmt(pct,0)}%)</span>`;
+}
+
+function render(){
+  // household
+  const hhTotal = HH_BASE.reduce((s,c)=>s+hh[c.key],0);
+  const hhSegs = HH_BASE.map(c=>({frac: hh[c.key]/hhTotal, color:c.color, name:c.name, label: hh[c.key]+" gal"}));
+  donut(document.getElementById('hhDonut'), hhSegs);
+  document.getElementById('hhCenter').innerHTML = `<div class="big">${Math.round(hhTotal)}</div><div class="sub">gal / person<br>per day</div>`;
+  document.getElementById('hhLegend').innerHTML = HH_BASE.map(c=>`
+    <div class="li"><span class="sw" style="background:${c.color}"></span>
+      <span class="nm">${c.name}</span><span class="vl">${hh[c.key]}</span></div>`).join('');
+
+  // statewide — residential scales with household per-capita total
+  const resid = RESID_BASE * (hhTotal/HH_TOTAL_BASE);
+  const muni = resid + OTHER_MUNI;
+  const total = AGRI + muni + INDUS;
+  const swItems = [
+    {name:"Agriculture",          val:AGRI,       color:"#2D6A4F", linked:false},
+    {name:"Residential (homes)",  val:resid,      color:"#1C7293", linked:true},
+    {name:"Other municipal",      val:OTHER_MUNI, color:"#5BA3C4", linked:false},
+    {name:"Industrial",           val:INDUS,      color:"#BC8A2E", linked:false},
+  ];
+  donut(document.getElementById('swDonut'),
+    swItems.map(it=>({frac:it.val/total, color:it.color, name:it.name, label:fmt(it.val,2)+" MAF"})));
+  document.getElementById('swCenter').innerHTML = `<div class="big">${fmt(total,2)}</div><div class="sub">MAF / year</div>`;
+  document.getElementById('swLegend').innerHTML = swItems.map(it=>`
+    <div class="li ${it.linked?'linked':''}"><span class="sw" style="background:${it.color}"></span>
+      <span class="nm">${it.name}</span>
+      <span class="vl">${Math.round(it.val/total*100)}%</span>
+      ${it.linked?'<span class="tag">linked</span>':''}</div>`).join('');
+
+  // readout
+  document.getElementById('readout').innerHTML = `
+    <div class="r"><span>Household use</span><b>${Math.round(hhTotal)} gal/person/day</b></div>
+    <div class="r"><span>↳ AZ residential demand</span>${deltaSpan(resid, RESID_BASE, "MAF")}</div>
+    <div class="r"><span>AZ municipal total</span>${deltaSpan(muni, RESID_BASE+OTHER_MUNI, "MAF")}</div>
+    <div class="r"><span><b>AZ statewide total</b></span>${deltaSpan(total, TOTAL_BASE, "MAF")}</div>`;
+
+  const pctChange = (total-TOTAL_BASE)/TOTAL_BASE*100;
+  const noteEl = document.getElementById('note');
+  if(Math.abs(pctChange)<0.5){
+    noteEl.innerHTML = `This is the statewide average. Try the presets or drag a slider — because homes are only part of <b>municipal</b> (about a fifth of the state's water), even big household changes move the whole pie modestly. Saving water still matters most where it is scarcest.`;
+  } else {
+    const dir = pctChange<0 ? "lower" : "higher";
+    noteEl.innerHTML = `If <b>every</b> Arizona household used water this way, statewide water use would be <b>${fmt(Math.abs(pctChange),1)}% ${dir}</b>. The residential slice shrank/grew, but agriculture (72%) still dominates — which is why farm efficiency is the biggest lever of all.`;
+  }
+}
+
+// ---- sliders ----
+const slWrap = document.getElementById('hhSliders');
+slWrap.innerHTML = HH_BASE.map(c=>`
+  <div class="sl">
+    <label><span class="sw" style="display:inline-block;width:11px;height:11px;border-radius:3px;background:${c.color}"></span>${c.name}</label>
+    <input type="range" min="0" max="${c.max}" step="1" value="${c.base}" data-key="${c.key}">
+    <span class="val" id="val-${c.key}">${c.base} gal</span>
+  </div>`).join('');
+slWrap.addEventListener('input', e=>{
+  const k=e.target.dataset.key; if(!k) return;
+  hh[k]=+e.target.value;
+  document.getElementById('val-'+k).textContent = hh[k]+' gal';
+  render();
+});
+
+document.getElementById('presets').addEventListener('click', e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  const p=b.dataset.preset;
+  if(p==='reset'){ HH_BASE.forEach(c=>hh[c.key]=c.base); }
+  else { Object.assign(hh, PRESETS[p]); }
+  // sync sliders
+  HH_BASE.forEach(c=>{
+    document.querySelector(`input[data-key="${c.key}"]`).value = hh[c.key];
+    document.getElementById('val-'+c.key).textContent = hh[c.key]+' gal';
+  });
+  render();
+});
+
+render();
+</script>
+</body>
+</html>

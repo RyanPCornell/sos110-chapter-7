@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arizona's Water — Who Uses It?</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#15201b; --forest:#1A3C34; --green:#2D6A4F; --green-light:#74C69D;
+  --pale:#F0F7F4; --line:#dde7e2; --muted:#5b6b63; --accent:#1C7293;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  color:var(--ink); background:#fff; padding:clamp(.8rem,2vw,1.4rem);}
+.wrap{max-width:1100px; margin:0 auto;}
+.toolbar{display:flex; flex-wrap:wrap; align-items:center; gap:.6rem; margin-bottom:.9rem;}
+.seg{display:inline-flex; background:var(--pale); border:1px solid var(--line); border-radius:10px; padding:3px;}
+.seg button{border:none; background:none; cursor:pointer; font-family:inherit; font-weight:700;
+  font-size:.9rem; color:var(--muted); padding:.5rem .95rem; border-radius:8px; transition:.15s;}
+.seg button.on{background:var(--green); color:#fff; box-shadow:0 2px 8px rgba(45,106,79,.3);}
+.spacer{flex:1;}
+.unit{font-size:.82rem; color:var(--muted); font-weight:600;}
+.panel{display:grid; grid-template-columns:minmax(280px,1fr) 1.1fr; gap:clamp(1rem,3vw,2.4rem);
+  align-items:center; background:#fff; border:1px solid var(--line); border-radius:16px;
+  padding:clamp(1rem,2.5vw,1.8rem); box-shadow:0 8px 26px rgba(20,40,30,.07);}
+.chartbox{position:relative; display:flex; align-items:center; justify-content:center; min-height:300px;}
+.center-num{position:absolute; text-align:center; pointer-events:none;}
+.center-num .big{font-size:clamp(1.5rem,3.2vw,2.2rem); font-weight:900; color:var(--forest); line-height:1;}
+.center-num .sub{font-size:.74rem; color:var(--muted); font-weight:600; margin-top:.25rem; max-width:130px;}
+svg .slice{cursor:pointer; transition:opacity .15s, transform .15s; transform-origin:center;}
+svg .slice.dim{opacity:.32;}
+.bars{display:flex; flex-direction:column; gap:.55rem;}
+.legend{display:flex; flex-direction:column; gap:.4rem;}
+.li{display:flex; align-items:center; gap:.6rem; cursor:pointer; padding:.35rem .5rem; border-radius:8px; transition:.12s;}
+.li:hover{background:var(--pale);}
+.li.dim{opacity:.4;}
+.sw{flex:none; width:14px; height:14px; border-radius:4px;}
+.li .name{font-size:.92rem; font-weight:600; color:#2c3a34; flex:1; display:flex; align-items:center; gap:.45rem;}
+.muni-tag{font-size:.6rem; font-weight:700; text-transform:uppercase; letter-spacing:.03em;
+  color:var(--accent); background:#e1eef5; border-radius:5px; padding:.05rem .38rem; white-space:nowrap;}
+.li .pct{font-size:.95rem; font-weight:800; color:var(--forest); font-variant-numeric:tabular-nums;}
+.li .amt{font-size:.72rem; color:var(--muted); margin-left:.5rem;}
+.bar-row{display:flex; align-items:center; gap:.7rem;}
+.bar-row .name{width:140px; font-size:.84rem; font-weight:600; color:#2c3a34; text-align:right; flex:none;}
+.bar-track{flex:1; background:var(--pale); border-radius:6px; height:22px; overflow:hidden; position:relative;}
+.bar-fill{display:block; height:100%; border-radius:6px; transition:width .5s cubic-bezier(.2,.8,.2,1);}
+.bar-row .pct{width:42px; font-size:.85rem; font-weight:800; color:var(--forest); flex:none;}
+h1{font-size:clamp(1.1rem,2.4vw,1.5rem); color:var(--forest); margin-bottom:.2rem;}
+.lead{font-size:.9rem; color:var(--muted); margin-bottom:1rem; max-width:80ch;}
+.totline{margin-top:.8rem; font-size:.85rem; color:#2c3a34;}
+.totline strong{color:var(--accent);}
+.cite{margin-top:1rem; font-size:.72rem; color:var(--muted); line-height:1.5; border-top:1px solid var(--line); padding-top:.7rem;}
+.cite a{color:var(--accent); text-decoration:none;}
+.cite a:hover{text-decoration:underline;}
+@media (max-width:720px){ .panel{grid-template-columns:1fr;} .bar-row .name{width:110px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <style>body.embed h1{display:none}</style>
+  <script>if(new URLSearchParams(location.search).get('embed')==='1')document.body.classList.add('embed');</script>
+  <h1>Arizona's Water — Who Uses It?</h1>
+  <p class="lead">In a desert state, water tells a clear story: nearly three-quarters grows our food, while only a small slice reaches the homes we live in. Hover any slice to explore. (Municipal use is split into homes vs. everything else — schools, parks, and businesses.)</p>
+
+  <div class="toolbar">
+    <div class="seg" id="viewSeg">
+      <button data-view="donut" class="on">Donut</button>
+      <button data-view="bar">Bars</button>
+    </div>
+    <div class="spacer"></div>
+    <div class="unit">Total: ≈ 7.0 million acre-feet per year</div>
+  </div>
+
+  <div class="panel">
+    <div class="chartbox">
+      <svg id="donut" viewBox="0 0 240 240" width="100%" style="max-width:300px"></svg>
+      <div class="center-num" id="center" style="display:none"></div>
+      <div class="bars" id="bars" style="display:none; width:100%"></div>
+    </div>
+    <div>
+      <div class="legend" id="legend"></div>
+      <div class="totline" id="totline"></div>
+    </div>
+  </div>
+
+  <div class="cite" id="cite"></div>
+</div>
+
+<script>
+// Arizona water use by sector. Municipal (22%) is split into residential homes and
+// "other municipal" (commercial, institutional, parks).
+const ITEMS = [
+  {name:"Agriculture",        pct:72, color:"#2D6A4F", amt:"~5.0 MAF", sub:false},
+  {name:"Residential (homes)",pct:15, color:"#1C7293", amt:"~1.1 MAF", sub:true},
+  {name:"Other municipal",    pct:7,  color:"#5BA3C4", amt:"~0.5 MAF", sub:true},
+  {name:"Industrial",         pct:6,  color:"#BC8A2E", amt:"~0.4 MAF", sub:false},
+];
+const NOTE = "Roughly three-quarters of Arizona's water grows food. Homes and other municipal uses (schools, parks, businesses) together make up about a fifth — and your household is just part of that.";
+const CITE = `<strong>Sources:</strong> Sector shares from the Arizona Department of Water Resources (~7.0 million acre-feet/yr; agriculture 72% · municipal 22% · industrial 6%) — <a href="https://www.azwater.gov/" target="_blank" rel="noopener">azwater.gov</a> and the University of Arizona MAP Dashboard, <a href="https://mapazdashboard.arizona.edu/article/arizonas-water-use-sector" target="_blank" rel="noopener">"Water Use in Arizona by Sector."</a> Municipal is split into residential (~70%) vs. other municipal using the ADWR / AMWUA Phoenix Metro <a href="https://www.azwater.gov/sites/default/files/2023-11/201902_CityofPhoenix_MultiCityWaterUseStudy_FinalPresentation.pdf" target="_blank" rel="noopener">Multi-City Water Use Study</a> (single-family homes ≈ half of city demand). Teaching estimate — shares vary by year and region.`;
+
+let view = "donut", hovered = null;
+
+const TAU = Math.PI*2, R=92, IR=58, CX=120, CY=120;
+function arc(a0,a1){
+  const big = (a1-a0) > Math.PI ? 1 : 0;
+  const x0=CX+R*Math.cos(a0), y0=CY+R*Math.sin(a0);
+  const x1=CX+R*Math.cos(a1), y1=CY+R*Math.sin(a1);
+  const xi1=CX+IR*Math.cos(a1), yi1=CY+IR*Math.sin(a1);
+  const xi0=CX+IR*Math.cos(a0), yi0=CY+IR*Math.sin(a0);
+  return `M${x0} ${y0} A${R} ${R} 0 ${big} 1 ${x1} ${y1} L${xi1} ${yi1} A${IR} ${IR} 0 ${big} 0 ${xi0} ${yi0} Z`;
+}
+
+function render(){
+  document.getElementById('cite').innerHTML = CITE;
+
+  const legend = document.getElementById('legend');
+  legend.innerHTML = ITEMS.map((it,i)=>`
+    <div class="li ${hovered!==null&&hovered!==i?'dim':''}" data-i="${i}">
+      <span class="sw" style="background:${it.color}"></span>
+      <span class="name">${it.name}${it.sub?'<span class="muni-tag">municipal</span>':''}</span>
+      <span class="pct">${it.pct}%<span class="amt">${it.amt}</span></span>
+    </div>`).join('');
+  legend.querySelectorAll('.li').forEach(el=>{
+    el.onmouseenter=()=>{hovered=+el.dataset.i; render();};
+    el.onmouseleave=()=>{hovered=null; render();};
+  });
+
+  document.getElementById('totline').innerHTML = `<strong>Arizona:</strong> ${NOTE}`;
+
+  if(view==="donut"){ renderDonut(); } else { renderBars(); }
+}
+
+function renderDonut(){
+  document.getElementById('donut').style.display='';
+  document.getElementById('bars').style.display='none';
+  const center = document.getElementById('center');
+  center.style.display='';
+  let a = -Math.PI/2;
+  const svg = document.getElementById('donut');
+  svg.innerHTML = ITEMS.map((it,i)=>{
+    const a1 = a + TAU*it.pct/100;
+    const path = `<path class="slice ${hovered!==null&&hovered!==i?'dim':''}" d="${arc(a,a1)}" fill="${it.color}" data-i="${i}"></path>`;
+    a = a1; return path;
+  }).join('');
+  svg.querySelectorAll('.slice').forEach(el=>{
+    el.onmouseenter=()=>{hovered=+el.dataset.i; render();};
+    el.onmouseleave=()=>{hovered=null; render();};
+  });
+  const it = hovered!==null ? ITEMS[hovered] : ITEMS[0];
+  center.innerHTML=`<div class="big">${it.pct}%</div><div class="sub">${it.name}</div>`;
+}
+
+function renderBars(){
+  document.getElementById('donut').style.display='none';
+  document.getElementById('center').style.display='none';
+  const bars = document.getElementById('bars');
+  bars.style.display='';
+  const max = Math.max(...ITEMS.map(it=>it.pct));
+  bars.innerHTML = ITEMS.map((it,i)=>`
+    <div class="bar-row" data-i="${i}" style="opacity:${hovered!==null&&hovered!==i?.4:1}">
+      <span class="name">${it.name}</span>
+      <span class="bar-track"><span class="bar-fill" style="width:${it.pct/max*100}%; background:${it.color}"></span></span>
+      <span class="pct">${it.pct}%</span>
+    </div>`).join('');
+  bars.querySelectorAll('.bar-row').forEach(el=>{
+    el.onmouseenter=()=>{hovered=+el.dataset.i; render();};
+    el.onmouseleave=()=>{hovered=null; render();};
+  });
+}
+
+document.getElementById('viewSeg').addEventListener('click', e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  view=b.dataset.view; hovered=null;
+  document.querySelectorAll('#viewSeg button').forEach(x=>x.classList.toggle('on',x===b));
+  render();
+});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Water Cycle Explorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080d16;
+  --surface:#0f172a;
+  --surface2:#162032;
+  --border:#1e293b;
+  --text:#e2e8f0;
+  --text-muted:#94a3b8;
+  --text-dim:#475569;
+  --accent:#38bdf8;
+  --accent-dim:rgba(56,189,248,.06);
+}
+html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+
+/* ─── HEADER ─────────────────────────────────── */
+#app-header{
+  position:fixed;top:0;left:0;right:0;height:58px;
+  background:rgba(8,13,22,.92);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 24px;gap:16px;z-index:100;
+}
+#app-header .logo{
+  display:flex;align-items:center;gap:10px;
+  font-size:15px;font-weight:700;letter-spacing:-.3px;
+}
+#app-header .logo .dot{
+  width:8px;height:8px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 12px var(--accent);
+}
+#app-header .subtitle{font-size:12px;color:var(--text-muted);font-weight:400}
+
+/* ─── CYCLE VIEW ─────────────────────────────── */
+#cycle-view{
+  position:fixed;top:58px;left:0;right:0;bottom:0;
+  display:flex;background:var(--bg);
+  opacity:0;transition:opacity .4s;
+}
+#cycle-view.view-active{opacity:1}
+#diagram-area{
+  flex:1;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 30%, var(--accent-dim) 0%, transparent 70%);
+}
+#diagram-svg{position:absolute;inset:0;width:100%;height:100%}
+#particle-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.node-div{
+  position:absolute;transform:translate(-50%,-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  cursor:pointer;z-index:10;
+}
+.node-circle{
+  width:72px;height:72px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  border:2px solid var(--accent);
+  background:color-mix(in srgb,var(--accent) 12%,var(--surface));
+  font-size:26px;
+  box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 40%,transparent);
+  transition:transform .2s,box-shadow .2s,background .2s,border-color .2s;
+  position:relative;
+}
+.node-circle::after{
+  content:'';position:absolute;inset:-4px;border-radius:50%;
+  border:2px solid color-mix(in srgb,var(--accent) 30%,transparent);
+  animation:pulse-ring 2.5s ease-out infinite;
+}
+.node-div:hover .node-circle,
+.node-div.selected .node-circle{
+  transform:scale(1.12);
+  background:color-mix(in srgb,var(--accent) 22%,var(--surface));
+  box-shadow:0 0 0 8px color-mix(in srgb,var(--accent) 15%,transparent),
+             0 0 40px color-mix(in srgb,var(--accent) 35%,transparent);
+}
+.node-label{
+  font-size:11px;font-weight:600;letter-spacing:.2px;text-align:center;
+  background:rgba(8,13,22,.85);padding:3px 8px;border-radius:4px;
+  border:1px solid var(--border);max-width:100px;line-height:1.3;
+}
+.node-reservoir{
+  font-size:9px;color:var(--accent);font-family:'JetBrains Mono',monospace;
+  font-weight:500;
+}
+@keyframes pulse-ring{
+  0%{transform:scale(1);opacity:.6}
+  100%{transform:scale(1.6);opacity:0}
+}
+
+/* ─── INFO PANEL ─────────────────────────────── */
+#info-panel{
+  width:340px;position:absolute;top:0;right:0;bottom:0;
+  background:rgba(15,23,42,.96);backdrop-filter:blur(12px);
+  border-left:1px solid var(--border);
+  overflow-y:auto;display:flex;flex-direction:column;
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  z-index:30;
+}
+#info-panel.collapsed{transform:translateX(100%)}
+.panel-header{
+  padding:20px 20px 16px;border-bottom:1px solid var(--border);
+  position:sticky;top:0;background:rgba(15,23,42,.98);z-index:5;
+  display:flex;flex-direction:column;
+}
+.panel-close{
+  position:absolute;top:14px;right:14px;
+  width:28px;height:28px;border-radius:6px;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text-muted);font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s,color .15s;
+}
+.panel-close:hover{background:var(--border);color:var(--text)}
+.panel-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  padding:3px 8px;border-radius:4px;margin-bottom:10px;
+  color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);
+}
+.panel-title{font-size:20px;font-weight:700;letter-spacing:-.4px;line-height:1.2;margin-bottom:4px}
+.panel-subtitle{font-size:12px;color:var(--text-muted)}
+.panel-body{padding:20px;flex:1;display:flex;flex-direction:column;gap:20px}
+.panel-section{display:flex;flex-direction:column;gap:8px}
+.panel-section h4{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text-dim)}
+.panel-section p{font-size:13px;line-height:1.65;color:var(--text-muted)}
+.stat-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:8px 12px;background:var(--surface2);border-radius:8px;
+  border:1px solid var(--border);
+}
+.stat-label{font-size:12px;color:var(--text-muted)}
+.stat-value{font-size:13px;font-weight:600;color:var(--accent);font-family:'JetBrains Mono',monospace}
+.fun-fact{
+  background:color-mix(in srgb,var(--accent) 8%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);
+  border-radius:10px;padding:14px;
+  font-size:12px;color:var(--text-muted);line-height:1.6;
+}
+.fun-fact strong{color:var(--accent);display:block;margin-bottom:4px;font-size:11px;text-transform:uppercase;letter-spacing:.6px}
+
+/* edge label tooltip */
+.edge-hit{cursor:pointer}
+.edge-popup{
+  position:absolute;pointer-events:none;z-index:50;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:10px 14px;font-size:12px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  min-width:160px;max-width:220px;line-height:1.5;
+}
+.edge-popup .ep-title{font-weight:600;font-size:13px;margin-bottom:4px}
+.edge-popup .ep-flux{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent)}
+
+/* ─── WELCOME PANEL ──────────────────────────── */
+#welcome-panel{
+  position:absolute;bottom:20px;right:20px;
+  background:rgba(8,13,22,.85);backdrop-filter:blur(8px);
+  border:1px solid var(--border);border-radius:12px;padding:12px 16px;
+  z-index:20;max-width:195px;
+  pointer-events:none;
+  opacity:1;transition:opacity .4s;
+}
+#welcome-panel.hidden{opacity:0}
+.welcome-label{
+  font-size:9px;font-weight:700;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--text-dim);margin-bottom:6px;
+}
+.welcome-hint{
+  font-size:10px;color:var(--text-muted);text-align:left;line-height:1.55;
+}
+
+/* ─── LEGEND ─────────────────────────────────── */
+#legend{
+  position:absolute;bottom:20px;left:20px;
+  background:rgba(8,13,22,.85);backdrop-filter:blur(8px);
+  border:1px solid var(--border);border-radius:10px;padding:12px 16px;
+  font-size:11px;color:var(--text-muted);line-height:1.8;z-index:20;
+  pointer-events:none;
+}
+#legend .leg-row{display:flex;align-items:center;gap:8px}
+.leg-line{width:24px;height:2px;background:var(--accent);opacity:.7}
+.leg-dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+#legend .leg-note{font-size:9px;color:var(--text-dim);margin-top:4px;max-width:150px;line-height:1.4}
+
+/* ─── CYCLE TITLE CARD ───────────────────────── */
+#cycle-title-card{
+  position:absolute;top:16px;left:16px;
+  background:rgba(8,13,22,.85);backdrop-filter:blur(8px);
+  border:1px solid var(--border);border-radius:12px;padding:12px 16px;
+  z-index:20;max-width:210px;
+}
+#cycle-title-card .ct-name{font-size:16px;font-weight:700;letter-spacing:-.3px;line-height:1.2}
+#cycle-title-card .ct-tagline{font-size:10px;color:var(--text-muted);margin-top:3px;line-height:1.4}
+#cycle-title-card .ct-key{
+  margin-top:8px;font-size:9px;font-weight:700;letter-spacing:.6px;
+  text-transform:uppercase;color:var(--text-dim);
+}
+#cycle-title-card .ct-process{
+  display:flex;align-items:center;gap:5px;
+  font-size:10px;color:var(--text-muted);margin-top:3px;
+}
+.ct-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.course-ref{
+  margin-top:12px;padding-top:10px;border-top:1px solid var(--border);
+  font-size:10px;color:var(--text-dim);display:flex;align-items:center;gap:5px;line-height:1.4;
+}
+.course-ref-badge{
+  font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
+  padding:2px 6px;border-radius:3px;flex-shrink:0;
+  background:color-mix(in srgb,var(--accent) 10%,transparent);
+  color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);
+}
+
+/* ─── SCROLLBAR ──────────────────────────────── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media(max-width:768px){
+  #info-panel{width:100%;top:auto;bottom:0;left:0;right:0;
+    height:50%;border-left:none;border-top:1px solid var(--border);
+    transform:translateY(100%);
+  }
+  #info-panel.collapsed{transform:translateY(100%)}
+  #info-panel:not(.collapsed){transform:translateY(0)}
+}
+</style>
+</head>
+<body>
+<style>body.embed #app-header{display:none}</style>
+<script>if(new URLSearchParams(location.search).get('embed')==='1')document.body.classList.add('embed');</script>
+
+<div id="app-header">
+  <div class="logo">
+    <div class="dot" id="accent-dot"></div>
+    <div>
+      <div>The Water Cycle</div>
+      <div class="subtitle">SOS 110 &nbsp;·&nbsp; Ryan Cornell</div>
+    </div>
+  </div>
+</div>
+
+<!-- CYCLE VIEW -->
+<div id="cycle-view">
+  <div id="diagram-area">
+    <svg id="diagram-svg" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="var(--accent)"/>
+        </marker>
+      </defs>
+    </svg>
+    <canvas id="particle-canvas"></canvas>
+    <div id="nodes-layer"></div>
+    <div id="welcome-panel">
+      <div class="welcome-label">How to explore</div>
+      <div class="welcome-hint">Click a reservoir node to see details, or hover over an arrow to see the process.</div>
+    </div>
+    <div id="cycle-title-card">
+      <div class="ct-name" id="ct-name"></div>
+      <div class="ct-tagline" id="ct-tagline"></div>
+      <div class="ct-key">Key Processes</div>
+      <div id="ct-processes"></div>
+      <div class="course-ref">
+        <span class="course-ref-badge">SOS 110</span>
+        Sherman &amp; Montgomery, 2nd ed.
+      </div>
+    </div>
+    <div id="legend">
+      <div class="leg-row"><div class="leg-line"></div> Water flow</div>
+      <div class="leg-row"><div class="leg-dot"></div> Reservoir</div>
+      <div class="leg-note">Thicker arrows indicate a larger scale of flow.</div>
+    </div>
+  </div>
+  <div id="info-panel" class="collapsed">
+    <div class="panel-header" style="position:relative">
+      <div class="panel-badge" id="panel-badge">Reservoir</div>
+      <div class="panel-title" id="panel-title">—</div>
+      <div class="panel-subtitle" id="panel-subtitle"></div>
+      <button class="panel-close" onclick="deselectNode()" title="Close">✕</button>
+    </div>
+    <div class="panel-body" id="panel-body"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// WATER CYCLE DATA
+// All content drawn from "At a Glance: The Water Cycle"
+// Sherman & Montgomery, Environmental Science and Sustainability, 2nd ed.
+// ═══════════════════════════════════════════════
+const CYCLE = {
+  name: "The Water Cycle",
+  tagline: "Earth's water reservoirs and how long a molecule stays in each",
+  color: "#38bdf8",
+  keyProcesses: ["Evaporation & Transpiration", "Precipitation", "Runoff & Groundwater"],
+  nodes: [
+    {id:"atm", label:"Atmosphere", icon:"☁️", x:52, y:17,
+     reservoir:"~10 days",
+     tagline:"Water vapor aloft — residence time ~10 days",
+     description:"Water evaporates into the atmosphere from the ocean and from sources on land. The atmosphere holds only about 0.001% of Earth's water at any given moment. Wind transports this moisture all around Earth before it falls again as precipitation.",
+     stats:[{l:"Share of Earth's water",v:"0.001%"},{l:"Residence time",v:"~10 days"},{l:"Main inputs",v:"Evaporation, transpiration"}],
+     fact:"Wind transportation of moisture moves water vapor all around the planet — including the water that was recently inside you. On average a molecule stays in the air only about 10 days before falling back to the surface."},
+
+    {id:"ocean", label:"The Ocean", icon:"🌊", x:85, y:48,
+     reservoir:"~3,000 yrs",
+     tagline:"Earth's largest reservoir — 96.5% of all water",
+     description:"The oceans hold 96.5% of Earth's total water, and only about 0.07% of it evaporates in a year. Water returns to the ocean through precipitation over the oceans, surface runoff from land, and groundwater flow.",
+     stats:[{l:"Share of Earth's water",v:"96.5%"},{l:"Evaporates per year",v:"~0.07%"},{l:"Residence time",v:"~3,000 years"}],
+     fact:"Even though the ocean is by far the largest water reservoir, only about 0.07% of it evaporates each year — yet that is enough to supply most of the moisture in the atmosphere."},
+
+    {id:"ice", label:"Ice, Snow & Permafrost", icon:"🧊", x:17, y:40,
+     reservoir:"up to ~200k yrs",
+     tagline:"Frozen water trapped in solid reservoirs",
+     description:"Around 1.8% of Earth's water becomes frozen and trapped in solid reservoirs — ice caps, flowing glaciers, and winter snow. Deeper underground, water in the spaces between rock grains can freeze; if it stays frozen for two years or more, it is called permafrost.",
+     stats:[{l:"Share of Earth's water",v:"~1.8%"},{l:"Ice caps",v:"~200,000 years"},{l:"Flowing glaciers",v:"~100 years"},{l:"Winter snow",v:"2–6 months"},{l:"Permafrost",v:"~50 years"}],
+     fact:"An ice cap can lock a water molecule away for around 200,000 years, while winter snow may hold it for only a few months — the same frozen state, but residence times that differ by nearly a million-fold."},
+
+    {id:"fresh", label:"Freshwater Bodies", icon:"🏞️", x:53, y:50,
+     reservoir:"~10 yrs (lakes)",
+     tagline:"Lakes, rivers, and streams",
+     description:"Water collects in lakes (0.007% of Earth's water) and in rivers or streams (0.0002%). Water leaves these reservoirs as it evaporates, flows into the ocean, or sinks underground.",
+     stats:[{l:"Lakes",v:"0.007% of water"},{l:"Rivers & streams",v:"0.0002% of water"},{l:"Lakes residence",v:"~10 years"},{l:"Rivers residence",v:"2–6 months"}],
+     fact:"A molecule entering a lake may linger about 10 years, but in a fast-moving river or stream it typically stays only 2–6 months before moving on."},
+
+    {id:"soil", label:"Soil", icon:"🟫", x:31, y:64,
+     reservoir:"1–2 months",
+     tagline:"Water held in the land surface",
+     description:"When water hits Earth's surface it can go a lot of places. About 0.001% of Earth's water is absorbed by soil, where it may evaporate, be taken up by living things, run off the surface, or seep downward as soil water flow.",
+     stats:[{l:"Share of Earth's water",v:"0.001%"},{l:"Residence time",v:"1–2 months"}],
+     fact:"Soil is a brief way-station for water — a molecule absorbed by soil typically stays only one to two months before it evaporates, is taken up by life, or sinks underground."},
+
+    {id:"living", label:"Living Organisms", icon:"🌿", x:14, y:73,
+     reservoir:"hours–days",
+     tagline:"Water inside living things",
+     description:"About 0.0001% of Earth's water is consumed by living things at any moment — and this includes the water inside you. Plants return much of this water to the atmosphere through transpiration.",
+     stats:[{l:"Share of Earth's water",v:"0.0001%"},{l:"Residence time",v:"A few hours to days"}],
+     fact:"The water cycle runs right through living things — including you. A water molecule taken up by an organism usually stays only a few hours to a few days."},
+
+    {id:"ground", label:"Groundwater", icon:"💧", x:52, y:87,
+     reservoir:"100–10k yrs",
+     tagline:"Largest source of liquid fresh water",
+     description:"Groundwater, or underground water, is the largest source of liquid fresh water on Earth (0.76% of Earth's water). Spaces between rock grains are filled with water; underlying impermeable rock layers keep groundwater from moving deeper underground. Water can stay here a long time before it is used or slowly flows somewhere else.",
+     stats:[{l:"Share of Earth's water",v:"0.76%"},{l:"Residence time",v:"100–10,000 years"},{l:"Largest source of",v:"liquid fresh water"}],
+     fact:"Groundwater is the largest store of liquid fresh water on Earth. A single molecule can remain underground anywhere from 100 to 10,000 years before it is used or slowly flows away."}
+  ],
+  edges: [
+    {from:"ocean",to:"atm",flux:"Largest source of moisture",label:"Evaporation",
+     desc:"Water evaporates off the ocean surface into the atmosphere. The ocean is the dominant source of atmospheric moisture, even though only about 0.07% of it evaporates each year.",importance:5,labelT:0.34},
+    {from:"atm",to:"ocean",flux:"Largest flow",label:"Precipitation",
+     desc:"Precipitation over the oceans returns most atmospheric water directly to the sea.",importance:5,labelT:0.34},
+    {from:"soil",to:"atm",flux:"Land moisture",label:"Evaporation",
+     desc:"Water absorbed by the soil evaporates back into the atmosphere.",importance:3,labelT:0.34},
+    {from:"living",to:"atm",flux:"Through vegetation",label:"Transpiration",
+     desc:"Plants and other living things release water into the atmosphere through transpiration — evaporation through vegetation.",importance:3,labelT:0.35},
+    {from:"fresh",to:"atm",flux:"From lakes & rivers",label:"Evaporation",
+     desc:"Water leaves lakes, rivers, and streams as it evaporates into the atmosphere.",importance:2,labelT:0.5},
+    {from:"atm",to:"soil",flux:"Onto land",label:"Precipitation",
+     desc:"Precipitation onto land delivers atmospheric water to the soil and the land surface.",importance:4,labelT:0.3},
+    {from:"atm",to:"ice",flux:"Winter snow",label:"Snowfall",
+     desc:"Precipitation onto land falls as winter snow, building snowpack, glaciers, and ice caps.",importance:2,labelT:0.55},
+    {from:"ice",to:"fresh",flux:"Seasonal melt",label:"Meltwater",
+     desc:"Meltwater from snow and glaciers flows into streams, rivers, and lakes.",importance:3},
+    {from:"soil",to:"fresh",flux:"Overland flow",label:"Surface runoff",
+     desc:"Surface runoff carries water across the land into streams, rivers, and lakes.",importance:3},
+    {from:"fresh",to:"ocean",flux:"River discharge",label:"Flows to ocean",
+     desc:"Water leaves freshwater bodies as it flows downhill into the ocean.",importance:3,labelT:0.45},
+    {from:"soil",to:"ground",flux:"Infiltration",label:"Soil water flow",
+     desc:"Water seeps downward from the soil as soil water flow, recharging the groundwater below.",importance:3},
+    {from:"fresh",to:"ground",flux:"Recharge",label:"Sinks underground",
+     desc:"Water also leaves freshwater bodies as it sinks underground into the groundwater.",importance:2},
+    {from:"ground",to:"ocean",flux:"Slow flow",label:"Groundwater flow",
+     desc:"Groundwater slowly flows underground and can discharge into the ocean.",importance:2,labelT:0.55},
+    {from:"ground",to:"ground",flux:"Very slow",label:"Deep groundwater flow",
+     desc:"Some water moves as deep groundwater flow, staying underground for a very long time before it is used or slowly flows somewhere else. Underlying impermeable rock layers keep groundwater from moving deeper underground.",importance:2,loopX:120,loopY:0},
+    {from:"soil",to:"living",flux:"~0.0001% of water",label:"Consumed by life",
+     desc:"About 0.0001% of Earth's water is consumed by living things, taken up from the soil and freshwater.",importance:2,labelT:0.4}
+  ]
+};
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let currentCycle = CYCLE;
+let selectedNode = null;
+let particles = [];
+let animFrame = null;
+let canvas, ctx, diagArea;
+let nodeEls = {};
+let edgeData = {};
+
+// ═══════════════════════════════════════════════
+// RENDER CYCLE DIAGRAM
+// ═══════════════════════════════════════════════
+function renderCycle(){
+  stopParticles();
+  const cyc = currentCycle;
+  diagArea = document.getElementById('diagram-area');
+  canvas = document.getElementById('particle-canvas');
+  ctx = canvas.getContext('2d');
+  const W = diagArea.clientWidth;
+  const H = diagArea.clientHeight;
+  canvas.width=W; canvas.height=H;
+
+  // Update title card
+  document.getElementById('ct-name').textContent=cyc.name;
+  document.getElementById('ct-tagline').textContent=cyc.tagline;
+  const procDiv=document.getElementById('ct-processes');
+  procDiv.innerHTML=cyc.keyProcesses.slice(0,3).map(p=>
+    `<div class="ct-process"><div class="ct-dot"></div>${p}</div>`).join('');
+
+  // Render SVG edges
+  const svg=document.getElementById('diagram-svg');
+  svg.innerHTML=`<defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="${cyc.color}" opacity=".8"/>
+    </marker>
+  </defs>`;
+
+  edgeData={};
+  nodeEls={};
+
+  // Background click-catcher (behind all edges) to deselect
+  const bgRect=document.createElementNS('http://www.w3.org/2000/svg','rect');
+  bgRect.setAttribute('x','0');bgRect.setAttribute('y','0');
+  bgRect.setAttribute('width','100%');bgRect.setAttribute('height','100%');
+  bgRect.setAttribute('fill','transparent');
+  bgRect.onclick=()=>deselectNode();
+  svg.appendChild(bgRect);
+
+  // Build node position map
+  const positions={};
+  cyc.nodes.forEach(n=>{
+    positions[n.id]={x:n.x/100*W, y:n.y/100*H};
+  });
+
+  // Render edges
+  cyc.edges.forEach((edge,i)=>{
+    const node0=positions[edge.from];
+    const to0=positions[edge.to];
+    if(!node0||!to0)return;
+    const edgeId='edge_'+i;
+    const isSelfLoop=edge.from===edge.to;
+
+    let from,to,cpx,cpy;
+    if(isSelfLoop){
+      // Internal flow (e.g. deep groundwater): a loop bulging to the side of
+      // the node, returning into it. Direction set by edge.loopX/loopY.
+      const lx=edge.loopX!==undefined?edge.loopX:120;
+      const ly=edge.loopY!==undefined?edge.loopY:0;
+      from={x:node0.x+(lx>=0?8:-8), y:node0.y-13};
+      to={x:node0.x+(lx>=0?8:-8), y:node0.y+13};
+      cpx=node0.x+lx;
+      cpy=node0.y+ly;
+    }else{
+      from=node0; to=to0;
+      // Compute control point (perpendicular offset for curved edges)
+      const mx=(from.x+to.x)/2;
+      const my=(from.y+to.y)/2;
+      const dx=to.x-from.x;
+      const dy=to.y-from.y;
+      const len=Math.sqrt(dx*dx+dy*dy);
+      const offset=Math.min(len*.3,80);
+      const perpX=-dy/len*offset;
+      const perpY=dx/len*offset;
+      // Alternate curve direction for visual clarity
+      const sign=(i%2===0)?1:-1;
+      cpx=mx+perpX*sign;
+      cpy=my+perpY*sign;
+    }
+
+    const pathD=`M ${from.x} ${from.y} Q ${cpx} ${cpy} ${to.x} ${to.y}`;
+
+    // Line
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',pathD);
+    path.setAttribute('fill','none');
+    path.setAttribute('stroke',cyc.color);
+    path.setAttribute('stroke-width',edge.importance>3?'2':'1.5');
+    path.setAttribute('stroke-opacity','.45');
+    path.setAttribute('marker-end','url(#arrow)');
+    path.id=edgeId+'_path';
+    svg.appendChild(path);
+
+    // Store edge data for particles
+    edgeData[edgeId]={from,to,cpx,cpy,color:cyc.color,importance:edge.importance};
+
+    // Invisible wider hit area + label
+    const hitPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+    hitPath.setAttribute('d',pathD);
+    hitPath.setAttribute('fill','none');
+    hitPath.setAttribute('stroke','rgba(255,255,255,0.001)');
+    hitPath.setAttribute('stroke-width','20');
+    hitPath.setAttribute('pointer-events','stroke');
+    hitPath.className.baseVal='edge-hit';
+    hitPath.style.cursor='pointer';
+    hitPath.onmouseenter=(e)=>showEdgeTooltip(edge,e);
+    hitPath.onmouseleave=hideEdgeTooltip;
+    hitPath.onclick=(e)=>showEdgeInfo(edge,e);
+    svg.appendChild(hitPath);
+
+    // Edge label (midpoint, or custom labelT if set)
+    const t=edge.labelT!==undefined?edge.labelT:0.5;
+    const lx=(1-t)*(1-t)*from.x+2*(1-t)*t*cpx+t*t*to.x;
+    const ly=(1-t)*(1-t)*from.y+2*(1-t)*t*cpy+t*t*to.y;
+    const label=document.createElementNS('http://www.w3.org/2000/svg','text');
+    label.setAttribute('x',lx);
+    label.setAttribute('y',ly-8);
+    label.setAttribute('text-anchor','middle');
+    label.setAttribute('fill',cyc.color);
+    label.setAttribute('font-size','9');
+    label.setAttribute('font-family','Inter,sans-serif');
+    label.setAttribute('font-weight','600');
+    label.setAttribute('opacity','.7');
+    label.setAttribute('pointer-events','none');
+    label.textContent=edge.label;
+    svg.appendChild(label);
+  });
+
+  // Render node elements
+  const layer=document.getElementById('nodes-layer');
+  layer.innerHTML='';
+  cyc.nodes.forEach(node=>{
+    const el=document.createElement('div');
+    el.className='node-div';
+    el.id='node_'+node.id;
+    el.style.left=(node.x/100*W)+'px';
+    el.style.top=(node.y/100*H)+'px';
+    el.innerHTML=`
+      <div class="node-circle">${node.icon}</div>
+      <div class="node-label">${node.label}<br><span class="node-reservoir">${node.reservoir}</span></div>`;
+    el.onclick=(e)=>{e.stopPropagation();selectNode(node,el)};
+    layer.appendChild(el);
+    nodeEls[node.id]=el;
+  });
+
+  // Click background to deselect
+  diagArea.onclick=(e)=>{
+    if(e.target===diagArea||e.target===canvas){
+      deselectNode();
+    }
+  };
+
+  startParticles();
+}
+
+// ═══════════════════════════════════════════════
+// PARTICLE SYSTEM
+// ═══════════════════════════════════════════════
+class Particle{
+  constructor(edgeId,edata){
+    this.edgeId=edgeId;
+    this.edata=edata;
+    this.t=0;
+    this.speed=0.003+Math.random()*.003;
+    this.size=2+Math.random()*2;
+    this.alpha=0;
+    this.done=false;
+  }
+  update(){
+    this.t+=this.speed;
+    if(this.t>1){this.done=true;return;}
+    this.alpha=this.t<.1?this.t/.1:this.t>.85?(1-this.t)/.15:1;
+  }
+  getPos(){
+    const {from,to,cpx,cpy}=this.edata;
+    const t=this.t;
+    const x=(1-t)*(1-t)*from.x+2*(1-t)*t*cpx+t*t*to.x;
+    const y=(1-t)*(1-t)*from.y+2*(1-t)*t*cpy+t*t*to.y;
+    return{x,y};
+  }
+  draw(ctx){
+    const {x,y}=this.getPos();
+    const col=this.edata.color;
+    ctx.save();
+    ctx.globalAlpha=this.alpha*.85;
+    // Glow
+    ctx.beginPath();
+    ctx.arc(x,y,this.size*2.5,0,Math.PI*2);
+    const g=ctx.createRadialGradient(x,y,0,x,y,this.size*2.5);
+    g.addColorStop(0,col+'60');
+    g.addColorStop(1,'transparent');
+    ctx.fillStyle=g;
+    ctx.fill();
+    // Core
+    ctx.beginPath();
+    ctx.arc(x,y,this.size,0,Math.PI*2);
+    ctx.fillStyle=col;
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+function startParticles(){
+  particles=[];
+  function loop(){
+    animFrame=requestAnimationFrame(loop);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    // Spawn particles
+    Object.entries(edgeData).forEach(([id,edata])=>{
+      const rate=edata.importance>3?1:0.5;
+      if(Math.random()<rate*0.04){
+        particles.push(new Particle(id,edata));
+      }
+    });
+    // Update + draw
+    particles=particles.filter(p=>{
+      p.update();
+      if(!p.done)p.draw(ctx);
+      return !p.done;
+    });
+    if(particles.length>120) particles=particles.slice(-100);
+  }
+  loop();
+}
+
+function stopParticles(){
+  if(animFrame){cancelAnimationFrame(animFrame);animFrame=null;}
+  particles=[];
+  if(ctx&&canvas)ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
+// ═══════════════════════════════════════════════
+// EDGE TOOLTIP
+// ═══════════════════════════════════════════════
+let tooltip=null;
+function showEdgeTooltip(edge,e){
+  hideEdgeTooltip();
+  tooltip=document.createElement('div');
+  tooltip.className='edge-popup';
+  tooltip.innerHTML=`<div class="ep-title">${edge.label}</div>
+    <div class="ep-flux">${edge.flux}</div>`;
+  tooltip.style.left=(e.clientX+12)+'px';
+  tooltip.style.top=(e.clientY-40)+'px';
+  document.body.appendChild(tooltip);
+}
+function hideEdgeTooltip(){
+  if(tooltip){tooltip.remove();tooltip=null;}
+}
+
+function showEdgeInfo(edge,e){
+  hideEdgeTooltip();
+  collapsePanel();
+  setTimeout(()=>{
+    document.getElementById('panel-badge').textContent='Process';
+    document.getElementById('panel-title').textContent=edge.label;
+    document.getElementById('panel-subtitle').textContent=`${edge.from} → ${edge.to}`;
+    const body=document.getElementById('panel-body');
+    body.innerHTML=`
+      <div class="panel-section">
+        <h4>Description</h4>
+        <p>${edge.desc}</p>
+      </div>
+      <div class="panel-section">
+        <h4>Scale of Flow</h4>
+        <div class="stat-row"><span class="stat-label">Relative flow</span><span class="stat-value">${edge.flux}</span></div>
+      </div>`;
+    document.getElementById('info-panel').classList.remove('collapsed');
+    document.getElementById('welcome-panel').classList.add('hidden');
+  },50);
+}
+
+// ═══════════════════════════════════════════════
+// NODE SELECTION
+// ═══════════════════════════════════════════════
+function selectNode(node,el){
+  Object.values(nodeEls).forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedNode=node;
+  document.getElementById('welcome-panel').classList.add('hidden');
+
+  document.getElementById('panel-badge').textContent='Reservoir';
+  document.getElementById('panel-title').textContent=node.label;
+  document.getElementById('panel-subtitle').textContent=node.tagline;
+
+  const statsHtml=node.stats.map(s=>`
+    <div class="stat-row">
+      <span class="stat-label">${s.l}</span>
+      <span class="stat-value">${s.v}</span>
+    </div>`).join('');
+
+  const body=document.getElementById('panel-body');
+  body.innerHTML=`
+    <div class="panel-section">
+      <h4>Overview</h4>
+      <p>${node.description}</p>
+    </div>
+    <div class="panel-section">
+      <h4>Key Statistics</h4>
+      ${statsHtml}
+    </div>
+    <div class="fun-fact">
+      <strong>Did you know?</strong>
+      ${node.fact}
+    </div>
+    <div class="fun-fact" style="border-color:color-mix(in srgb,var(--accent) 20%,transparent);margin-top:4px">
+      <strong>📖 SOS 110 · Source</strong>
+      Sherman &amp; Montgomery, <em>Environmental Science and Sustainability</em>, 2nd ed. — "The Water Cycle" (At a Glance). Figures show Earth's major water reservoirs and the average residence time of a water molecule in each.
+    </div>`;
+
+  document.getElementById('info-panel').classList.remove('collapsed');
+}
+
+function deselectNode(){
+  Object.values(nodeEls).forEach(e=>e.classList.remove('selected'));
+  selectedNode=null;
+  collapsePanel();
+  document.getElementById('welcome-panel').classList.remove('hidden');
+}
+
+function collapsePanel(){
+  document.getElementById('info-panel').classList.add('collapsed');
+}
+
+// ═══════════════════════════════════════════════
+// RESIZE HANDLER
+// ═══════════════════════════════════════════════
+let resizeTimer;
+window.addEventListener('resize',()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer=setTimeout(()=>renderCycle(),200);
+});
+
+// ═══════════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════════
+function init(){
+  document.getElementById('cycle-view').classList.add('view-active');
+  requestAnimationFrame(()=>renderCycle());
+}
+init();
+</script>
+</body>
+</html>
