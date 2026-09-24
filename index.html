@@ -256,6 +256,10 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   .slide{justify-content:flex-start; overflow-y:auto;}
 }
 
+.slide.dense .lead{font-size:clamp(.88rem,1.4vw,1rem); line-height:1.45; margin-bottom:.8rem;}
+.slide.dense .bullets{gap:.42rem;}
+.slide.dense .bullets li{font-size:clamp(.84rem,1.3vw,.96rem); line-height:1.38;}
+.slide.dense .note{margin-top:.6rem;}
 
 .asu27{--maroon:#8C1D40; --gold:#FFC627; --maroon-dk:#6b1531;
   background:linear-gradient(135deg,#fff 0%,#fdf6e3 55%,#faecc8 100%);}
@@ -376,6 +380,9 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .swu-why{font-family:'Merriweather',Georgia,serif; font-style:italic; color:#4a4130;
   font-size:clamp(.76rem,1.18vw,.9rem); line-height:1.4; margin-top:.8rem; padding-top:.6rem;
   border-top:1px solid #e2d5b7; max-width:36ch;}
+.swu-cite{margin-top:.55rem; font-family:'Inter',sans-serif; font-size:clamp(.56rem,.86vw,.66rem);
+  line-height:1.38; color:#8a7d60; max-width:40ch;}
+.swu-cite i{font-style:italic;}
 @media (max-width:800px){ .swu-grid{grid-template-columns:1fr;}
   .swu-col.sus{border-right:none; border-bottom:1px solid #e2d5b7;} }
 
@@ -1602,6 +1609,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
         <div class="swu-num">4M+</div>
         <div class="swu-unit">acre-feet stored underground for future droughts</div>
         <div class="swu-why">Saving the surplus underground builds a reserve the state can draw on when the river runs short.</div>
+        <div class="swu-cite">Source: Arizona Water Banking Authority (2024), <i>Recovery Planning</i>: 4.41 million acre-feet of long-term storage credits accrued since 1996.</div>
       </div>
       <div class="swu-col unsus">
         <div class="swu-label">Unsustainable</div>
@@ -1625,30 +1633,19 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
         <div class="swu-num">12+ ft</div>
         <div class="swu-unit">the land has sunk across south-central Arizona</div>
         <div class="swu-why">Pumping past what nature replaced compacted the aquifer for good and cracked the ground with earth fissures.</div>
+        <div class="swu-cite">Source: Galloway, Jones &amp; Ingebritsen (1999), <i>Land Subsidence in the United States</i>, USGS Circular 1182: about 12.5 ft near Eloy by 1977, more than 15 ft by 1985.</div>
       </div>
     </div>
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
-<section class="slide" data-type="quote" style="--accent:#1C7293">
-  <div class="bleed-grid">
-    <div class="bleed-text">
-      <div class="eyebrow">Introduction</div>
-      <blockquote class="bigquote">We know the value of water when the well runs dry.<cite>— Ben Franklin</cite></blockquote>
-      <div class="stat-row"><div class="stat-box"><div class="stat-num">82 gal</div><div class="stat-lbl">water used per American, per day (EPA)</div></div></div>
-      <ul class="bullets"><li><strong>EPA:</strong> the average American uses about 82 gallons of water every day.</li><li><strong>UN:</strong> roughly 3.5 million people die each year from inadequate water supply or contaminated water.</li><li><strong>Cape Town, 2018:</strong> reservoirs fell to 25% capacity and officials threatened to shut off residential taps.</li></ul>
-    </div>
-    <div class="bleed-media cover"><img loading="lazy" decoding="async" data-src="media/image2.jpeg" alt=""></div>
-  </div>
-  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
-</section>
-<section class="slide" data-type="content" style="--accent:#1C7293">
+<section class="slide dense" data-type="content" style="--accent:#1C7293">
   <div class="bleed-grid">
     <div class="bleed-text">
 <div class="eyebrow">7.1 · Where on Earth Is All the Water?</div>
 <h2 class="heading">The Hydrosphere</h2>
 <p class="lead">The hydrosphere is all the places on Earth that hold water. Water collects in reservoirs — parts of Earth where it remains for a period of time — and the ocean is by far the largest.</p>
-<ul class="bullets"><li><strong>Reservoirs:</strong> the ocean holds the most water — about 75% of global precipitation falls straight back into it.</li><li><strong>Aquifers:</strong> water accumulates in subsurface rock and sediment, then seeps toward oceans, lakes, and rivers at roughly 1 ft/year.</li><li><strong>Residence time:</strong> how long a water molecule stays in a reservoir — about 10 days in the atmosphere, but thousands of years in the deep ocean.</li><li><strong>Embedded water:</strong> the water used to make goods — ~700 gallons for a gallon of beer, 500+ gallons for a pound of pork.</li><li><strong>Surface water:</strong> rivers, streams, lakes, and wetlands are the most available fresh water for human use; glaciers are masses of ice that flow over land.</li></ul>
+<ul class="bullets"><li><strong>Reservoirs:</strong> the ocean holds the most water — about 75% of global precipitation falls straight back into it.</li><li><strong>Aquifers:</strong> water accumulates in subsurface rock and sediment, then seeps toward oceans, lakes, and rivers at roughly 1 ft/year.</li><li><strong>Residence time:</strong> how long a water molecule stays in a reservoir — about 10 days in the atmosphere, but thousands of years in the deep ocean.</li><li><strong>Embedded water:</strong> the water used to make goods — ~700 gallons for a gallon of beer, 500+ gallons for a pound of pork.</li><li><strong>Surface water:</strong> rivers, streams, lakes, and wetlands are the most available fresh water for human use; glaciers are masses of ice that flow over land.</li><li><u><strong>Groundwater recharge:</strong> water soaking down through the soil into aquifers, replenishing groundwater.</u></li><li><u><strong>Transpiration:</strong> plants release water vapor into the atmosphere through their leaves.</u></li></ul>
     </div>
     <div class="bleed-media contain"><img loading="lazy" decoding="async" data-src="media/image3.jpg" alt=""></div>
   </div>
@@ -1672,18 +1669,6 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
-<section class="slide" data-type="content" style="--accent:#2D6A4F">
-  <div class="bleed-grid">
-    <div class="bleed-text">
-<div class="eyebrow">7.2 · Rivers and Streams</div>
-<h2 class="heading">Lotic Ecosystems — Flowing Waters</h2>
-<p class="lead">Rivers and streams are lotic (flowing-water) ecosystems. As the gradient and flow change downstream, so do the habitats and the species they support.</p>
-<ul class="bullets"><li>Steep upper reaches bring riffles, rapids, and waterfalls; as the gradient eases, the flow deepens and pools form.</li><li><strong>Wetlands:</strong> grass- and cattail-dominated wetlands are marshes; forested wetlands are swamps.</li><li><strong>Estuaries:</strong> where fresh water meets salt water — denser salt water sits below the lighter fresh water — among Earth's richest habitats.</li></ul>
-    </div>
-    <div class="bleed-media contain"><img loading="lazy" decoding="async" data-src="media/image7.jpg" alt=""></div>
-  </div>
-  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
-</section>
 <section class="slide" data-type="content" style="--accent:#A4373A">
   <div class="bleed-grid">
     <div class="bleed-text">
@@ -1704,7 +1689,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 <h2 class="heading">Mining Water We Cannot Replace</h2>
       </div>
       <div class="stack-body">
-<p class="lead">Water mining means withdrawing groundwater faster than it is replenished. Global groundwater use has expanded 10-fold since 1950 — drawing down water that took millennia to accumulate.</p>
+<p class="lead">Water mining means withdrawing groundwater faster than it is replenished. <strong>This excessive groundwater withdrawal can lead to aquifer depletion.</strong></p>
 <div class="stat-row"><div class="stat-box"><div class="stat-num">10×</div><div class="stat-lbl">growth in global groundwater use since 1950</div></div></div>
 <ul class="bullets"><li><strong>Renewable vs. non-renewable:</strong> some aquifers recharge in years; others hold “fossil” water that is, for practical purposes, gone once used.</li><li><strong>Subsidence:</strong> the ground sinks or collapses as water drains from aquifers — often permanently.</li><li><strong>Impervious surfaces (roads, rooftops):</strong> send water to storm drains instead of soil, worsening floods, stream-bank erosion, and habitat damage.</li><li><strong>Dams and diversions:</strong> disrupt fish migration and sediment transport.</li></ul>
       </div>
@@ -1825,18 +1810,6 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 <ul class="bullets"><li>In parts of Africa, over half the population lacks safe drinking water — some walk three hours a day to collect it.</li><li>California's 2015 drought led to mandatory 25% water cuts.</li><li>In Cape Town, wealthier residents kept home water tanks while poorer residents waited in long lines at public distribution centers.</li><li>Some Middle Eastern nations without adequate fresh water have invested heavily in desalination.</li></ul>
     </div>
     <div class="bleed-media cover"><img loading="lazy" decoding="async" data-src="media/image12.jpg" alt=""></div>
-  </div>
-  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
-</section>
-<section class="slide" data-type="content" style="--accent:#BC8A2E">
-  <div class="bleed-grid">
-    <div class="bleed-text">
-<div class="eyebrow">7.4 · Almond Milk vs. Cow Milk — A Water Comparison</div>
-<h2 class="heading">How Many Gallons in Your Glass?</h2>
-<p class="lead">Embedded water lets us compare everyday choices. Plant-based milks generally take far less water than dairy — but “less” still adds up.</p>
-<div class="stat-row"><div class="stat-box"><div class="stat-num">9 gal</div><div class="stat-lbl">one glass of soy milk</div></div><div class="stat-box"><div class="stat-num">23 gal</div><div class="stat-lbl">one glass of almond milk</div></div><div class="stat-box"><div class="stat-num">30 gal</div><div class="stat-lbl">one glass of cow's milk</div></div></div>
-    </div>
-    <div class="bleed-media contain"><img loading="lazy" decoding="async" data-src="media/image13.jpg" alt=""></div>
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
@@ -3485,33 +3458,16 @@ window.__deckLiveReady.then(function(live){
     <iframe class="embed-frame" data-src="apps/water-usage.html?embed=1" title="Water Usage Explorer — Household &amp; Statewide" loading="lazy"></iframe>
   </div>
 </section>
-<section class="slide" data-type="content" style="--accent:#52796F">
+<section class="slide dense" data-type="content" style="--accent:#52796F">
   <div class="bleed-grid">
     <div class="bleed-text">
 <div class="eyebrow">7.5 · How Do We Keep Fresh Water Clean?</div>
 <h2 class="heading">Treatment, Access, and Regulation</h2>
 <p class="lead">Even where treatment works well, gaps remain. In the US, more than 90% of people are served by a water system with no violations — yet some communities still face unsafe water.</p>
-<ul class="bullets"><li>Globally, 2.5 billion people lack sanitary wastewater systems, and 1.8 billion drink water contaminated with sewage.</li><li><strong>US framework:</strong> the Clean Water Act sets surface-water quality standards; the Safe Drinking Water Act sets public-supply standards.</li><li>Agricultural nonpoint-source pollution remains the most challenging to regulate.</li><li><strong>New ideas:</strong> green roofs and the solar “watercone” that distills clean water using sunlight.</li></ul>
+<ul class="bullets"><li>Globally, 2.5 billion people lack sanitary wastewater systems, and 1.8 billion drink water contaminated with sewage.</li><li><strong>US framework:</strong> the Clean Water Act sets surface-water quality standards; the Safe Drinking Water Act sets public-supply standards.</li><li>Agricultural nonpoint-source pollution remains the most challenging to regulate.</li><li><u><strong>Vegetated buffer zones:</strong> strips of trees, shrubs, and grasses along streams trap sediment and absorb fertilizer runoff before it reaches the water, one of the most effective ways to protect water quality.</u></li><li><strong>New ideas:</strong> green roofs and the solar “watercone” that distills clean water using sunlight.</li></ul>
 <p class="note">Map: groundwater-level change in the High Plains (Ogallala) Aquifer — a vivid picture of how hard clean, reliable supply can be to sustain. Adapted from McGuire (2004).</p>
     </div>
     <div class="bleed-media contain"><img loading="lazy" decoding="async" data-src="media/image15.jpg" alt=""></div>
-  </div>
-  <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
-</section>
-<section class="slide" data-type="content" style="--accent:#5BA3C4">
-  <div class="stack-grid">
-    <div class="stack-top">
-      <div class="stack-head">
-<div class="eyebrow">7.6 · Why Is Frozen Water Important?</div>
-<h2 class="heading">The Cryosphere: Earth's Frozen Reservoir</h2>
-      </div>
-      <div class="stack-body">
-<p class="lead">The cryosphere is all the frozen parts of Earth's surface — snow, sea ice, glaciers, permafrost, and ice sheets. Earth's glaciers have been losing mass since the 1970s.</p>
-<ul class="bullets"><li>Glacier loss contributes to sea-level rise and reduces freshwater storage for downstream communities.</li><li><strong>Permafrost:</strong> water perpetually frozen in soil or rock.</li><li>Sea ice covers about 15% of the ocean seasonally and reflects sunlight, helping cool the planet.</li><li><strong>Ice ages:</strong> at times, vast continental ice sheets shaped the landscapes we live in today.</li></ul>
-<p class="note">Chart: net global ice loss from glaciers since the 1940s (meters of water equivalent). Source: W. W. Norton, Environmental Science (2023), after the World Glacier Monitoring Service.</p>
-      </div>
-    </div>
-    <div class="stack-media contain"><img loading="lazy" decoding="async" data-src="media/image16.jpg" alt=""></div>
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
@@ -3590,7 +3546,7 @@ window.__deckLiveReady.then(function(live){
     <div class="eyebrow">Chapter 7 · Key Concepts</div>
     <h2 class="heading">Water: How Do We Use It and Affect Its Quality?</h2>
     
-    <div class="grid cols-4"><div class="gcard"><div class="gcard-head">Hydrosphere</div><div class="gcard-desc">All the places on Earth that hold water — surface, groundwater, glaciers, and atmosphere.</div></div><div class="gcard"><div class="gcard-head">Aquifer</div><div class="gcard-desc">Subsurface rock/sediment zone where groundwater accumulates.</div></div><div class="gcard"><div class="gcard-head">Embedded Water</div><div class="gcard-desc">Water used to produce the goods and food we consume.</div></div><div class="gcard"><div class="gcard-head">Subsidence</div><div class="gcard-desc">Ground sinking from aquifer depletion — often permanent.</div></div><div class="gcard"><div class="gcard-head">Lentic Ecosystem</div><div class="gcard-desc">Still-water bodies — lakes and ponds.</div></div><div class="gcard"><div class="gcard-head">Estuary</div><div class="gcard-desc">Where fresh meets salt water — among Earth's most biologically rich areas.</div></div><div class="gcard"><div class="gcard-head">Cryosphere</div><div class="gcard-desc">All frozen parts of Earth — glaciers, permafrost, and sea ice.</div></div><div class="gcard"><div class="gcard-head">Ocean Acidification</div><div class="gcard-desc">CO₂ dissolving in seawater forms carbonic acid, threatening calcifying organisms.</div></div></div>
+    <div class="grid cols-3"><div class="gcard"><div class="gcard-head">Hydrosphere</div><div class="gcard-desc">All the places on Earth that hold water — surface, groundwater, glaciers, and atmosphere.</div></div><div class="gcard"><div class="gcard-head">Aquifer</div><div class="gcard-desc">Subsurface rock/sediment zone where groundwater accumulates.</div></div><div class="gcard"><div class="gcard-head"><u>Transpiration</u></div><div class="gcard-desc"><u>Water vapor released into the atmosphere by plants.</u></div></div><div class="gcard"><div class="gcard-head">Embedded Water</div><div class="gcard-desc">Water used to produce the goods and food we consume.</div></div><div class="gcard"><div class="gcard-head">Subsidence</div><div class="gcard-desc">Ground sinking from aquifer depletion — often permanent.</div></div><div class="gcard"><div class="gcard-head">Lentic Ecosystem</div><div class="gcard-desc">Still-water bodies — lakes and ponds.</div></div><div class="gcard"><div class="gcard-head">Estuary</div><div class="gcard-desc">Where fresh meets salt water — among Earth's most biologically rich areas.</div></div><div class="gcard"><div class="gcard-head">Cryosphere</div><div class="gcard-desc">All frozen parts of Earth — glaciers, permafrost, and sea ice.</div></div><div class="gcard"><div class="gcard-head">Ocean Acidification</div><div class="gcard-desc">CO₂ dissolving in seawater forms carbonic acid, threatening calcifying organisms.</div></div></div>
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
@@ -3601,7 +3557,7 @@ window.__deckLiveReady.then(function(live){
 
 <div class="hud">
   <button onclick="prev()" title="Previous (left arrow)">&#8249;</button>
-  <span class="counter" id="counter">1 / 31</span>
+  <span class="counter" id="counter">1 / 27</span>
   <button onclick="next()" title="Next (right arrow)">&#8250;</button>
   <button onclick="toggleMenu()" title="Slide menu (O)">&#9776;</button>
   <button onclick="toggleFs()" title="Fullscreen (F)">&#9974;</button>
@@ -3610,7 +3566,7 @@ window.__deckLiveReady.then(function(live){
 <div class="menu" id="menu">
   <button class="menu-close" onclick="toggleMenu(false)" aria-label="Close menu">&times;</button>
   <h3>Chapter 7 &mdash; Jump to a slide</h3>
-  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Water in the News</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Sustainable vs. Unsustainable</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>Introduction</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>7.1 The Hydrosphere</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>7.1 ▶ Water Cycle App</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>7.1 Embedded Water</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>7.2 Rivers and Streams</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>7.3 Flint, Michigan</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>7.3 Groundwater Depletion</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>7.3 Dams &amp; Diversions</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>7.3 Water Pollution</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>7.3 Eutrophication</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>7.4 Water Access</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>7.4 ▶ Guess: Water Use</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>7.4 ▶ Water-Use by Sector</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>7.4 Water Scarcity</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>7.4 Almond vs. Cow Milk</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>7.4 ▶ Rank: Food Water</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>7.4 Water Conservation</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>7.4 ▶ Game: City Water Supply</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>7.4 ▶ Water Usage App</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>7.5 Keeping Water Clean</button><button class="menu-item" data-go="25"><span class="menu-num">26</span>7.6 The Cryosphere</button><button class="menu-item" data-go="26"><span class="menu-num">27</span>7.6 ▶ Sea-Level Rise</button><button class="menu-item" data-go="27"><span class="menu-num">28</span>7.8 Ocean Pollution</button><button class="menu-item" data-go="28"><span class="menu-num">29</span>7.8 Overfishing &amp; Acidification</button><button class="menu-item" data-go="29"><span class="menu-num">30</span>7.9 What Can I Do?</button><button class="menu-item" data-go="30"><span class="menu-num">31</span>Key Concepts</button></div>
+  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Water in the News</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Sustainable vs. Unsustainable</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>7.1 The Hydrosphere</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>7.1 ▶ Water Cycle App</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>7.1 Embedded Water</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>7.3 Flint, Michigan</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>7.3 Groundwater Depletion</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>7.3 Dams &amp; Diversions</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>7.3 Water Pollution</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>7.3 Eutrophication</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>7.4 Water Access</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>7.4 ▶ Guess: Water Use</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>7.4 ▶ Water-Use by Sector</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>7.4 Water Scarcity</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>7.4 ▶ Rank: Food Water</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>7.4 Water Conservation</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>7.4 ▶ Game: City Water Supply</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>7.4 ▶ Water Usage App</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>7.5 Keeping Water Clean</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>7.6 ▶ Sea-Level Rise</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>7.8 Ocean Pollution</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>7.8 Overfishing &amp; Acidification</button><button class="menu-item" data-go="25"><span class="menu-num">26</span>7.9 What Can I Do?</button><button class="menu-item" data-go="26"><span class="menu-num">27</span>Key Concepts</button></div>
 </div>
 
 <script>
