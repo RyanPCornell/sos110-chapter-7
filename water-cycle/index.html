@@ -5,231 +5,143 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Water Cycle Explorer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,700;0,900;1,400;1,700;1,900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#080d16;
-  --surface:#0f172a;
-  --surface2:#162032;
-  --border:#1e293b;
-  --text:#e2e8f0;
-  --text-muted:#94a3b8;
-  --text-dim:#475569;
-  --accent:#38bdf8;
-  --accent-dim:rgba(56,189,248,.06);
+  --bg:#f6efe0;
+  --paper:#fffdf6;
+  --surface:#fffaf0;
+  --surface2:#f6edd8;
+  --border:rgba(120,100,60,.28);
+  --ink:#3b3222;
+  --text:#3b3222;
+  --text-muted:#6b604c;
+  --text-dim:#9a8f78;
+  --accent:#2f6f9f;
+  --gold:#8a6a2f;
 }
 html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
 
-/* ─── HEADER ─────────────────────────────────── */
+/* ─── HEADER (standalone only) ───────────────── */
 #app-header{
   position:fixed;top:0;left:0;right:0;height:58px;
-  background:rgba(8,13,22,.92);backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border);
+  background:rgba(255,250,240,.94);border-bottom:1px solid var(--border);
   display:flex;align-items:center;padding:0 24px;gap:16px;z-index:100;
 }
-#app-header .logo{
-  display:flex;align-items:center;gap:10px;
-  font-size:15px;font-weight:700;letter-spacing:-.3px;
-}
-#app-header .logo .dot{
-  width:8px;height:8px;border-radius:50%;background:var(--accent);
-  box-shadow:0 0 12px var(--accent);
-}
-#app-header .subtitle{font-size:12px;color:var(--text-muted);font-weight:400}
+#app-header .logo{display:flex;align-items:center;gap:10px;font-family:'Merriweather',serif;font-size:16px;font-weight:900;font-style:italic}
+#app-header .logo .dot{width:9px;height:9px;border-radius:50%;background:var(--accent)}
+#app-header .subtitle{font-family:'Inter',sans-serif;font-style:normal;font-size:12px;color:var(--text-muted);font-weight:500}
 
 /* ─── CYCLE VIEW ─────────────────────────────── */
-#cycle-view{
-  position:fixed;top:58px;left:0;right:0;bottom:0;
-  display:flex;background:var(--bg);
-  opacity:0;transition:opacity .4s;
-}
+#cycle-view{position:fixed;top:58px;left:0;right:0;bottom:0;display:flex;background:var(--bg);opacity:0;transition:opacity .4s}
+body.embed #cycle-view{top:0}
 #cycle-view.view-active{opacity:1}
-#diagram-area{
-  flex:1;position:relative;overflow:hidden;
-  background:radial-gradient(ellipse at 50% 30%, var(--accent-dim) 0%, transparent 70%);
-}
-#diagram-svg{position:absolute;inset:0;width:100%;height:100%}
+#diagram-area{flex:1;position:relative;overflow:hidden;background:linear-gradient(180deg,#fbf3e1 0%,#f6e6c6 55%,#efe2c6 100%)}
+#backdrop-svg,#diagram-svg{position:absolute;inset:0;width:100%;height:100%}
 #particle-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.node-div{
-  position:absolute;transform:translate(-50%,-50%);
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  cursor:pointer;z-index:10;
-}
+.node-div{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;z-index:10}
 .node-circle{
-  width:72px;height:72px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;flex-direction:column;
-  border:2px solid var(--accent);
-  background:color-mix(in srgb,var(--accent) 12%,var(--surface));
-  font-size:26px;
-  box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 40%,transparent);
-  transition:transform .2s,box-shadow .2s,background .2s,border-color .2s;
-  position:relative;
+  width:66px;height:66px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:2.2px solid var(--ink);background:var(--paper);
+  box-shadow:0 4px 12px rgba(80,60,20,.18);
+  transition:transform .2s,box-shadow .2s,background .2s;position:relative;
 }
+.node-circle svg{width:44px;height:44px;overflow:visible}
 .node-circle::after{
-  content:'';position:absolute;inset:-4px;border-radius:50%;
-  border:2px solid color-mix(in srgb,var(--accent) 30%,transparent);
-  animation:pulse-ring 2.5s ease-out infinite;
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:1.5px dashed rgba(59,50,34,.35);animation:spin 24s linear infinite;
 }
-.node-div:hover .node-circle,
-.node-div.selected .node-circle{
-  transform:scale(1.12);
-  background:color-mix(in srgb,var(--accent) 22%,var(--surface));
-  box-shadow:0 0 0 8px color-mix(in srgb,var(--accent) 15%,transparent),
-             0 0 40px color-mix(in srgb,var(--accent) 35%,transparent);
+.node-div:hover .node-circle,.node-div.selected .node-circle{
+  transform:scale(1.1);background:#fff6df;
+  box-shadow:0 0 0 6px rgba(138,106,47,.16),0 8px 20px rgba(80,60,20,.22);
 }
+.node-div.selected .node-circle{border-color:var(--gold)}
 .node-label{
-  font-size:11px;font-weight:600;letter-spacing:.2px;text-align:center;
-  background:rgba(8,13,22,.85);padding:3px 8px;border-radius:4px;
-  border:1px solid var(--border);max-width:100px;line-height:1.3;
+  font-family:'Merriweather',serif;font-style:italic;font-weight:900;font-size:13px;color:var(--ink);
+  text-align:center;background:rgba(255,250,240,.94);padding:3px 9px 4px;border-radius:999px;
+  border:1px solid var(--border);line-height:1.25;white-space:nowrap;
 }
-.node-reservoir{
-  font-size:9px;color:var(--accent);font-family:'JetBrains Mono',monospace;
-  font-weight:500;
-}
-@keyframes pulse-ring{
-  0%{transform:scale(1);opacity:.6}
-  100%{transform:scale(1.6);opacity:0}
-}
+.node-reservoir{display:block;font-family:'Inter',sans-serif;font-style:normal;font-size:10.5px;color:var(--accent);font-weight:700}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.node-circle::after{animation:none}}
 
 /* ─── INFO PANEL ─────────────────────────────── */
 #info-panel{
-  width:340px;position:absolute;top:0;right:0;bottom:0;
-  background:rgba(15,23,42,.96);backdrop-filter:blur(12px);
-  border-left:1px solid var(--border);
+  width:350px;position:absolute;top:12px;right:12px;bottom:12px;
+  background:var(--paper);border:1px solid var(--border);border-top:5px solid var(--gold);border-radius:12px;
+  box-shadow:0 16px 40px rgba(60,45,15,.22);
   overflow-y:auto;display:flex;flex-direction:column;
-  transition:transform .35s cubic-bezier(.4,0,.2,1);
-  z-index:30;
+  transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .3s;z-index:30;
 }
-#info-panel.collapsed{transform:translateX(100%)}
-.panel-header{
-  padding:20px 20px 16px;border-bottom:1px solid var(--border);
-  position:sticky;top:0;background:rgba(15,23,42,.98);z-index:5;
-  display:flex;flex-direction:column;
-}
+#info-panel.collapsed{transform:translateX(calc(100% + 24px));opacity:0}
+.panel-header{padding:18px 20px 14px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--paper);z-index:5;display:flex;flex-direction:column}
 .panel-close{
-  position:absolute;top:14px;right:14px;
-  width:28px;height:28px;border-radius:6px;
-  background:var(--surface2);border:1px solid var(--border);
-  color:var(--text-muted);font-size:14px;cursor:pointer;
+  position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:50%;
+  background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);font-size:13px;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  transition:background .15s,color .15s;
 }
-.panel-close:hover{background:var(--border);color:var(--text)}
+.panel-close:hover{background:#efe2c4;color:var(--ink)}
 .panel-badge{
-  display:inline-flex;align-items:center;gap:5px;
-  font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
-  padding:3px 8px;border-radius:4px;margin-bottom:10px;
-  color:var(--accent);
-  background:color-mix(in srgb,var(--accent) 12%,transparent);
-  border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);
+  align-self:flex-start;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:6px;
 }
-.panel-title{font-size:20px;font-weight:700;letter-spacing:-.4px;line-height:1.2;margin-bottom:4px}
-.panel-subtitle{font-size:12px;color:var(--text-muted)}
-.panel-body{padding:20px;flex:1;display:flex;flex-direction:column;gap:20px}
+.panel-title{font-family:'Merriweather',serif;font-weight:900;font-style:italic;font-size:22px;line-height:1.2;margin-bottom:4px;padding-right:30px}
+.panel-subtitle{font-size:12.5px;color:var(--text-muted)}
+.panel-body{padding:18px 20px;flex:1;display:flex;flex-direction:column;gap:18px}
 .panel-section{display:flex;flex-direction:column;gap:8px}
-.panel-section h4{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text-dim)}
-.panel-section p{font-size:13px;line-height:1.65;color:var(--text-muted)}
-.stat-row{
-  display:flex;justify-content:space-between;align-items:baseline;
-  padding:8px 12px;background:var(--surface2);border-radius:8px;
-  border:1px solid var(--border);
-}
-.stat-label{font-size:12px;color:var(--text-muted)}
-.stat-value{font-size:13px;font-weight:600;color:var(--accent);font-family:'JetBrains Mono',monospace}
-.fun-fact{
-  background:color-mix(in srgb,var(--accent) 8%,transparent);
-  border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);
-  border-radius:10px;padding:14px;
-  font-size:12px;color:var(--text-muted);line-height:1.6;
-}
-.fun-fact strong{color:var(--accent);display:block;margin-bottom:4px;font-size:11px;text-transform:uppercase;letter-spacing:.6px}
+.panel-section h4{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.panel-section p{font-size:13.5px;line-height:1.6;color:var(--text)}
+.stat-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:7px 2px;border-bottom:1px solid rgba(120,100,60,.16)}
+.stat-label{font-size:12.5px;color:var(--text-muted)}
+.stat-value{font-family:'Merriweather',serif;font-size:14px;font-weight:900;color:var(--ink);text-align:right}
+.fun-fact{background:#f6edd8;border-left:4px solid var(--gold);border-radius:8px;padding:12px 14px;font-size:12.5px;color:var(--text);line-height:1.55}
+.fun-fact strong{color:var(--gold);display:block;margin-bottom:4px;font-size:10.5px;text-transform:uppercase;letter-spacing:.12em}
 
 /* edge label tooltip */
 .edge-hit{cursor:pointer}
 .edge-popup{
-  position:absolute;pointer-events:none;z-index:50;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:8px;padding:10px 14px;font-size:12px;
-  box-shadow:0 8px 32px rgba(0,0,0,.4);
-  min-width:160px;max-width:220px;line-height:1.5;
+  position:absolute;pointer-events:none;z-index:50;background:var(--paper);border:1px solid var(--border);
+  border-radius:10px;padding:9px 13px;font-size:12px;box-shadow:0 8px 24px rgba(60,45,15,.2);min-width:150px;max-width:230px;line-height:1.45;
 }
-.edge-popup .ep-title{font-weight:600;font-size:13px;margin-bottom:4px}
-.edge-popup .ep-flux{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent)}
+.edge-popup .ep-title{font-family:'Merriweather',serif;font-style:italic;font-weight:900;font-size:14px;margin-bottom:2px}
+.edge-popup .ep-flux{font-size:11.5px;color:var(--accent);font-weight:700}
 
-/* ─── WELCOME PANEL ──────────────────────────── */
-#welcome-panel{
-  position:absolute;bottom:20px;right:20px;
-  background:rgba(8,13,22,.85);backdrop-filter:blur(8px);
-  border:1px solid var(--border);border-radius:12px;padding:12px 16px;
-  z-index:20;max-width:195px;
-  pointer-events:none;
-  opacity:1;transition:opacity .4s;
-}
+/* ─── cards over the drawing ─────────────────── */
+.card{background:rgba(255,250,240,.93);border:1px solid var(--border);border-radius:12px;box-shadow:0 6px 18px rgba(80,60,20,.12)}
+#welcome-panel{position:absolute;bottom:18px;right:18px;padding:11px 15px;z-index:20;max-width:215px;pointer-events:none;opacity:1;transition:opacity .4s}
 #welcome-panel.hidden{opacity:0}
-.welcome-label{
-  font-size:9px;font-weight:700;letter-spacing:.6px;
-  text-transform:uppercase;color:var(--text-dim);margin-bottom:6px;
-}
-.welcome-hint{
-  font-size:10px;color:var(--text-muted);text-align:left;line-height:1.55;
-}
-
-/* ─── LEGEND ─────────────────────────────────── */
-#legend{
-  position:absolute;bottom:20px;left:20px;
-  background:rgba(8,13,22,.85);backdrop-filter:blur(8px);
-  border:1px solid var(--border);border-radius:10px;padding:12px 16px;
-  font-size:11px;color:var(--text-muted);line-height:1.8;z-index:20;
-  pointer-events:none;
-}
+.welcome-label{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.welcome-hint{font-size:11.5px;color:var(--text-muted);line-height:1.5}
+#legend{position:absolute;bottom:18px;left:18px;padding:11px 15px;font-size:11.5px;color:var(--text-muted);line-height:1.9;z-index:20;pointer-events:none}
 #legend .leg-row{display:flex;align-items:center;gap:8px}
-.leg-line{width:24px;height:2px;background:var(--accent);opacity:.7}
-.leg-dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
-#legend .leg-note{font-size:9px;color:var(--text-dim);margin-top:4px;max-width:150px;line-height:1.4}
+.leg-line{width:26px;height:0;border-top:2.4px solid var(--accent)}
+.leg-dot{width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--ink)}
+#legend .leg-note{font-size:10px;color:var(--text-dim);margin-top:2px;max-width:170px;line-height:1.4}
+#cycle-title-card{position:absolute;top:16px;left:18px;padding:14px 18px;z-index:20;max-width:270px}
+#cycle-title-card .ct-eyebrow{font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:6px}
+#cycle-title-card .ct-eyebrow::before{content:'';width:7px;height:7px;border-radius:2px;background:var(--accent)}
+#cycle-title-card .ct-name{font-family:'Merriweather',serif;font-style:italic;font-weight:900;font-size:24px;line-height:1.15;margin-top:4px}
+#cycle-title-card .ct-tagline{font-size:12px;color:var(--text-muted);margin-top:4px;line-height:1.45}
+#cycle-title-card .ct-key{margin-top:10px;font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+#cycle-title-card .ct-process{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text);margin-top:3px}
+.ct-dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.course-ref{margin-top:10px;padding-top:9px;border-top:1px solid var(--border);font-size:10.5px;color:var(--text-dim);line-height:1.4;font-style:italic}
 
-/* ─── CYCLE TITLE CARD ───────────────────────── */
-#cycle-title-card{
-  position:absolute;top:16px;left:16px;
-  background:rgba(8,13,22,.85);backdrop-filter:blur(8px);
-  border:1px solid var(--border);border-radius:12px;padding:12px 16px;
-  z-index:20;max-width:210px;
-}
-#cycle-title-card .ct-name{font-size:16px;font-weight:700;letter-spacing:-.3px;line-height:1.2}
-#cycle-title-card .ct-tagline{font-size:10px;color:var(--text-muted);margin-top:3px;line-height:1.4}
-#cycle-title-card .ct-key{
-  margin-top:8px;font-size:9px;font-weight:700;letter-spacing:.6px;
-  text-transform:uppercase;color:var(--text-dim);
-}
-#cycle-title-card .ct-process{
-  display:flex;align-items:center;gap:5px;
-  font-size:10px;color:var(--text-muted);margin-top:3px;
-}
-.ct-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
-.course-ref{
-  margin-top:12px;padding-top:10px;border-top:1px solid var(--border);
-  font-size:10px;color:var(--text-dim);display:flex;align-items:center;gap:5px;line-height:1.4;
-}
-.course-ref-badge{
-  font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
-  padding:2px 6px;border-radius:3px;flex-shrink:0;
-  background:color-mix(in srgb,var(--accent) 10%,transparent);
-  color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);
-}
-
-/* ─── SCROLLBAR ──────────────────────────────── */
-::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+::-webkit-scrollbar-thumb{background:rgba(120,100,60,.3);border-radius:3px}
 
-/* ─── RESPONSIVE ─────────────────────────────── */
 @media(max-width:768px){
-  #info-panel{width:100%;top:auto;bottom:0;left:0;right:0;
-    height:50%;border-left:none;border-top:1px solid var(--border);
-    transform:translateY(100%);
-  }
-  #info-panel.collapsed{transform:translateY(100%)}
-  #info-panel:not(.collapsed){transform:translateY(0)}
+  #info-panel{width:auto;top:auto;left:8px;right:8px;bottom:8px;height:55%}
+  #info-panel.collapsed{transform:translateY(calc(100% + 16px))}
+  #cycle-title-card{max-width:170px;padding:8px 11px;top:10px;left:10px}
+  #cycle-title-card .ct-name{font-size:17px}
+  #cycle-title-card .ct-tagline,#cycle-title-card .ct-key,#ct-processes,#cycle-title-card .course-ref{display:none}
+  .node-circle{width:52px;height:52px} .node-circle svg{width:34px;height:34px}
+  .node-label{font-size:11.5px;white-space:normal;max-width:120px}
+  #legend,#welcome-panel{display:none}
 }
 </style>
 </head>
@@ -250,6 +162,7 @@ html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--
 <!-- CYCLE VIEW -->
 <div id="cycle-view">
   <div id="diagram-area">
+    <svg id="backdrop-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
     <svg id="diagram-svg" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
@@ -259,24 +172,22 @@ html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--
     </svg>
     <canvas id="particle-canvas"></canvas>
     <div id="nodes-layer"></div>
-    <div id="welcome-panel">
+    <div id="welcome-panel" class="card">
       <div class="welcome-label">How to explore</div>
       <div class="welcome-hint">Click a reservoir node to see details, or hover over an arrow to see the process.</div>
     </div>
-    <div id="cycle-title-card">
+    <div id="cycle-title-card" class="card">
+      <div class="ct-eyebrow">7.1 &middot; The Hydrosphere</div>
       <div class="ct-name" id="ct-name"></div>
       <div class="ct-tagline" id="ct-tagline"></div>
       <div class="ct-key">Key Processes</div>
       <div id="ct-processes"></div>
-      <div class="course-ref">
-        <span class="course-ref-badge">SOS 110</span>
-        Sherman &amp; Montgomery, 2nd ed.
-      </div>
+      <div class="course-ref">Source: Sherman &amp; Montgomery, <i>Environmental Science and Sustainability</i>, 2nd ed.</div>
     </div>
-    <div id="legend">
-      <div class="leg-row"><div class="leg-line"></div> Water flow</div>
-      <div class="leg-row"><div class="leg-dot"></div> Reservoir</div>
-      <div class="leg-note">Thicker arrows indicate a larger scale of flow.</div>
+    <div id="legend" class="card">
+      <div class="leg-row"><div class="leg-line"></div> Water flow (hover or tap an arrow)</div>
+      <div class="leg-row"><div class="leg-dot"></div> Reservoir (tap for details)</div>
+      <div class="leg-note">Thicker arrows carry more water.</div>
     </div>
   </div>
   <div id="info-panel" class="collapsed">
@@ -299,52 +210,52 @@ html,body{height:100%;font-family:'Inter',system-ui,sans-serif;background:var(--
 const CYCLE = {
   name: "The Water Cycle",
   tagline: "Earth's water reservoirs and how long a molecule stays in each",
-  color: "#38bdf8",
+  color: "#2f6f9f",
   keyProcesses: ["Evaporation & Transpiration", "Precipitation", "Runoff & Groundwater"],
   nodes: [
-    {id:"atm", label:"Atmosphere", icon:"☁️", x:52, y:17,
+    {id:"atm", label:"Atmosphere", icon:"cloud", x:50, y:15,
      reservoir:"~10 days",
      tagline:"Water vapor aloft — residence time ~10 days",
      description:"Water evaporates into the atmosphere from the ocean and from sources on land. The atmosphere holds only about 0.001% of Earth's water at any given moment. Wind transports this moisture all around Earth before it falls again as precipitation.",
      stats:[{l:"Share of Earth's water",v:"0.001%"},{l:"Residence time",v:"~10 days"},{l:"Main inputs",v:"Evaporation, transpiration"}],
      fact:"Wind transportation of moisture moves water vapor all around the planet — including the water that was recently inside you. On average a molecule stays in the air only about 10 days before falling back to the surface."},
 
-    {id:"ocean", label:"The Ocean", icon:"🌊", x:85, y:48,
+    {id:"ocean", label:"The Ocean", icon:"wave", x:87, y:58,
      reservoir:"~3,000 yrs",
      tagline:"Earth's largest reservoir — 96.5% of all water",
      description:"The oceans hold 96.5% of Earth's total water, and only about 0.07% of it evaporates in a year. Water returns to the ocean through precipitation over the oceans, surface runoff from land, and groundwater flow.",
      stats:[{l:"Share of Earth's water",v:"96.5%"},{l:"Evaporates per year",v:"~0.07%"},{l:"Residence time",v:"~3,000 years"}],
      fact:"Even though the ocean is by far the largest water reservoir, only about 0.07% of it evaporates each year — yet that is enough to supply most of the moisture in the atmosphere."},
 
-    {id:"ice", label:"Ice, Snow & Permafrost", icon:"🧊", x:17, y:40,
+    {id:"ice", label:"Ice, Snow & Permafrost", icon:"snow", x:15, y:36,
      reservoir:"up to ~200k yrs",
      tagline:"Frozen water trapped in solid reservoirs",
      description:"Around 1.8% of Earth's water becomes frozen and trapped in solid reservoirs — ice caps, flowing glaciers, and winter snow. Deeper underground, water in the spaces between rock grains can freeze; if it stays frozen for two years or more, it is called permafrost.",
      stats:[{l:"Share of Earth's water",v:"~1.8%"},{l:"Ice caps",v:"~200,000 years"},{l:"Flowing glaciers",v:"~100 years"},{l:"Winter snow",v:"2–6 months"},{l:"Permafrost",v:"~50 years"}],
      fact:"An ice cap can lock a water molecule away for around 200,000 years, while winter snow may hold it for only a few months — the same frozen state, but residence times that differ by nearly a million-fold."},
 
-    {id:"fresh", label:"Freshwater Bodies", icon:"🏞️", x:53, y:50,
+    {id:"fresh", label:"Freshwater Bodies", icon:"lake", x:57, y:52,
      reservoir:"~10 yrs (lakes)",
      tagline:"Lakes, rivers, and streams",
      description:"Water collects in lakes (0.007% of Earth's water) and in rivers or streams (0.0002%). Water leaves these reservoirs as it evaporates, flows into the ocean, or sinks underground.",
      stats:[{l:"Lakes",v:"0.007% of water"},{l:"Rivers & streams",v:"0.0002% of water"},{l:"Lakes residence",v:"~10 years"},{l:"Rivers residence",v:"2–6 months"}],
      fact:"A molecule entering a lake may linger about 10 years, but in a fast-moving river or stream it typically stays only 2–6 months before moving on."},
 
-    {id:"soil", label:"Soil", icon:"🟫", x:31, y:64,
+    {id:"soil", label:"Soil", icon:"soil", x:36, y:71,
      reservoir:"1–2 months",
      tagline:"Water held in the land surface",
      description:"When water hits Earth's surface it can go a lot of places. About 0.001% of Earth's water is absorbed by soil, where it may evaporate, be taken up by living things, run off the surface, or seep downward as soil water flow.",
      stats:[{l:"Share of Earth's water",v:"0.001%"},{l:"Residence time",v:"1–2 months"}],
      fact:"Soil is a brief way-station for water — a molecule absorbed by soil typically stays only one to two months before it evaporates, is taken up by life, or sinks underground."},
 
-    {id:"living", label:"Living Organisms", icon:"🌿", x:14, y:73,
+    {id:"living", label:"Living Organisms", icon:"leaf", x:26, y:49,
      reservoir:"hours–days",
      tagline:"Water inside living things",
      description:"About 0.0001% of Earth's water is consumed by living things at any moment — and this includes the water inside you. Plants return much of this water to the atmosphere through transpiration.",
      stats:[{l:"Share of Earth's water",v:"0.0001%"},{l:"Residence time",v:"A few hours to days"}],
      fact:"The water cycle runs right through living things — including you. A water molecule taken up by an organism usually stays only a few hours to a few days."},
 
-    {id:"ground", label:"Groundwater", icon:"💧", x:52, y:87,
+    {id:"ground", label:"Groundwater", icon:"drop", x:58, y:87,
      reservoir:"100–10k yrs",
      tagline:"Largest source of liquid fresh water",
      description:"Groundwater, or underground water, is the largest source of liquid fresh water on Earth (0.76% of Earth's water). Spaces between rock grains are filled with water; underlying impermeable rock layers keep groundwater from moving deeper underground. Water can stay here a long time before it is used or slowly flows somewhere else.",
@@ -385,6 +296,63 @@ const CYCLE = {
   ]
 };
 
+// hand-drawn icons, ink outlines with flat muted fills
+const INK='#3b3222';
+const ICONS={
+  cloud:`<svg viewBox="-22 -22 44 44"><path d="M-15,8 C-21,8 -21,-1 -15,-1 C-15,-9 -5,-11 -2,-5 C1,-12 13,-11 13,-2 C20,-2 20,8 13,8 Z" fill="#f4f1ea" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M-9,13 l-2,5 M-1,13 l-2,5 M7,13 l-2,5" stroke="#4f86b0" stroke-width="2.2" stroke-linecap="round"/></svg>`,
+  wave:`<svg viewBox="-22 -22 44 44"><path d="M-18,4 C-12,-10 -2,-10 2,-2 C4,2 9,1 8,-4 C14,-2 16,4 18,4 L18,16 L-18,16 Z" fill="#6fa3c7" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M-14,10 q4,-3 8,0 t8,0 t8,0" stroke="#eaf4f9" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`,
+  snow:`<svg viewBox="-22 -22 44 44"><path d="M-19,15 L-4,-14 L3,-2 L8,-9 L19,15 Z" fill="#c9a877" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M-9,-4 L-4,-14 L0,-7 L-3,-5 L-6,-2 Z" fill="#fbfaf6" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/><path d="M5,-5 L8,-9 L11,-3 Z" fill="#fbfaf6" stroke="${INK}" stroke-width="1.4"/></svg>`,
+  lake:`<svg viewBox="-22 -22 44 44"><path d="M-19,4 C-19,-4 -8,-6 0,-5 C10,-6 19,-3 19,4 C19,11 8,13 0,12 C-9,13 -19,11 -19,4 Z" fill="#8fbcd6" stroke="${INK}" stroke-width="2"/><path d="M-10,3 q3,-2 6,0 M3,6 q3,-2 6,0" stroke="#eaf4f9" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M-15,-6 v-8 M-12,-5 v-6 M14,-5 v-8" stroke="#6f9440" stroke-width="2" stroke-linecap="round"/></svg>`,
+  soil:`<svg viewBox="-22 -22 44 44"><path d="M-18,-6 C-8,-9 8,-3 18,-6 L18,15 L-18,15 Z" fill="#b8905f" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><circle cx="-9" cy="3" r="2.2" fill="#8a6a3f"/><circle cx="5" cy="8" r="2.6" fill="#8a6a3f"/><circle cx="10" cy="0" r="1.6" fill="#8a6a3f"/><path d="M-2,-7 v-10 M-2,-12 q-6,-3 -8,-8 q6,1 8,8 M-2,-14 q5,-4 8,-6 q-1,6 -8,6" stroke="#6f9440" stroke-width="2" fill="#8fb050" stroke-linejoin="round"/></svg>`,
+  leaf:`<svg viewBox="-22 -22 44 44"><path d="M-14,15 C-16,-4 -2,-16 16,-16 C16,2 4,16 -14,15 Z" fill="#8fb050" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M-14,15 L10,-10 M-6,7 l-1,-8 M2,-1 l7,1" stroke="${INK}" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+  drop:`<svg viewBox="-22 -22 44 44"><path d="M0,-18 C8,-6 13,0 13,6 C13,13 7,17 0,17 C-7,17 -13,13 -13,6 C-13,0 -8,-6 0,-18 Z" fill="#6fa3c7" stroke="${INK}" stroke-width="2"/><path d="M-6,5 C-6,1 -4,-2 -2,-4" stroke="#eaf4f9" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`
+};
+/* the landscape cross-section behind the nodes, drawn to the real pixel size so
+   every node sits on the thing it names at any aspect ratio */
+function drawBackdrop(W,H){
+  const g=H*0.60, sea=H*0.555, coast=W*0.74;
+  const X=f=>(f*W).toFixed(1), Y=f=>(f*H).toFixed(1);
+  const f=`<defs><filter id="bd-r" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="2" seed="6" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter>
+    <pattern id="bd-aq" width="18" height="13" patternUnits="userSpaceOnUse"><rect width="18" height="13" fill="#a9cfe0"/><circle cx="4" cy="4" r="1.7" fill="#d9c49c"/><circle cx="13" cy="9" r="1.4" fill="#d9c49c"/></pattern>
+    <pattern id="bd-soil" width="22" height="14" patternUnits="userSpaceOnUse"><rect width="22" height="14" fill="#d8b98a"/><circle cx="5" cy="4" r="1.3" fill="#b8966a"/><circle cx="15" cy="10" r="1.7" fill="#bd9c6f"/></pattern>
+    <pattern id="bd-rock" width="46" height="20" patternUnits="userSpaceOnUse"><rect width="46" height="20" fill="#a88d62"/><path d="M0,10 H46 M12,0 V10 M32,10 V20" stroke="#937850" stroke-width="1.2"/></pattern></defs>`;
+  let h=f+`<g filter="url(#bd-r)" stroke="${INK}" stroke-linejoin="round" stroke-linecap="round">`;
+  // sun
+  h+=`<circle cx="${X(.80)}" cy="${Y(.13)}" r="${(H*.05).toFixed(1)}" fill="#f5c85e" stroke="#c9953a" stroke-width="2.4"/>`;
+  // mountains with snow
+  h+=`<path d="M0,${g} L0,${Y(.44)} L${X(.07)},${Y(.36)} L${X(.12)},${Y(.40)} L${X(.20)},${Y(.27)} L${X(.30)},${Y(.46)} L${X(.36)},${g} Z" fill="#c9a877" stroke-width="2.2"/>`;
+  h+=`<path d="M${X(.165)},${Y(.33)} L${X(.20)},${Y(.27)} L${X(.235)},${Y(.335)} L${X(.21)},${Y(.32)} L${X(.19)},${Y(.34)} Z" fill="#fbfaf6" stroke-width="1.6"/>`;
+  h+=`<path d="M${X(.10)},${g} L${X(.12)},${Y(.40)} M${X(.24)},${Y(.36)} L${X(.26)},${Y(.46)}" stroke="#a8875a" stroke-width="1.4" fill="none"/>`;
+  // ground band, then soil, aquifer, bedrock under the land
+  h+=`<path d="M0,${g} C${X(.2)},${(g-6).toFixed(1)} ${X(.5)},${(g+4).toFixed(1)} ${X(.74)},${sea} L${W},${sea} L${W},${H} L0,${H} Z" fill="url(#bd-soil)" stroke-width="2.2"/>`;
+  h+=`<path d="M0,${Y(.78)} C${X(.25)},${Y(.765)} ${X(.5)},${Y(.79)} ${X(.78)},${Y(.77)} L${W},${Y(.76)} L${W},${Y(.95)} L0,${Y(.95)} Z" fill="url(#bd-aq)" stroke="#5f8fb0" stroke-width="2"/>`;
+  h+=`<path d="M0,${Y(.78)} C${X(.25)},${Y(.765)} ${X(.5)},${Y(.79)} ${X(.78)},${Y(.77)} L${W},${Y(.76)}" fill="none" stroke="#2f6f9f" stroke-width="2" stroke-dasharray="10 6"/>`;
+  h+=`<rect x="-5" y="${Y(.95)}" width="${W+10}" height="${(H*.06).toFixed(1)}" fill="url(#bd-rock)" stroke-width="2"/>`;
+  // ocean
+  h+=`<path d="M${X(.73)},${sea} L${W+5},${sea} L${W+5},${Y(.745)} L${X(.86)},${Y(.745)} C${X(.80)},${Y(.74)} ${X(.77)},${Y(.66)} ${X(.73)},${sea} Z" fill="#6fa3c7" stroke-width="2"/>`;
+  h+=`<path d="M${X(.80)},${Y(.60)} q10,-5 20,0 t20,0 M${X(.90)},${Y(.63)} q10,-5 20,0 t20,0" stroke="#eaf4f9" stroke-width="2" fill="none"/>`;
+  // lake and the river feeding the sea
+  h+=`<ellipse cx="${X(.57)}" cy="${Y(.595)}" rx="${(W*.085).toFixed(1)}" ry="${(H*.028).toFixed(1)}" fill="#8fbcd6" stroke-width="2"/>`;
+  h+=`<path d="M${X(.655)},${Y(.593)} C${X(.69)},${Y(.585)} ${X(.70)},${Y(.575)} ${X(.73)},${Y(.558)}" stroke="#4f86b0" stroke-width="6" fill="none"/>`;
+  // trees on the plain
+  [[.20,.585,1],[.245,.59,.8],[.30,.595,1.1],[.43,.598,.85],[.47,.6,1]].forEach(([tx,ty,sc])=>{
+    const x=tx*W, y=ty*H, r=H*.028*sc;
+    h+=`<path d="M${x.toFixed(1)},${y.toFixed(1)} v${(-r*1.2).toFixed(1)}" stroke="#6b4f2e" stroke-width="3"/>`;
+    h+=`<circle cx="${x.toFixed(1)}" cy="${(y-r*1.7).toFixed(1)}" r="${r.toFixed(1)}" fill="#8fb050" stroke-width="1.8"/>`;
+  });
+  // clouds with rain over the land and sea
+  const cl=(cx,cy,k)=>`<path d="M${cx-40*k},${cy+12*k} C${cx-56*k},${cy+12*k} ${cx-56*k},${cy-6*k} ${cx-40*k},${cy-6*k} C${cx-40*k},${cy-24*k} ${cx-14*k},${cy-28*k} ${cx-6*k},${cy-14*k} C${cx+2*k},${cy-32*k} ${cx+34*k},${cy-28*k} ${cx+34*k},${cy-8*k} C${cx+52*k},${cy-8*k} ${cx+52*k},${cy+12*k} ${cx+34*k},${cy+12*k} Z" fill="#fbf8f1" stroke-width="2"/>`;
+  h+=cl(W*.30,H*.14,1)+cl(W*.66,H*.23,.8);
+  h+=`</g>`;
+  h+=`<g stroke="#4f86b0" stroke-width="1.8" stroke-linecap="round" opacity=".55">`;
+  for(let i=0;i<7;i++) h+=`<path d="M${(W*.27+i*14).toFixed(0)},${(H*.17+14).toFixed(0)} l-5,14"/>`;
+  h+=`</g>`;
+  // quiet zone labels
+  const lab=(x,y,t,a)=>`<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${a||'start'}" font-family="Merriweather,serif" font-style="italic" font-weight="700" font-size="13" fill="#2f5f84" paint-order="stroke" stroke="#f6efe0" stroke-width="4">${t}</text>`;
+  h+=lab(W*.99,H*.745,'water table','end')+lab(W*.30,H*.90,'aquifer (groundwater)');
+  document.getElementById('backdrop-svg').innerHTML=h;
+}
+
 // ═══════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════
@@ -408,6 +376,7 @@ function renderCycle(){
   const W = diagArea.clientWidth;
   const H = diagArea.clientHeight;
   canvas.width=W; canvas.height=H;
+  drawBackdrop(W,H);
 
   // Update title card
   document.getElementById('ct-name').textContent=cyc.name;
@@ -483,8 +452,9 @@ function renderCycle(){
     path.setAttribute('d',pathD);
     path.setAttribute('fill','none');
     path.setAttribute('stroke',cyc.color);
-    path.setAttribute('stroke-width',edge.importance>3?'2':'1.5');
-    path.setAttribute('stroke-opacity','.45');
+    path.setAttribute('stroke-width',edge.importance>3?'3':edge.importance>2?'2.2':'1.6');
+    path.setAttribute('stroke-opacity','.75');
+    path.setAttribute('stroke-linecap','round');
     path.setAttribute('marker-end','url(#arrow)');
     path.id=edgeId+'_path';
     svg.appendChild(path);
@@ -514,11 +484,15 @@ function renderCycle(){
     label.setAttribute('x',lx);
     label.setAttribute('y',ly-8);
     label.setAttribute('text-anchor','middle');
-    label.setAttribute('fill',cyc.color);
-    label.setAttribute('font-size','9');
-    label.setAttribute('font-family','Inter,sans-serif');
-    label.setAttribute('font-weight','600');
-    label.setAttribute('opacity','.7');
+    label.setAttribute('fill','#244f73');
+    label.setAttribute('font-size','12');
+    label.setAttribute('font-family','Merriweather,serif');
+    label.setAttribute('font-style','italic');
+    label.setAttribute('font-weight','700');
+    label.setAttribute('paint-order','stroke');
+    label.setAttribute('stroke','#fbf3e1');
+    label.setAttribute('stroke-width','4');
+    label.setAttribute('stroke-linejoin','round');
     label.setAttribute('pointer-events','none');
     label.textContent=edge.label;
     svg.appendChild(label);
@@ -534,7 +508,7 @@ function renderCycle(){
     el.style.left=(node.x/100*W)+'px';
     el.style.top=(node.y/100*H)+'px';
     el.innerHTML=`
-      <div class="node-circle">${node.icon}</div>
+      <div class="node-circle">${ICONS[node.icon]||''}</div>
       <div class="node-label">${node.label}<br><span class="node-reservoir">${node.reservoir}</span></div>`;
     el.onclick=(e)=>{e.stopPropagation();selectNode(node,el)};
     layer.appendChild(el);
@@ -580,20 +554,15 @@ class Particle{
     const {x,y}=this.getPos();
     const col=this.edata.color;
     ctx.save();
-    ctx.globalAlpha=this.alpha*.85;
-    // Glow
-    ctx.beginPath();
-    ctx.arc(x,y,this.size*2.5,0,Math.PI*2);
-    const g=ctx.createRadialGradient(x,y,0,x,y,this.size*2.5);
-    g.addColorStop(0,col+'60');
-    g.addColorStop(1,'transparent');
-    ctx.fillStyle=g;
-    ctx.fill();
-    // Core
+    ctx.globalAlpha=this.alpha*.9;
+    // an ink-ringed droplet
     ctx.beginPath();
     ctx.arc(x,y,this.size,0,Math.PI*2);
-    ctx.fillStyle=col;
+    ctx.fillStyle='#6fa3c7';
     ctx.fill();
+    ctx.lineWidth=1.2;
+    ctx.strokeStyle=col;
+    ctx.stroke();
     ctx.restore();
   }
 }
@@ -701,7 +670,7 @@ function selectNode(node,el){
       ${node.fact}
     </div>
     <div class="fun-fact" style="border-color:color-mix(in srgb,var(--accent) 20%,transparent);margin-top:4px">
-      <strong>📖 SOS 110 · Source</strong>
+      <strong>Source</strong>
       Sherman &amp; Montgomery, <em>Environmental Science and Sustainability</em>, 2nd ed. — "The Water Cycle" (At a Glance). Figures show Earth's major water reservoirs and the average residence time of a water molecule in each.
     </div>`;
 
