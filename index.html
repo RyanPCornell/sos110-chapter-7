@@ -320,6 +320,36 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   .slide{justify-content:flex-start; overflow-y:auto;}
 }
 
+
+.slide.ac-tool{background:linear-gradient(158deg,#faf7f0,#f1ebdd); --accent:#8a6a2f;}
+.slide.ac-tool .embed-head{background:transparent; border-bottom:1px solid rgba(120,100,60,.32);}
+.slide.ac-tool .embed-title{color:#3b3222;}
+.slide.ac-tool .eyebrow{color:#8a6a2f;}
+.slide.ac-tool .eyebrow::before{background:#8a6a2f;}
+.slide.ac-tool .embed-sub{color:#7a7260;}
+.slide.ac-tool .embed-wrap{background:transparent;
+  padding:.55rem clamp(3.4rem,4.8vw,4.6rem) clamp(3.5rem,7vh,4.1rem);}
+.slide.ac-tool .embed-frame{background:#fffdf6; border:1px solid rgba(120,100,60,.26); border-radius:12px;}
+
+.slide.ac-live,.slide.ac-live.guess,.slide.ac-live.ranking{background:linear-gradient(158deg,#faf7f0,#f1ebdd); --accent:#8a6a2f;}
+.slide.ac-live .heading{color:#3b3222;}
+.slide.ac-live .eyebrow{color:#8a6a2f;}
+.slide.ac-live .eyebrow::before{background:#8a6a2f;}
+.slide.ac-live .gu-sub,.slide.ac-live .rk-sub{color:#7a7260;}
+.slide.ac-live .gu-root,.slide.ac-live .rk-root{padding-bottom:clamp(3.4rem,7.5vh,4.1rem);}
+.slide.ac-live .gu-rows,.slide.ac-live .gu-foot,.slide.ac-live .gu-toolbar,.slide.ac-live .gu-strips,
+.slide.ac-live .gu-grid,.slide.ac-live .rk-list,.slide.ac-live .rk-foot,.slide.ac-live .rk-toolbar{
+  width:100%; max-width:min(900px, calc(100% - 6rem)); margin-left:auto; margin-right:auto;}
+.slide.ac-live .gu-row,.slide.ac-live .rk-item,.slide.ac-live .gu-strip,.slide.ac-live .gu-card{
+  background:#fffdf6; border-color:rgba(120,100,60,.26); box-shadow:none;}
+.slide.ac-live .rk-item{border-left-color:#8a6a2f;}
+.slide.ac-live .gu-cat,.slide.ac-live .rk-name{color:#3b3222; font-weight:700;}
+.slide.ac-live .gu-total strong,.slide.ac-live .rk-total strong{color:#3b3222;}
+.slide.ac-live .gu-submit,.slide.ac-live .rk-submit,.slide.ac-live .gu-revealbtn,.slide.ac-live .rk-revealbtn{background:#8a6a2f;}
+.slide.ac-live .gu-submit:disabled,.slide.ac-live .rk-submit:disabled{background:#cfc5b0;}
+.slide.ac-live .rk-moves button,.slide.ac-live .gu-reset,.slide.ac-live .rk-reset{
+  background:#fdfbf5; border-color:rgba(120,100,60,.38); color:#3b3222;}
+.slide.ac-live .rk-moves button:hover:not(:disabled){background:#8a6a2f; border-color:#8a6a2f; color:#fff;}
 .slide.dense .lead{font-size:clamp(.88rem,1.4vw,1rem); line-height:1.45; margin-bottom:.8rem;}
 .slide.dense .bullets{gap:.42rem;}
 .slide.dense .bullets li{font-size:clamp(.84rem,1.3vw,.96rem); line-height:1.38;}
@@ -1688,7 +1718,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   <div class="slide-inner col">
     <div class="eyebrow">Chapter 7 · Outline</div>
     <h2 class="heading">What we'll cover</h2>
-    <div class="outline-grid"><div class="ol-item"><span class="ol-num">7.1</span><span class="ol-text">Where on Earth Is All the Water?</span></div><div class="ol-item"><span class="ol-num">7.2</span><span class="ol-text">How Does Fresh Water Support Life?</span></div><div class="ol-item"><span class="ol-num">7.3</span><span class="ol-text">How Do Humans Impact Fresh Water?</span></div><div class="ol-item"><span class="ol-num">7.4</span><span class="ol-text">Can We Improve Access to Fresh Water?</span></div><div class="ol-item"><span class="ol-num">7.5</span><span class="ol-text">How Do We Keep Fresh Water Clean?</span></div><div class="ol-item"><span class="ol-num">7.6</span><span class="ol-text">Why Is Frozen Water Important?</span></div><div class="ol-item"><span class="ol-num">7.7</span><span class="ol-text">How Does the Ocean Support Life?</span></div></div>
+    <div class="outline-grid"><div class="ol-item"><span class="ol-num">7.1</span><span class="ol-text">Where on Earth Is All the Water?</span></div><div class="ol-item"><span class="ol-num">7.3</span><span class="ol-text">How Do Humans Impact Fresh Water?</span></div><div class="ol-item"><span class="ol-num">7.4</span><span class="ol-text">Can We Improve Access to Fresh Water?</span></div><div class="ol-item"><span class="ol-num">7.5</span><span class="ol-text">How Do We Keep Fresh Water Clean?</span></div><div class="ol-item"><span class="ol-num">7.6</span><span class="ol-text">Why Is Frozen Water Important?</span></div></div>
   </div>
 </section>
 <section class="slide" data-type="announce" style="--accent:#2D6A4F" data-at-id="ch7-attendance" data-at-chapter="SOS 110 — Chapter 7: Water: How Do We Use It and Affect Its Quality?">
@@ -1894,12 +1924,12 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
-<section class="slide guess" data-type="guess" data-gu-id="ch7-water-sector-guess" data-gu-unit="%" data-gu-budget="100" data-gu-answers="72,6,7,15" style="--accent:#BC8A2E">
+<section class="slide ac-live guess" data-type="guess" data-gu-id="ch7-water-sector-guess" data-gu-unit="%" data-gu-budget="100" data-gu-answers="72,6,7,15" style="--accent:#8a6a2f">
   <div class="gu-root">
     <div class="gu-head">
       <div class="eyebrow">7.4 · Water Access</div>
       <h2 class="heading">Your Guess: Where Does Arizona's Water Go?</h2>
-      <div class="gu-sub">Distribute 100% of Arizona's water use across the four sectors — your guesses can't total more than 100%. Lock them in, and the class's guesses appear as live distributions on the instructor's screen. The next slide reveals the real breakdown.</div>
+      <div class="gu-sub">Distribute 100% of Arizona's water use across the four sectors; your guesses can't total more than 100%. Lock them in, and the class's guesses appear as live distributions on the instructor's screen. The next slide reveals the real breakdown.</div>
     </div>
     <div class="gu-student" data-gu-student>
       <div class="gu-rows"><div class="gu-row"><div class="gu-cat">Agriculture</div><input class="gu-range" type="range" data-cat="0" min="0" max="100" value="0" step="1"><div class="gu-out"><span class="gu-num" data-gu-num="0">0</span><span class="gu-unit">%</span></div></div><div class="gu-row"><div class="gu-cat">Industrial</div><input class="gu-range" type="range" data-cat="1" min="0" max="100" value="0" step="1"><div class="gu-out"><span class="gu-num" data-gu-num="1">0</span><span class="gu-unit">%</span></div></div><div class="gu-row"><div class="gu-cat">Other Municipal</div><input class="gu-range" type="range" data-cat="2" min="0" max="100" value="0" step="1"><div class="gu-out"><span class="gu-num" data-gu-num="2">0</span><span class="gu-unit">%</span></div></div><div class="gu-row"><div class="gu-cat">Residential (Homes)</div><input class="gu-range" type="range" data-cat="3" min="0" max="100" value="0" step="1"><div class="gu-out"><span class="gu-num" data-gu-num="3">0</span><span class="gu-unit">%</span></div></div></div>
@@ -1926,14 +1956,14 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     </div>
   </div>
 </section>
-<section class="slide embed" data-type="embed" style="--accent:#BC8A2E">
+<section class="slide embed ac-tool" data-type="embed" style="--accent:#BC8A2E">
   <div class="embed-head">
     <div class="embed-head-text">
       <div class="eyebrow">7.4 · Water Access</div>
       <h2 class="embed-title">Where Do We Use the Most Water?</h2>
-      <div class="embed-sub">Arizona's water use by sector — switch between donut and bars, and hover any slice. Municipal use is split into homes vs. everything else. Sources cited below the chart.</div>
+      <div class="embed-sub">Arizona's water use by sector. Switch between donut and bars, and hover any slice; municipal use is split into homes and everything else.</div>
     </div>
-    <a class="embed-open" href="apps/water-sectors.html" target="_blank" rel="noopener">Open full chart ↗</a>
+    
   </div>
   <div class="embed-wrap">
     <iframe class="embed-frame" data-src="apps/water-sectors.html?embed=1" title="Where Do We Use the Most Water?" loading="lazy"></iframe>
@@ -1952,19 +1982,19 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
-<section class="slide ranking" data-type="ranking" data-rk-id="ch7-food-water-rank" data-rk-answer='[1, 0, 2, 3, 5, 4]' data-rk-values='["~1,100 gal/lb", "~1,800 gal/lb", "~600 gal/lb", "~470 gal/lb", "~40 gal/lb", "~300 gal/lb"]' style="--accent:#BC8A2E">
+<section class="slide ac-live ranking" data-type="ranking" data-rk-id="ch7-food-water-rank" data-rk-answer='[1, 0, 2, 3, 5, 4]' data-rk-values='["~1,100 gal/lb", "~1,800 gal/lb", "~600 gal/lb", "~470 gal/lb", "~40 gal/lb", "~300 gal/lb"]' style="--accent:#8a6a2f">
   <div class="rk-root">
     <div class="rk-head">
       <div class="eyebrow">7.4 · The Water Footprint of Food</div>
       <h2 class="heading">Rank These Foods by Water Footprint</h2>
-      <div class="rk-sub">Which foods take the most water to produce, pound for pound? Put them in order (top = thirstiest). The class's consensus builds live on the instructor's screen — then we reveal the real numbers.</div>
+      <div class="rk-sub">Which foods take the most water to produce, pound for pound? Put them in order (top = thirstiest). The class's consensus builds live on the instructor's screen, and then we reveal the real numbers.</div>
     </div>
     <div class="rk-toolbar"><button class="rk-revealbtn" type="button" data-rk-revealbtn hidden>Reveal answer</button></div>
     <ol class="rk-list" data-rk-list><li class="rk-item" data-idx="0" draggable="false"><span class="rk-rank" data-rk-rank>1</span><span class="rk-name">Almonds</span><span class="rk-val" data-rk-val hidden></span><span class="rk-moves"><button class="rk-up" type="button" data-rk-up aria-label="Move up">▲</button><button class="rk-down" type="button" data-rk-down aria-label="Move down">▼</button></span></li><li class="rk-item" data-idx="1" draggable="false"><span class="rk-rank" data-rk-rank>2</span><span class="rk-name">Beef</span><span class="rk-val" data-rk-val hidden></span><span class="rk-moves"><button class="rk-up" type="button" data-rk-up aria-label="Move up">▲</button><button class="rk-down" type="button" data-rk-down aria-label="Move down">▼</button></span></li><li class="rk-item" data-idx="2" draggable="false"><span class="rk-rank" data-rk-rank>3</span><span class="rk-name">Cheese</span><span class="rk-val" data-rk-val hidden></span><span class="rk-moves"><button class="rk-up" type="button" data-rk-up aria-label="Move up">▲</button><button class="rk-down" type="button" data-rk-down aria-label="Move down">▼</button></span></li><li class="rk-item" data-idx="3" draggable="false"><span class="rk-rank" data-rk-rank>4</span><span class="rk-name">Chicken</span><span class="rk-val" data-rk-val hidden></span><span class="rk-moves"><button class="rk-up" type="button" data-rk-up aria-label="Move up">▲</button><button class="rk-down" type="button" data-rk-down aria-label="Move down">▼</button></span></li><li class="rk-item" data-idx="4" draggable="false"><span class="rk-rank" data-rk-rank>5</span><span class="rk-name">Lettuce</span><span class="rk-val" data-rk-val hidden></span><span class="rk-moves"><button class="rk-up" type="button" data-rk-up aria-label="Move up">▲</button><button class="rk-down" type="button" data-rk-down aria-label="Move down">▼</button></span></li><li class="rk-item" data-idx="5" draggable="false"><span class="rk-rank" data-rk-rank>6</span><span class="rk-name">Rice</span><span class="rk-val" data-rk-val hidden></span><span class="rk-moves"><button class="rk-up" type="button" data-rk-up aria-label="Move up">▲</button><button class="rk-down" type="button" data-rk-down aria-label="Move down">▼</button></span></li></ol>
-    <div class="rk-note" data-rk-note hidden>Water Footprint Network (Mekonnen &amp; Hoekstra) — global-average gallons per pound; teaching estimates.</div>
+    <div class="rk-note" data-rk-note hidden>Water Footprint Network (Mekonnen &amp; Hoekstra): global-average gallons per pound; teaching estimates.</div>
     <div class="rk-foot">
       <span class="rk-total"><strong data-rk-total>0</strong> rankings in</span>
-      <span class="rk-hint" data-rk-hint>Use ▲▼ to order the foods — top = most water per pound</span>
+      <span class="rk-hint" data-rk-hint>Use ▲▼ to order the foods (top = most water per pound)</span>
       <button class="rk-submit" type="button" data-rk-submit>Lock in my ranking</button>
       <button class="rk-reset" type="button" data-rk-reset hidden>Reset rankings</button>
     </div>
@@ -4034,17 +4064,17 @@ window.__deckLiveReady.then(function(live){
 
 })();</script>
 </section>
-<section class="slide embed" data-type="embed" style="--accent:#BC8A2E">
+<section class="slide embed ac-tool" data-type="embed" style="--accent:#BC8A2E">
   <div class="embed-head">
     <div class="embed-head-text">
       <div class="eyebrow">7.4 · Water Usage</div>
-      <h2 class="embed-title">Water Usage Explorer — Household &amp; Statewide</h2>
-      <div class="embed-sub">Adjust a household category and watch the “Residential” slice of Arizona's statewide pie respond. Try the presets. Sources cited below the charts.</div>
+      <h2 class="embed-title">Water Usage Explorer: Household and Statewide</h2>
+      <div class="embed-sub">Change how a household uses water and watch the Residential slice of Arizona's statewide use respond. The presets can be combined.</div>
     </div>
-    <a class="embed-open" href="apps/water-usage.html" target="_blank" rel="noopener">Open full app ↗</a>
+    
   </div>
   <div class="embed-wrap">
-    <iframe class="embed-frame" data-src="apps/water-usage.html?embed=1" title="Water Usage Explorer — Household &amp; Statewide" loading="lazy"></iframe>
+    <iframe class="embed-frame" data-src="apps/water-usage.html?embed=1" title="Water Usage Explorer: Household and Statewide" loading="lazy"></iframe>
   </div>
 </section>
 <section class="slide dense" data-type="content" style="--accent:#52796F">
@@ -4135,7 +4165,7 @@ window.__deckLiveReady.then(function(live){
     <div class="eyebrow">Chapter 7 · Key Concepts</div>
     <h2 class="heading">Water: How Do We Use It and Affect Its Quality?</h2>
     
-    <div class="grid cols-3"><div class="gcard"><div class="gcard-head">Hydrosphere</div><div class="gcard-desc">All the places on Earth that hold water — surface, groundwater, glaciers, and atmosphere.</div></div><div class="gcard"><div class="gcard-head">Aquifer</div><div class="gcard-desc">Subsurface rock/sediment zone where groundwater accumulates.</div></div><div class="gcard"><div class="gcard-head"><u>Transpiration</u></div><div class="gcard-desc"><u>Water vapor released into the atmosphere by plants.</u></div></div><div class="gcard"><div class="gcard-head">Embedded Water</div><div class="gcard-desc">Water used to produce the goods and food we consume.</div></div><div class="gcard"><div class="gcard-head">Subsidence</div><div class="gcard-desc">Ground sinking from aquifer depletion — often permanent.</div></div><div class="gcard"><div class="gcard-head">Lentic Ecosystem</div><div class="gcard-desc">Still-water bodies — lakes and ponds.</div></div><div class="gcard"><div class="gcard-head">Estuary</div><div class="gcard-desc">Where fresh meets salt water — among Earth's most biologically rich areas.</div></div><div class="gcard"><div class="gcard-head">Cryosphere</div><div class="gcard-desc">All frozen parts of Earth — glaciers, permafrost, and sea ice.</div></div><div class="gcard"><div class="gcard-head">Ocean Acidification</div><div class="gcard-desc">CO₂ dissolving in seawater forms carbonic acid, threatening calcifying organisms.</div></div></div>
+    <div class="grid cols-3"><div class="gcard"><div class="gcard-head">Hydrosphere</div><div class="gcard-desc">All the places on Earth that hold water — surface, groundwater, glaciers, and atmosphere.</div></div><div class="gcard"><div class="gcard-head">Aquifer</div><div class="gcard-desc">Subsurface rock/sediment zone where groundwater accumulates.</div></div><div class="gcard"><div class="gcard-head"><u>Transpiration</u></div><div class="gcard-desc"><u>Water vapor released into the atmosphere by plants.</u></div></div><div class="gcard"><div class="gcard-head">Embedded Water</div><div class="gcard-desc">Water used to produce the goods and food we consume.</div></div><div class="gcard"><div class="gcard-head">Subsidence</div><div class="gcard-desc">Ground sinking from aquifer depletion — often permanent.</div></div><div class="gcard"><div class="gcard-head">Ocean Acidification</div><div class="gcard-desc">CO₂ dissolving in seawater forms carbonic acid, threatening calcifying organisms.</div></div></div>
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
@@ -4155,7 +4185,7 @@ window.__deckLiveReady.then(function(live){
 <div class="menu" id="menu">
   <button class="menu-close" onclick="toggleMenu(false)" aria-label="Close menu">&times;</button>
   <h3>Chapter 7 &mdash; Jump to a slide</h3>
-  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Water in the News</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Sustainable vs. Unsustainable</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>7.1 The Hydrosphere</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>7.1 ▶ Water Cycle App</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>7.1 Embedded Water</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>7.3 Flint, Michigan</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>7.3 Groundwater Depletion</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>7.3 Dams &amp; Diversions</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>7.3 Water Pollution</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>7.3 Eutrophication</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>7.4 Water Access</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>7.4 ▶ Guess: Water Use</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>7.4 ▶ Water-Use by Sector</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>7.4 Water Scarcity</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>7.4 ▶ Rank: Food Water</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>7.4 Water Conservation</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>7.4 ▶ Game: City Water Supply</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>7.4 ▶ Water Usage App</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>7.5 Keeping Water Clean</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>7.6 ▶ Sea-Level Rise</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>7.8 Ocean Pollution</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>7.8 Overfishing &amp; Acidification</button><button class="menu-item" data-go="25"><span class="menu-num">26</span>7.9 What Can I Do?</button><button class="menu-item" data-go="26"><span class="menu-num">27</span>Key Concepts</button></div>
+  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Water in the News</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Sustainable vs. Unsustainable</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>7.1 The Hydrosphere</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>7.1 ▶ Water Cycle App</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>7.3 Flint, Michigan</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>7.3 Groundwater Depletion</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>7.3 Dams &amp; Diversions</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>7.3 Water Pollution</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>7.3 Eutrophication</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>7.4 Water Access</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>7.4 ▶ Guess: Water Use</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>7.4 ▶ Water-Use by Sector</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>7.4 Water Scarcity</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>7.4 ▶ Rank: Food Water</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>7.4 Water Conservation</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>7.4 ▶ Game: City Water Supply</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>7.4 ▶ Water Usage App</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>7.5 Keeping Water Clean</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>7.6 ▶ Sea-Level Rise</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>7.8 Ocean Pollution</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>7.8 Overfishing &amp; Acidification</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>7.9 What Can I Do?</button><button class="menu-item" data-go="25"><span class="menu-num">26</span>Key Concepts</button></div>
 </div>
 
 <script>
