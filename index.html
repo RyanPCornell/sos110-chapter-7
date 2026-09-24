@@ -319,6 +319,18 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .plate .pl-media{border-left:1px solid rgba(120,100,60,.35);}
 .plate .pl-media::before{background:linear-gradient(90deg,rgba(241,235,221,.9),transparent) !important;}
 .plate .pl-media::after{content:''; position:absolute; inset:14px; border:1px solid rgba(255,250,240,.7); pointer-events:none; z-index:3;}
+/* superscript citation and its reference line */
+.plate .pl-fn{font-family:'Inter',sans-serif; font-style:normal; font-weight:800; font-size:.62em; color:#8a6a2f;
+  vertical-align:super; line-height:0; margin-left:.12em;}
+.plate .pl-ref{margin:.55rem 0 0; font-size:clamp(.6rem,.9vw,.7rem); line-height:1.4; color:#7a6a4a;
+  /* stop short of the deck's centred page counter at every width */
+  max-width:min(36rem, calc(50vw - 11rem));}
+.plate.pl-cited .pl-sub{margin-bottom:.65rem; padding-bottom:.55rem;}
+.plate.pl-cited .pl-lead{margin-bottom:.75rem;}
+.plate.pl-cited .pl-stat{margin-bottom:.8rem;}
+.plate.pl-cited .pl-item{padding:.42rem 0 .46rem;}
+.plate .pl-ref sup{font-weight:800; color:#8a6a2f; margin-right:.15em;}
+.plate .pl-ref em{font-style:italic;}
 @media(max-width:900px){ .plate .pl-pair{grid-template-columns:1fr;} .plate .pl-vs{text-align:center;} }
 
 .slide.ac-tool{background:linear-gradient(158deg,#faf7f0,#f1ebdd); --accent:#8a6a2f;}
@@ -1989,18 +2001,19 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
 </section>
-<section class="slide plate" data-type="content" style="--accent:#8a6a2f">
+<section class="slide plate pl-cited" data-type="content" style="--accent:#8a6a2f">
   <div class="bleed-grid">
     <div class="bleed-text">
 <div class="eyebrow">7.3 &middot; Dams and Diversions</div>
 <h2 class="heading pl-h">Managing Water Flows at Civilizational Scale</h2>
-<p class="pl-sub">A constant supply of water and power &mdash; paid for downstream.</p>
+<p class="pl-sub">A constant supply of water and power, paid for downstream.</p>
 <p class="pl-lead">Dams store water through dry seasons and generate hydroelectric power, and diversions carry that water to cities and farms. The costs fall on the river below the dam and on the people and ecosystems that depend on it.</p>
-<div class="pl-stat"><div class="pl-num">25%</div><div class="pl-stat-t">of the world&rsquo;s population experiences <em>decreased</em> water availability because of dams.</div></div>
+<div class="pl-stat"><div class="pl-num">25%</div><div class="pl-stat-t">of the world&rsquo;s population experiences <em>decreased</em> water availability because of dams.<sup class="pl-fn">1</sup></div></div>
 <div class="pl-list">
   <div class="pl-item"><span class="pl-n">i</span><div><b>Adverse impacts</b><p>Disrupted fish migration, lost wetlands, altered sediment transport, changed river temperatures, and diminished downstream flows.</p></div></div>
   <div class="pl-item"><span class="pl-n">ii</span><div><b>The Colorado River</b><p>Upstream dams and diversions have so reduced its flow that it no longer consistently reaches the Gulf of California.</p></div></div>
 </div>
+<p class="pl-ref"><sup>1</sup> Sherman, D. J., &amp; Montgomery, D. R. (2023). <em>Environmental Science and Sustainability</em> (2nd ed.), Chapter 7. W. W. Norton &amp; Company.</p>
     </div>
     <div class="bleed-media cover pl-media"><img loading="lazy" decoding="async" data-src="media/image10.jpg" alt="Aerial view of a winding river through wetlands and forest"></div>
   </div>
@@ -2013,9 +2026,9 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 <h2 class="heading pl-h">Where Pollution Comes From</h2>
 <p class="pl-sub">Regulation is easiest when you can point to the pipe.</p>
 <div class="pl-pair">
-  <div class="pl-card"><div class="pl-tag">Easier to regulate</div><div class="pl-ct">Point sources</div><p>Contaminants from a clearly identifiable conduit &mdash; a pipe, ditch, channel, or well. The source is known, so it can be permitted and monitored.</p></div>
+  <div class="pl-card"><div class="pl-tag">Easier to regulate</div><div class="pl-ct">Point sources</div><p>Contaminants from a clearly identifiable conduit, such as a pipe, ditch, channel, or well. The source is known, so it can be permitted and monitored.</p></div>
   <div class="pl-vs">vs.</div>
-  <div class="pl-card"><div class="pl-tag red">Harder to regulate</div><div class="pl-ct">Nonpoint sources</div><p>Pollutants from broad, diffuse places &mdash; agricultural, residential, and industrial activities across a whole watershed.</p></div>
+  <div class="pl-card"><div class="pl-tag red">Harder to regulate</div><div class="pl-ct">Nonpoint sources</div><p>Pollutants from broad, diffuse places: agricultural, residential, and industrial activities across a whole watershed.</p></div>
 </div>
 <div class="pl-rule"><span>What the water carries</span></div>
 <div class="pl-list">
@@ -2261,7 +2274,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 
     <div class="cg-top">
       <div class="cg-titlewrap">
-        <div class="eyebrow">7.4 · Live Game</div>
+        <div class="eyebrow">Chapter 7 · Review Game</div>
         <h2 class="heading cg-h ev-h-hidden">Build a City's Water Supply</h2><svg class="ev-wm" viewBox="0 0 2910 285" role="img" aria-label="Build a City's Water Supply"
      preserveAspectRatio="xMinYMid meet"><title>Build a City's Water Supply</title>
   <defs><filter id="ch7-water-nib" x="-2%" y="-12%" width="104%" height="124%">
@@ -4330,7 +4343,7 @@ window.__deckLiveReady.then(function(live){
 <div class="menu" id="menu">
   <button class="menu-close" onclick="toggleMenu(false)" aria-label="Close menu">&times;</button>
   <h3>Chapter 7 &mdash; Jump to a slide</h3>
-  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Water in the News</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Word Cloud: Water</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>7.1 Earth's Water Supply</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>7.1 The Hydrosphere</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>7.1 ▶ Water Cycle App</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>7.3 Groundwater Depletion</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>7.3 Dams &amp; Diversions</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>7.3 Water Pollution</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>7.3 Flint, Michigan</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>7.3 Eutrophication</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>7.4 Water Scarcity</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>7.4 Water Access</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>7.4 ▶ Guess: Water Use</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>7.4 ▶ Water-Use by Sector</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>7.4 ▶ Rank: Food Water</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>7.4 ▶ Water Usage App</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>7.4 Water Conservation</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>7.5 Keeping Water Clean</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>7.6 ▶ Sea-Level Rise</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>7.8 Ocean Pollution</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>7.8 Overfishing &amp; Acidification</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>7.9 What Can I Do?</button><button class="menu-item" data-go="25"><span class="menu-num">26</span>7.4 ▶ Game: City Water Supply</button><button class="menu-item" data-go="26"><span class="menu-num">27</span>Key Concepts</button></div>
+  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Outline</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Announcements</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Water in the News</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Word Cloud: Water</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>7.1 Earth's Water Supply</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>7.1 The Hydrosphere</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>7.1 ▶ Water Cycle App</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>7.3 Groundwater Depletion</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>7.3 Dams &amp; Diversions</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>7.3 Water Pollution</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>7.3 Flint, Michigan</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>7.3 Eutrophication</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>7.4 Water Scarcity</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>7.4 Water Access</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>7.4 ▶ Guess: Water Use</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>7.4 ▶ Water-Use by Sector</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>7.4 ▶ Rank: Food Water</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>7.4 ▶ Water Usage App</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>7.4 Water Conservation</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>7.5 Keeping Water Clean</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>7.6 ▶ Sea-Level Rise</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>7.8 Ocean Pollution</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>7.8 Overfishing &amp; Acidification</button><button class="menu-item" data-go="24"><span class="menu-num">25</span>7.9 What Can I Do?</button><button class="menu-item" data-go="25"><span class="menu-num">26</span>▶ Review Game: City Water Supply</button><button class="menu-item" data-go="26"><span class="menu-num">27</span>Key Concepts</button></div>
 </div>
 
 <script>
