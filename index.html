@@ -1624,6 +1624,30 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 @media(max-width:1100px){ .wt-rep-grid.four{grid-template-columns:repeat(2,minmax(0,1fr));} }
 @media(max-width:900px){ .wt-rep-grid,.wt-rep-grid.four{grid-template-columns:1fr;} .wt-cv-body{grid-template-columns:1fr;} .wt-rep-you{flex-direction:column; align-items:flex-start;} }
 
+/* ══ v3: the water budget, observations, a eutrophic river ══ */
+.wt-bud{background:#fffdf8; border:1px solid rgba(120,100,60,.26); border-left:4px solid #4f86b0; border-radius:10px; padding:.4rem .55rem .45rem;}
+.ev-blk .wt-bud{border:0; border-left:0; padding:0; background:transparent;}
+.wt-bud-h{font-size:clamp(.58rem,.9vw,.7rem); font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:#8a6a2f; margin-bottom:.15rem;}
+.wt-bud-sec{font-size:clamp(.5rem,.76vw,.6rem); font-weight:800; color:#a09781; text-transform:uppercase; letter-spacing:.06em; margin:.25rem 0 .08rem;}
+.wt-bud-r{display:grid; grid-template-columns:5.6rem 1fr auto; gap:.35rem; align-items:center; font-size:clamp(.54rem,.82vw,.64rem); color:#3b3222; padding:.05rem 0;}
+.wt-bud-r i{height:.45rem; background:#efe7d4; border-radius:3px; overflow:hidden;}
+.wt-bud-r i b{display:block; height:100%; border-radius:3px;}
+.wt-bud-r em{font-style:normal; font-weight:700; white-space:nowrap; font-family:'Merriweather',serif;}
+.wt-bud-r.short span, .wt-bud-r.short em{color:#A4373A; font-weight:800;}
+.wt-bud-aq{font-size:clamp(.52rem,.78vw,.62rem); color:#5e5340; line-height:1.35; margin-top:.3rem; border-top:1px solid rgba(120,100,60,.15); padding-top:.25rem;}
+.wt-bud-aq .red{color:#A4373A; font-weight:800;} .wt-bud-aq .ok{color:#2f7d4f; font-weight:800;}
+.wt-obs{background:#fffdf8; border:1px solid rgba(120,100,60,.26); border-left:4px solid #2f7d6b; border-radius:10px; padding:.4rem .55rem .45rem;}
+.ev-blk .wt-obs{border:0; border-left:0; padding:0; background:transparent;}
+.wt-rep .wt-obs{margin-bottom:.45rem;}
+.wt-ob{padding:.25rem 0; border-top:1px solid rgba(120,100,60,.13);}
+.wt-ob:first-of-type{border-top:0;}
+.wt-ob-t{font-size:clamp(.58rem,.88vw,.68rem); color:#3b3222; line-height:1.35;}
+.wt-ob-i{font-size:clamp(.58rem,.88vw,.68rem); color:#1f4f44; font-weight:700; line-height:1.35; margin-top:.15rem;}
+.wt-ob-i span{display:inline-block; font-size:.78em; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#fff;
+  background:#2f7d6b; border-radius:999px; padding:0 .4rem; margin-right:.3rem; vertical-align:1px;}
+.wt-cv-key .k-eu{background:#6f9a3a;}
+.wt-cv-mapcol .wt-bud{margin-top:.2rem;}
+
 
 /* ── Water Footprint Face-Off (live class game) ─────────────────────────── */
 .slide.fp-slide{background:linear-gradient(158deg,#faf7f0,#f1ebdd);}
@@ -3538,7 +3562,7 @@ function cityRun(d, E){
   }
   var m=AQT[E.aq].m, perv=1-d.imp, bufF=Math.min(1,(s.buf?0.65:0)+0.16*d.nearB);
   var c={k:E.k, d:d, x:E.x, rank:E.rank, aq:E.aq, A:A0, Amax:A0, sub:0, S:STOREC*(s.store?0.5:0), extra:0,
-         yrs:[], sprawl:[], annexU:0, annexO:0, sprAcc:0, rchIn:0, cool:0, conf:0.92, rate:1};
+         yrs:[], sprawl:[], annexU:0, annexO:0, sprAcc:0, rchIn:0, cool:0, conf:0.92, rate:1, nut:0};
   /* build order: zoned squares closest to the existing town go first */
   var town=[]; for(i=0;i<NT;i++) if(core[i]) town.push(i);
   function nearTown(a){ var best=99; town.forEach(function(t){ best=Math.min(best, gridDist(a,t)); }); return best; }
@@ -3562,23 +3586,31 @@ function cityRun(d, E){
     var Y1=y+1, et=E.ev[Y1]||null, f=E.f[y], heat=E.heat[y];
     var hx = et==='heat'? (s.cons? 0.08 : 0.22) : 0;
     var priceX=Math.pow(c.rate, -0.41);                     /* demand responds to last year's water price */
-    var mIn=0, mOut=0, ind=0, ag=0, full=0, hot=0;
+    var mIn=0, mOut=0, ind=0, ag=0, full=0, hot=0, uH=0, uC=0, uP=0, oM=0;
     for(i=0;i<NT;i++){ var Z=ZONES[z[i]]; if(!Z||!Z.w||!B[i]) continue;
       var use=Z.kind==='ag'? B[i]*(1-F[i]) : Z.kind==='park'? B[i] : B[i]*O[i];
       var inP=Z.w*use*(1-Z.out), outP=Z.w*use*Z.out*heat*(1+hx);
       full+=inP+outP;
       if(Z.kind==='ag'){ ag+=inP+outP; continue; }
       if(z[i]==='i'){ ind+=inP+outP; continue; }
-      var px=Z.kind==='park'? 1 : priceX;
-      mIn+=inP*(s.cons?0.9:1)*px; mOut+=outP*(s.cons?0.7:1)*px; hot+=Z.w*use*Z.out*heat*hx*(s.cons?0.7:1);
+      var px=Z.kind==='park'? 1 : priceX, ui=inP*(s.cons?0.9:1)*px, uo=outP*(s.cons?0.7:1)*px;
+      mIn+=ui; mOut+=uo; hot+=Z.w*use*Z.out*heat*hx*(s.cons?0.7:1);
+      if(Z.kind==='res') uH+=ui+uo; else if(Z.kind==='park') uP+=ui+uo; else uC+=ui+uo;
     }
-    if(c.annexU){ var Za=ZONES.h, ua=c.annexU*c.annexO; mIn+=Za.w*ua*(1-Za.out)*(s.cons?0.9:1)*priceX; mOut+=Za.w*ua*Za.out*heat*(1+hx)*(s.cons?0.7:1)*priceX; full+=Za.w*ua; }
+    if(c.annexU){ var Za=ZONES.h, ua=c.annexU*c.annexO, ai=Za.w*ua*(1-Za.out)*(s.cons?0.9:1)*priceX, ao=Za.w*ua*Za.out*heat*(1+hx)*(s.cons?0.7:1)*priceX;
+      mIn+=ai; mOut+=ao; uH+=ai+ao; full+=Za.w*ua; }
     var dem=mIn+mOut+ind+ag, saved=Math.max(0,full-dem);
     /* supply */
     var reuse=s.reuse? Math.min(REUSEC, 0.6*mIn, mOut+ind) : 0, need=dem-reuse;
     var ent=rivAF(s), riv=ent*Math.min(1, E.R[y]*(1.25-0.5*c.x));
     var loss = et==='bloom'? 0.45*(0.55+0.45*Math.min(1,d.nearF/2))*Math.max(0,1-bufF)
              : et==='flood'? 0.22*(0.4+0.6*d.imp)*Math.max(0,1-bufF) : 0;
+    /* nitrogen and phosphorus from farms on the riverbank build up year after year unless buffers trap them;
+       past a threshold the river turns eutrophic: algae, then oxygen loss as they decay */
+    var agRun=0; for(i=0;i<NT;i++){ var Zn=ZONES[z[i]]; if(NEAR[i] && Zn && Zn.run && B[i]) agRun+=Zn.run*B[i]*(1-F[i]); }
+    c.nut=c.nut*0.93+agRun*(1-bufF)*(et==='flood'? 1.6 : 1);
+    var eut=Math.max(0, Math.min(1, (c.nut-12)/8));
+    loss=Math.min(0.8, loss+0.12*eut);
     riv*=(1-loss);
     var rUse=Math.min(riv,need); need-=rUse;
     var scap=s.store? STOREC : 0, fill=Math.min(riv-rUse, scap-c.S); c.S+=fill;
@@ -3613,9 +3645,9 @@ function cityRun(d, E){
     else if(met>=OK) for(i=0;i<NT;i++) if(F[i]>0) F[i]=Math.max(0, F[i]-0.5);
     /* confidence: shortages, a dwindling aquifer, and sinking ground scare people and business away */
     var over=pump-recharge, yearsLeft=over>1? c.A/over : 99;
-    var outlook=over>1? Math.max(0.35, Math.min(1, yearsLeft/25)) : 1;
+    var outlook=over>1? Math.max(0.35, Math.min(1, (c.A/A0-0.12)/0.38)) : 1;
     var tgt=(metM>=OK? 1 : Math.max(0.2, 1-3*(OK-metM)))*outlook*(c.sub? 0.88 : 1);
-    c.conf+=0.35*(tgt-c.conf);
+    c.conf+=0.25*(tgt-c.conf);
     /* people and jobs */
     var stA=stat(), W=0.48*stA.P, jobsWant=stA.J, unemp=W? Math.max(0, 1-jobsWant/W) : 0;
     var tgtR=Math.min(0.97, c.conf*(0.93+0.05*Math.min(1, W? jobsWant/W : 1))*(1-0.7*unemp));
@@ -3691,6 +3723,8 @@ function cityRun(d, E){
                 restrict:restrict, fallow:fallowNow, A:c.A/A0, S:scap? c.S/scap : 0, ent:ent, got:riv, loss:loss,
                 heatX:dem? hot/dem : 0, hit:hit, sub:c.sub===Y1, built:built, bld:bld$, grow:c.sprawl.length+Math.floor(c.annexU),
                 annex:Math.floor(c.annexU), rate:c.rate, depth:depth, recharge:recharge, mined:mined, blocked:blocked,
+                uHomes:uH*metM, uBiz:uC*metM, uParks:uP*metM, uInd:ind*metM, uFarms:Math.max(0,ag-fallowNow), uOut:mOut*metM+Math.max(0,ag-fallowNow),
+                rNat:nat, rInc:incid, rBas:rin, eut:eut, nut:c.nut, nearRun:agRun,
                 B:B.slice(), O:O.slice(), F:F.slice(), z:z.join('')});
   }
   var ok=0, worst=1, dry=0, sumU=0, sumD=0, sec=0, pk=0, pky=0, ek=0, eky=0;
@@ -3986,7 +4020,13 @@ function tileArt(ch, x, y, i, o){
     for(k=0;k<3;k++) h.push('<ellipse cx="'+(x+8+R2('px'+k)*44).toFixed(1)+'" cy="'+(y+8+R2('py'+k)*44).toFixed(1)+'" rx="1.8" ry="1.2" fill="#c9ab78"/>');
     if(R2('cac')<0.35) h.push(cactus(x+18+R2('cx')*24, y+44, 0.9));
   } else if(ch==='r'){
-    h.push('<path d="M'+(x+6)+','+(y+20)+' q6,-4 12,0 t12,0 t12,0 t12,0 M'+(x+6)+','+(y+40)+' q6,-4 12,0 t12,0 t12,0 t12,0" stroke="#dcedf7" stroke-width="1.6" fill="none"/>');
+    var eu=o.eut||0;
+    if(eu>0.05) h.push('<rect x="'+(x+1)+'" y="'+(y+1)+'" width="'+(T-2)+'" height="'+(T-2)+'" rx="3" fill="'+mixCol('#86b8d8','#6f9a3a',Math.min(1,eu*1.1))+'"/>');
+    h.push('<path d="M'+(x+6)+','+(y+20)+' q6,-4 12,0 t12,0 t12,0 t12,0 M'+(x+6)+','+(y+40)+' q6,-4 12,0 t12,0 t12,0 t12,0" stroke="'+(eu>0.3?'#a9c47c':'#dcedf7')+'" stroke-width="1.6" fill="none"/>');
+    if(eu>0.2){ for(k=0;k<Math.round(eu*9);k++) h.push('<ellipse cx="'+(x+6+R2('al'+k)*48).toFixed(1)+'" cy="'+(y+6+R2('ay'+k)*48).toFixed(1)+'" rx="'+(2.5+R2('ar'+k)*3).toFixed(1)+'" ry="'+(1.6+R2('aq'+k)*1.6).toFixed(1)+'" fill="#4f7a2f" opacity=".75"/>'); }
+    if(eu>0.6 && R2('fish')<0.6){ var fx=x+18+R2('fx')*20, fy=y+26+R2('fy')*14;
+      h.push('<g transform="rotate(180 '+fx.toFixed(1)+' '+fy.toFixed(1)+')"><path d="M'+(fx-7)+','+fy+' q7,-5 12,0 q-5,5 -12,0 Z M'+(fx+5)+','+fy+' l4,-3 v6 Z" fill="#e8e4d8" stroke="#3b3222" stroke-width=".7"/>'
+        +'<path d="M'+(fx-4)+','+(fy-1.3)+' l1.6,1.6 m0,-1.6 l-1.6,1.6" stroke="#3b3222" stroke-width=".6"/></g>'); }
   } else if(ch==='h'){
     var nb=Math.round(4*Bv), no=Math.round(nb*Ov);
     for(k=0;k<4;k++){ var lx=x+4+(k%2)*27, ly=y+4+Math.floor(k/2)*27;
@@ -4088,7 +4128,7 @@ function gridSvg(z, o){
   if(!o.flat) h.push('<rect x="-4" y="-4" width="'+(GW+8)+'" height="'+(GH+8)+'" rx="8" fill="#d8bf8e"/>');
   for(var i=0;i<NT;i++){
     var ch=z.charAt(i), x=(i%COLS)*GT, y=Math.floor(i/COLS)*GT;
-    var st={flat:o.flat, fresh:fresh[i], aband:aband[i], lock:lock[i], dry:o.dry};
+    var st={flat:o.flat, fresh:fresh[i], aband:aband[i], lock:lock[i], dry:o.dry, eut:o.eut};
     if(at){ st.B=at.B[i]; st.O=at.O[i]; st.F=at.F[i]; st.building=at.prevB? at.B[i]>at.prevB[i]+0.01 : false; }
     else if(o.plan){ st.B= o.plan[i]? 1 : 0; }
     h.push(tileArt(ch, x, y, i, st));
@@ -4720,8 +4760,7 @@ function drawAwards(svg, sN, sM, who){
     h.push('<text x="656" y="'+(y+32)+'" class="wt-awcity">'+esc(c.d.nm)+(mineK?' (you)':'')+'</text>');
     h.push('<text x="656" y="'+(y+47)+'" class="wt-tk sm">'+esc(a[2])+'</text>');
   });
-  var cq=0, cn=0; quizList().forEach(function(it){ var st=quizStats(it.key,it.t); cq+=st.ok; cn+=st.n; });
-  if(cn) h.push('<text x="40" y="530" class="wt-tk">Concept checks, whole class: <tspan class="wt-tk b">'+pct(cq/cn)+' correct</tspan> across '+cn+' answers</text>');
+
   paint(svg, h.join(''), 'chart');
 }
 
@@ -4934,7 +4973,7 @@ function sparkGrowth(c, upto){
 }
 function cityAt(c, i){
   var r=i? c.yrs[i-1] : null, ch=i? changesSince(c, i>=10? i-(i%10||10) : 0, i) : null;
-  var body = r? gridSvg(r.z,{at:{B:r.B, O:r.O, F:r.F, prevB:i>1? c.yrs[i-2].B : null}, fresh:ch.fresh, aband:ch.aband, dry:Math.max(0,OK-r.met), run:true})
+  var body = r? gridSvg(r.z,{at:{B:r.B, O:r.O, F:r.F, prevB:i>1? c.yrs[i-2].B : null}, fresh:ch.fresh, aband:ch.aband, dry:Math.max(0,OK-r.met), run:true, eut:r.eut})
               : gridSvg(c.d.z,{plan:c.d.core});
   return '<button type="button" class="wt-mapbtn" data-opencity="'+c.k+'" title="Open a bigger view of your city"><svg viewBox="-4 -4 '+(GW+8)+' '+(GH+8)+'" class="wt-mygrid">'+body+'</svg>'
     +'<span class="wt-mapzoom">See my city &#8599;</span></button>';
@@ -4947,9 +4986,7 @@ function renderMine(){
   var aqKnown = ph!=='reveal';
   h+='<div class="ev-mycard wt-mycard"><div class="ev-mymeta"><b>'+esc(d.nm)+'</b><em>'+TYBY[d.ty].n+' · '+ordinal(c.rank+1)+' of '+sim.n+' on the river</em>'
     +(aqKnown? '<em class="wt-aqline">Aquifer: '+AQT[c.aq].n+', '+AQT[c.aq].d+'</em>' : '')+'</div>'+cityAt(c,i)+'</div>';
-  /* the latest concept check stays up until the next headline */
-  var ql=quizList(), last=ql.length? ql[ql.length-1] : null;
-  if(last && (ph==='run'||ph==='mega'||quizMine()[last.key]===undefined)) h+=quizHtml(last);
+  if(r) h+=budgetHtml(r, 'Water budget · year '+i);
   if(r){
     var sofar=0; for(var j=0;j<i;j++) if(c.yrs[j].met<OK) sofar++;
     h+=blk(bhead('','Year '+i+(scenNow()==='mega'?' · megadrought':''))
@@ -5026,18 +5063,80 @@ function runHtml(sim, i){
     +statRow('Cities short of water', t.short+' <i>/</i> '+n));
   h+=blk(bhead('III','Where the water came from')+sparkMix(sim,i)
     +'<div class="ev-key"><span><i style="background:'+SRCBY.reuse.c+'"></i>Recycled</span><span><i style="background:'+SRCBY.river.c+'"></i>River</span><span><i style="background:'+SRCBY.wells.c+'"></i>Wells</span><span><i style="background:#A4373A"></i>Short</span></div>');
-  /* the room's answers to the latest concept check, live */
-  var ly=0; for(var y=i;y>=1;y--) if(sim.ev[y]){ ly=y; break; }
-  if(ly){
-    var t2=sim.ev[ly], st=quizStats(qKey(sim.kind,ly), t2);
-    h+=blk(bhead('IV','Concept check · '+esc(EVT[t2].tag))
-      +'<div class="ev-hint">'+esc(EVT[t2].q)+'</div>'
-      +statRow('Answered', st.n)
-      +statRow('Correct', st.n? pct(st.ok/st.n) : '—')
-      +'<div class="ev-hint dim">Answer: '+esc(EVT[t2].a[EVT[t2].ok])+'</div>');
-  }
+  h+=blk(budgetHtml(sumBudget(sim,i), 'IV · Water budget, whole basin'));
   return h;
 }
+/* ══ THE WATER BUDGET: where a year's water came from, and where it went ══ */
+function afTxt(v){ return num(v)+' AF'; }
+function budgetRows(r){
+  return {inp:[['River', r.river, SRCBY.river.c], ['Recycled water', r.reuse, SRCBY.reuse.c], ['Reservoir storage', r.store, SRCBY.store.c], ['Groundwater pumped', r.wells, SRCBY.wells.c]],
+          out:[['Homes', r.uHomes, '#e7b78a'], ['Shops & offices', r.uBiz, '#d9c07a'], ['Industry', r.uInd, '#a7a9b0'], ['Farms', r.uFarms, '#a9c46c'], ['Parks', r.uParks, '#7fb069']],
+          short:r.unmet, aqIn:r.rNat+r.rInc+r.rBas, aqOut:r.wells, rNat:r.rNat, rInc:r.rInc, rBas:r.rBas};
+}
+function sumBudget(sim, i){
+  var t={river:0,reuse:0,store:0,wells:0,uHomes:0,uBiz:0,uInd:0,uFarms:0,uParks:0,unmet:0,rNat:0,rInc:0,rBas:0};
+  sim.ks.forEach(function(k){ var r=sim.cities[k].yrs[i-1]; for(var f in t) t[f]+=r[f]||0; });
+  return t;
+}
+function budgetHtml(r, title){
+  var b=budgetRows(r), tot=0, mx=1;
+  b.inp.forEach(function(x){ tot+=x[1]; mx=Math.max(mx,x[1]); }); b.out.forEach(function(x){ mx=Math.max(mx,x[1]); }); mx=Math.max(mx,b.short);
+  function row(x, cls){ if(x[1]<0.5 && cls!=='short') return '';
+    return '<div class="wt-bud-r'+(cls?' '+cls:'')+'"><span>'+x[0]+'</span><i><b style="width:'+Math.max(2,x[1]/mx*100).toFixed(1)+'%;background:'+x[2]+'"></b></i><em>'+afTxt(x[1])+'</em></div>'; }
+  var net=b.aqIn-b.aqOut;
+  return '<div class="wt-bud"><div class="wt-bud-h">'+title+'</div>'
+    +'<div class="wt-bud-sec">Inputs: water coming in</div>'+b.inp.map(function(x){ return row(x); }).join('')
+    +'<div class="wt-bud-sec">Outputs: water being used</div>'+b.out.map(function(x){ return row(x); }).join('')
+    +(b.short>0.5? row(['Demand not met', b.short, '#A4373A'], 'short') : '')
+    +'<div class="wt-bud-aq"><b>Aquifer:</b> in '+afTxt(b.aqIn)+' (rain on open ground '+num(b.rNat)+', seepage from fields and yards '+num(b.rInc)+(b.rBas>0.5? ', banked river and storm water '+num(b.rBas) : '')+'), out '+afTxt(b.aqOut)+' pumped. '
+    +'<span class="'+(net<0?'red':'ok')+'">'+(net<0? 'Falling '+afTxt(-net)+' this year.' : 'Holding: '+afTxt(net)+' to spare.')+'</span></div></div>';
+}
+
+/* ══ OBSERVATIONS: what a city's own outcome shows about the chapter's key ideas.
+   Only the ones that fit this city appear. ══ */
+function observations(c, upto){
+  var out=[], yrs=c.yrs.slice(0, upto), d=c.d, s=d.s;
+  if(!yrs.length) return out;
+  var maxE=0, eY=0, minA=1, pumpT=0, rchT=0, outT=0, useT=0, basT=0;
+  yrs.forEach(function(r,i){ if(r.eut>maxE) maxE=r.eut; if(!eY && r.eut>0.35) eY=i+1; minA=Math.min(minA,r.A);
+    pumpT+=r.wells; rchT+=r.rNat+r.rInc+r.rBas; basT+=r.rBas; outT+=r.uOut; useT+=r.dem-r.unmet; });
+  var bufOn=s.buf || d.nearB>=1.5;
+  if(eY){
+    out.push({k:'eu-cause', idea:'Eutrophication is primarily caused by excess nutrients entering water bodies.',
+      text:'Fertilizer and manure from farms on your riverbank washed into the river year after year. By year '+eY+' the water had turned green with algae.'});
+    out.push({k:'eu-p', idea:'Phosphorus is the nutrient most often associated with eutrophication.',
+      text:'Farm fertilizer and manure are rich in phosphorus, and it is the nutrient that most often sets off algal blooms in fresh water.'});
+    if(maxE>0.6) out.push({k:'eu-o2', idea:'A major consequence of eutrophication is oxygen depletion in water.',
+      text:'As the algae died and decayed, bacteria used up the dissolved oxygen, and fish died. Your river intakes lost water to treatment and closures.'});
+    out.push({k:'buf', idea:'Establishing vegetated buffer zones near streams is the conservation strategy that best improves water quality.',
+      text:'Your riverbank farms had no buffer strips'+(s.buf? '' : ' and no buffer law')+'. Planted buffers trap nutrients and sediment before they reach the water.'});
+  } else if(d.nearF>=1 && bufOn){
+    out.push({k:'buf', idea:'Establishing vegetated buffer zones near streams is the conservation strategy that best improves water quality.',
+      text:'You farm on the riverbank, but your '+(s.buf? 'buffer law' : 'riparian buffers')+' trapped the runoff, and your river stayed clear.'});
+  } else if(d.nearF>=1 && maxE>0.1){
+    out.push({k:'eu-cause', idea:'Eutrophication is primarily caused by excess nutrients entering water bodies.',
+      text:'Runoff from your riverbank farms is building up nutrients in the river. Without buffers, algae will follow.'});
+  }
+  if(minA<0.5 || c.sub){
+    out.push({k:'aq', idea:'Excessive groundwater withdrawal can result in aquifer depletion.',
+      text:'Your wells pumped '+afTxt(Math.max(0,pumpT-rchT))+' more than soaked back in, and the aquifer fell to '+pct(minA)+(c.sub && c.sub<=upto? '; in year '+c.sub+' the ground sank.' : '.')});
+  }
+  if((s.rch && basT>1000) || (minA>=0.8 && rchT>pumpT*0.8)){
+    out.push({k:'rch', idea:'Groundwater recharge occurs when water moves into the soil and aquifers.',
+      text:afTxt(rchT)+' soaked back into your aquifer through open ground, farm fields, and yards'+(basT>1000? ', including '+afTxt(basT)+(s.rch? ' through your recharge basins' : ' of spare river and storm water')  : '')+'.'});
+  }
+  if(useT && outT/useT>=0.45){
+    out.push({k:'tr', idea:'Transpiration adds water vapor to the atmosphere from plants.',
+      text:'About '+pct(outT/useT)+' of your water went to lawns, parks, and fields. Plants return much of it to the air as water vapor through their leaves'+(s.cons? '; your conservation code trimmed it.' : ', more in the heat.')});
+  }
+  return out;
+}
+function obsHtml(list, title){
+  if(!list.length) return '';
+  return '<div class="wt-obs"><div class="wt-bud-h">'+(title||'Observations')+'</div>'+list.map(function(o){
+    return '<div class="wt-ob"><div class="wt-ob-t">'+esc(o.text)+'</div><div class="wt-ob-i"><span>Key idea</span>'+esc(o.idea)+'</div></div>'; }).join('')+'</div>';
+}
+
 /* ══ DECADE REPORTS: the run stops at year 10 and year 20; year 30 ends it. Each stop
    ranks the cities on the economy and on sustainability, and from year 20 on, shows
    who rose and who fell the most over the decade ══ */
@@ -5093,7 +5192,8 @@ function renderCheck(){
         sR=rows.slice().sort(function(a,b){ return b.S-a.S; }).findIndex(function(r){ return r.k===PK; })+1, r=c.yrs[y-1];
     h+='<div class="wt-rep-you"><div><b>'+esc(c.d.nm)+'</b>: '+ordinal(eR)+' of '+rows.length+' on the economy, '+ordinal(sR)+' on sustainability. '
       +'Economy '+signed(r.E-100,'%')+' since year 0, sustainability '+Math.round(r.Sus)+', aquifer '+pct(r.A)+'.</div>'
-      +'<button type="button" class="cg-btn go" data-opencity="'+PK+'">See my city &#9654;</button></div>';
+      +'<button type="button" class="cg-btn go" data-opencity="'+PK+'">See my city &#9654;</button></div>'
+      +obsHtml(observations(c, y).slice(0,2), 'Observations so far');
   }
   h+=reportHtml(sim, y, HOST || repTab);
   if(HOST && !repTab) h+='<div class="wt-rep-foot">Click any city to see its map and the choices behind it. Press <b>Continue</b> when you are ready.</div>';
@@ -5121,14 +5221,15 @@ function renderCityView(force){
   var ch= y? changesSince(c, y%10? y-(y%10) : prev, y) : {fresh:{}, aband:{}, nNew:0, nAb:0, nFal:0};
   var at= r? {B:r.B, O:r.O, F:r.F, prevB: y>1? c.yrs[y-2].B : null} : null;
   var map='<svg viewBox="-6 -6 '+(GW+12)+' '+(GH+12)+'" class="wt-cv-map" role="img" aria-label="'+esc(d.nm)+' in year '+y+'">'
-    +(r? gridSvg(r.z,{at:at, fresh:ch.fresh, aband:ch.aband, dry:Math.max(0,OK-r.met)}) : gridSvg(d.z,{plan:d.core}))+'</svg>';
+    +(r? gridSvg(r.z,{at:at, fresh:ch.fresh, aband:ch.aband, dry:Math.max(0,OK-r.met), eut:r.eut}) : gridSvg(d.z,{plan:d.core}))+'</svg>';
   var h='<div class="wt-pl-card wt-cv-card"><div class="wt-pl-head"><div><div class="wt-pl-eyebrow">'+(cvKey===PK&&!HOST? 'Your city' : 'City view')+(cvKind==='mega'?' · megadrought':'')+'</div>'
     +'<div class="wt-pl-title">'+esc(d.nm)+'</div></div>'
     +'<div class="wt-cv-years">'+cityYears().map(function(yy){ return '<button type="button" class="ev-bandbtn'+(yy===y?' on':'')+'" data-cvyear="'+yy+'">Year '+yy+'</button>'; }).join('')+'</div>'
     +'<button type="button" class="cg-btn ghost" data-cvclose>Close</button></div>';
   h+='<div class="wt-cv-body"><div class="wt-cv-mapcol">'+map
     +'<div class="wt-cv-key"><span><i class="k-new"></i>New since year '+(y%10? y-(y%10) : prev)+'</span><span><i class="k-ab"></i>Mostly empty or abandoned</span>'
-    +'<span><i class="k-zoned"></i>Zoned, not built yet</span><span><i class="k-fal"></i>Fallowed farm</span></div></div>';
+    +'<span><i class="k-zoned"></i>Zoned, not built yet</span><span><i class="k-fal"></i>Fallowed farm</span>'+(r && r.eut>0.2? '<span><i class="k-eu"></i>Algae bloom: eutrophication</span>' : '')+'</div>'
+    +(r? budgetHtml(r, 'Water budget, year '+y) : '')+'</div>';
   h+='<div class="wt-cv-side">';
   if(r){
     var story=[];
@@ -5147,6 +5248,7 @@ function renderCityView(force){
       if(r.conf<0.8 && r.A<0.6) story.push('Why: the aquifer is '+pct(r.A)+' full and falling, so businesses and families are moving to cities with safer water.');
       else if(r.conf<0.8) story.push('Why: water trouble has shaken confidence; builders and businesses are holding back.');
       if(r.rate>1.25) story.push('Water now costs '+signed(r.rate*100-100,'%')+' more, as wells pump from deeper.');
+      if(r.eut>0.35) story.push('The river is eutrophic: nutrient runoff from riverbank farms feeds algae, and oxygen is running low.');
     }
     h+=blk(bhead('','Year '+y)+'<div class="wt-cv-story">'+story.map(function(t){ return '<div>'+esc(t)+'</div>'; }).join('')+'</div>');
     h+=blk(statRow('People', ppl(r.P), signed(r.P/c.P0*100-100,'%'))
@@ -5163,6 +5265,7 @@ function renderCityView(force){
     +'<div class="wt-cv-zones">'+grp.map(function(t){ return '<div>'+esc(t)+'</div>'; }).join('')+'</div>'
     +statRow('Place on the river', ordinal(c.rank+1)+' of '+sim.n, c.x<0.5? 'upstream half' : 'downstream half')
     +statRow('Aquifer', AQT[c.aq].n, AQT[c.aq].d));
+  if(y) h+=obsHtml(observations(c, y));
   h+='</div></div></div>';
   if(force || box.dataset.sig!==h){ box.innerHTML=h; box.dataset.sig=h; }
   box.hidden=false;
@@ -5187,13 +5290,11 @@ function finalHtml(){
   var me=(!HOST && sN.cities[PK])? PK : null;
   var ql=quizList();
   if(me){
-    var bg=badgesFor(me, sN, sM), qm=quizMine(), qok=0, qn=0;
-    ql.forEach(function(it){ var v=qm[it.key]; if(v===undefined) return; qn++; if(+v===EVT[it.t].ok) qok++; });
-    if(qn===ql.length && ql.length && qok===qn) bg.push(['Concept master','Every concept check right']);
+    var bg=badgesFor(me, sN, sM);
+    h+=blk(obsHtml(observations(sN.cities[me], YEARS), 'Observations on your city'));
     h+=blk(bhead('','Your badges')+(bg.length? '<div class="wt-badges">'+bg.map(function(b){
         return '<div class="wt-badge"><span class="wt-medal"></span><span><b>'+esc(b[0])+'</b><em>'+esc(b[1])+'</em></span></div>'; }).join('')+'</div>'
-      : '<div class="ev-hint">No badges this time. Look at what the podium cities did differently, then play again.</div>')
-      +(ql.length? statRow('Concept checks', qok+' <i>/</i> '+ql.length, 'correct') : ''), 'wt-badgeblk');
+      : '<div class="ev-hint">No badges this time. Look at what the podium cities did differently, then play again.</div>'), 'wt-badgeblk');
     var c=sN.cities[me], rank=rankBySecure(sN).indexOf(me)+1;
     h+=blk(bhead('I','Your city')
       +statRow('Years with enough water', (YEARS-c.short)+' <i>/</i> 30', pct(c.rel))
@@ -5209,10 +5310,6 @@ function finalHtml(){
         +statRow('People', ppl(cm.Pend), chgTxt(cm.Pend/cm.P0*100))
         +statRow('Aquifer ran dry', cm.dryYear? 'Year '+cm.dryYear : 'No'));
     }
-  }
-  if(HOST && ql.length){
-    h+=blk(bhead('','Concept checks, whole class')+ql.map(function(it){ var st=quizStats(it.key,it.t);
-      return statRow(esc(EVT[it.t].tag.split(' · ')[0])+(it.kind==='mega'?' <i>(mega)</i>':''), st.n? pct(st.ok/st.n) : '—', st.n+' answered'); }).join(''));
   }
   /* boom and bust, in numbers: each growth preference at year 10 and year 30 */
   var bb='<div class="wt-gtab"><div class="wt-gtr hd wt-gtr5"><span>Growth</span><span>Yr 10</span><span>Yr 30</span><span>Busts</span><span>Enough</span></div>';
@@ -5645,7 +5742,7 @@ function demoRun(){
   function holdFor(kind, y){ return function(){ return holdYear(kind,y)? (kind==='mega'? 6200 : 7600) : (kind==='mega'? 1000 : 1500); }; }
   function capFor(kind, y){ return function(){ var t=simulate(kind).ev[y];
     return isCheck(kind,y)? 'Check-in, year '+y+': the run pauses so the class can compare the growth paces.'
-      : t? 'Headline, year '+y+': '+EVT[t].n+'. On their devices, students answer a one-tap concept check.'
+      : t? 'Headline, year '+y+': '+EVT[t].n+'. Each student sees what it did to their own water budget.'
       : (kind==='mega'? 'Megadrought, year '+y+' of 30.' : 'Year '+y+' of 30. Boom cities sprawl and drill; the river narrows downstream.'); }; }
   var bar=document.createElement('div');
   bar.className='ev-demobar';
@@ -5691,7 +5788,7 @@ function demoRun(){
   S.push([rvMs('normal')+500, function(){ doc({phase:'run', yr:1, deadline:null}); },
       'Year 1 of 30.']);
   for(var y=2;y<=YEARS;y++) (function(yy){
-    S.push([holdFor('normal',yy-1), function(){ doc({yr:yy}); classAnswers('normal',yy); }, capFor('normal',yy)]);
+    S.push([holdFor('normal',yy-1), function(){ doc({yr:yy}); }, capFor('normal',yy)]);
   })(y);
   S.push([1400, function(){ doc({phase:'discuss'}); }, 'After 30 years: boom and bust, by growth pace.']);
   S.push([5200, function(){ gmet='econ'; drawStage(true); renderTabs(); }, 'The economy tells the same story: an early boom, then the bill comes due.']);
@@ -5699,7 +5796,7 @@ function demoRun(){
       'Then a megadrought: the same cities and the same plans.']);
   S.push([rvMs('mega')+400, function(){ doc({phase:'mega', myr:1, deadline:null}); }, 'Megadrought, year 1 of 30.']);
   for(var m=2;m<=YEARS;m++) (function(mm){
-    S.push([holdFor('mega',mm-1), function(){ doc({myr:mm}); classAnswers('mega',mm); }, capFor('mega',mm)]);
+    S.push([holdFor('mega',mm-1), function(){ doc({myr:mm}); }, capFor('mega',mm)]);
   })(m);
   S.push([holdFor('mega',YEARS), function(){ doc({phase:'final', megaDone:1}); }, 'The Basin Awards: the most people with a reliable supply, and special awards.']);
   S.push([6500, function(){ tab='types'; drawStage(true); renderTabs(); }, 'Strategies: years with enough water by growth pace, policy, and river position.']);
