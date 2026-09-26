@@ -1775,7 +1775,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .fp-meas{display:none; width:100%; margin-top:2.4cqw; padding-top:2.6cqw; border-top:1px solid rgba(120,100,60,.3);}
 .fp-card.rev .fp-meas{display:block; animation:fp-rise .55s ease both;}
 .fp-card.rev .fp-art{flex:0 1 34%; margin:3.6cqw 0 1cqw;}
-@keyframes fp-rise{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+@keyframes fp-rise{from{transform:translateY(8px);} to{transform:none;}}
 .fp-num{font-family:'Merriweather',serif; font-weight:900; color:var(--ink); font-size:13cqw; line-height:1;}
 .fp-num small{font-family:'Inter',sans-serif; font-weight:700; font-size:4.4cqw; color:var(--ink2); margin-left:1cqw; letter-spacing:.02em;}
 .fp-litre{font-size:3.7cqw; color:var(--ink3); margin-top:.8cqw;}
@@ -1788,8 +1788,8 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .fp-card.rev.lose .fp-in > :not(.fp-meas){opacity:.55; transition:opacity .5s;}
 .fp-card.rev.win .fp-frame rect:first-child{stroke:var(--win); stroke-width:4;}
 .fp-seal{position:absolute; top:-5cqw; right:-7cqw; width:27cqw; aspect-ratio:1; z-index:2; pointer-events:none;
-  animation:fp-stamp .5s cubic-bezier(.3,1.6,.5,1) .35s both;}
-@keyframes fp-stamp{from{opacity:0; transform:scale(1.8) rotate(-30deg);} to{opacity:1; transform:scale(1) rotate(-12deg);}}
+  animation:fp-stamp .5s cubic-bezier(.3,1.6,.5,1) .35s;  transform:rotate(-12deg);}
+@keyframes fp-stamp{from{transform:scale(1.8) rotate(-30deg);} to{transform:scale(1) rotate(-12deg);}}
 .fp-seal text{font-family:'Inter',sans-serif; font-weight:800; font-size:10.5px; letter-spacing:.08em; fill:#fff;}
 /* leaderboard (host) */
 .fp-side{width:clamp(170px,17vw,230px); flex:none; border-left:1px solid var(--hair2); padding-left:clamp(.8rem,1.6vw,1.3rem);
@@ -2252,8 +2252,20 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   function isScored(p){ return p && p.g===gid() && (p.mode==='named' || p.mode==='anon'); }
   function pairAt(i){ var r=state.rounds||[]; return [r[2*i], r[2*i+1]]; }
   function correctSide(i){ var p=pairAt(i); return ITEMS[p[0]].gal < ITEMS[p[1]].gal ? 0 : 1; }
-  function spinEnd(){ return (state.roundEnds||0) - ROUND_MS; }
-  function timeLeft(){ return Math.max(0, (state.roundEnds||0) - Date.now()); }
+  /* Every device times the round from the moment the round reaches IT, so a phone whose
+     clock runs a few seconds fast or slow still gets the full spin and all 20 seconds.
+     (Timing off the instructor's clock made some phones start late or lock early.)
+     The instructor's copy times it from its own Next press and waits a short grace. */
+  var GRACE_MS=1500;
+  function roundStart(){
+    if(HOST) return (state.roundEnds||0) - ROUND_MS - SPIN_MS;
+    var k='fp-st:'+GID+':'+gid()+':'+state.idx, v=parseInt(ls(k),10);
+    if(!(v>0)){ v=Date.now(); ls(k, String(v)); }
+    return v;
+  }
+  function spinEnd(){ return roundStart() + SPIN_MS; }
+  function roundEnd(){ return roundStart() + SPIN_MS + ROUND_MS; }
+  function timeLeft(){ return state.roundEnds? Math.max(0, roundEnd() - Date.now()) : 0; }
   function timeUp(){ return !!state.roundEnds && timeLeft() <= 0; }
 
   function anonNum(pk){
@@ -2444,11 +2456,12 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
         + '</div>';
       var top='<div class="fp-top"><span class="fp-tag">Round '+(i+1)+' of '+count()+'</span>'
         + ((!HOST && scored()) ? '<span class="fp-score">Score <b>'+scoreOf(PK)+'</b></span>' : '')+'</div>';
-      el.play.innerHTML='<div class="fp-play"><div class="fp-main">'+top
+      el.play.innerHTML='<div class="fp-play" data-round="'+gid()+':'+i+':'+(rev?1:0)+'"><div class="fp-main">'+top
         + '<div class="fp-arena">'+cardHTML(i,0,o)+mid+cardHTML(i,1,o)+'</div>'
         + '<div class="fp-verdict">'+(rev ? verdictHTML(i) : '')+'</div></div>'
         + (HOST ? '<aside class="fp-side" data-side>'+boardHTML(rev?'Leaderboard':'Top '+topN(), topN())+'</aside>' : '')
         + '</div>';
+      if(spin) setTimeout(function(){ el.play.querySelectorAll('.fp-card.spin').forEach(function(c2){ c2.classList.remove('spin'); }); }, SPIN_MS+300);
       if(rev && revAnimFor!==spinKey){ revAnimFor=spinKey; animateReveal(); }
       else if(rev){ el.play.querySelectorAll('.fp-bar i').forEach(function(b){ b.style.width=b.dataset.w+'%'; }); }
     } else if(HOST){
@@ -2602,8 +2615,13 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       } else if(ph==='round' && !state.revealed){
         // the host's copy ends the round: at 0 s, or once every scored player has picked
         var n=scoredCount();
-        if(HOST && (timeUp() || (n>0 && Date.now()>=spinEnd() && answeredCount(state.idx)>=n))) reveal();
+        if(HOST && (Date.now()>=roundEnd()+GRACE_MS || (n>0 && Date.now()>=spinEnd() && answeredCount(state.idx)>=n))) reveal();
         tickPlay();
+      }
+      /* self-repair: if this screen is not showing the current round or its reveal, redraw it */
+      if(ph==='round'){
+        var shown=el.play.querySelector('[data-round]'), want=gid()+':'+state.idx+':'+(state.revealed?1:0);
+        if(!shown || shown.getAttribute('data-round')!==want){ playKey=null; renderPlay(); }
       }
     }, 250);
   });
