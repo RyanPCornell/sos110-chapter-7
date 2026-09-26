@@ -1807,7 +1807,37 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .fp-empty{color:var(--ink3); font-size:.9rem;}
 /* ended */
 .fp-final{display:flex; flex-direction:column; align-items:center; gap:clamp(.4rem,1.2vh,.9rem); width:100%;}
-.fp-final-h{display:flex; align-items:center; gap:.7rem;}
+.fp-final-h{display:flex; align-items:center; gap:.7rem; flex-wrap:wrap; justify-content:center;}
+.fp-endviews{display:inline-flex; gap:3px; padding:3px; background:var(--paper2); border:1px solid var(--hair); border-radius:9px; margin-left:.6rem;}
+.fp-ev{font:inherit; font-weight:700; font-size:clamp(.72rem,1.1vw,.84rem); border:0; background:transparent; color:var(--ink2); border-radius:6px; padding:.3rem .8rem; cursor:pointer;}
+.fp-ev.on{background:#8a6a2f; color:#fff;}
+.fp-rounds{width:100%; max-width:980px;}
+.fp-rr{display:grid; grid-template-columns:1.4rem 1fr 1fr; gap:.4rem; align-items:center; padding:.1rem 0; border-top:1px solid var(--hair2);}
+.fp-final.rounds{gap:.3rem;}
+.fp-final.rounds .fp-trophy{width:clamp(26px,4.4vh,36px);}
+.fp-final.rounds .fp-final-t{font-size:clamp(1rem,2.1vw,1.4rem);}
+.fp-rr.hd{border-top:0; font-family:'Inter',sans-serif; font-weight:800; font-size:clamp(.56rem,.86vw,.66rem); letter-spacing:.12em; text-transform:uppercase; color:#8a6a2f;}
+.fp-rn{font-family:'Merriweather',serif; font-weight:900; color:#8a6a2f; text-align:right;}
+.fp-rs{display:grid; grid-template-columns:minmax(0,1fr) auto 3.2rem 2.2rem; gap:.4rem; align-items:center;
+  background:var(--paper2); border:1px solid var(--hair2); border-radius:7px; padding:.14rem .45rem; min-width:0;}
+.fp-rs > b{font-size:clamp(.6rem,.92vw,.74rem); color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.fp-rs > em{font-style:normal; font-family:'Merriweather',serif; font-weight:900; font-size:clamp(.58rem,.88vw,.7rem); color:var(--ink2); white-space:nowrap;}
+.fp-rs > i{height:.42rem; background:rgba(120,100,60,.14); border-radius:99px; overflow:hidden;}
+.fp-rs > i b{display:block; height:100%; background:#8a6a2f; border-radius:99px;}
+.fp-rs.win > i b{background:#2D6A4F;}
+.fp-rs > span{font-weight:800; font-size:clamp(.6rem,.9vw,.72rem); color:var(--ink); text-align:right;}
+.fp-rs.win{border-color:#2D6A4F; background:#eef6f0;}
+.fp-rs-top{display:flex; align-items:center; gap:.35rem; min-width:0;}
+.fp-rs-top b{font-size:clamp(.62rem,.95vw,.76rem); color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.fp-ok{color:#2D6A4F; font-weight:900;}
+.fp-you{flex:none; font-size:.62rem; font-weight:800; color:#fff; background:#8a6a2f; border-radius:99px; padding:0 .4rem; letter-spacing:.04em;}
+.fp-rs-bot{display:grid; grid-template-columns:auto 1fr 2.4rem; gap:.4rem; align-items:center; margin-top:.1rem;}
+.fp-rs-bot em{font-style:normal; font-family:'Merriweather',serif; font-weight:900; font-size:clamp(.6rem,.9vw,.72rem); color:var(--ink2); white-space:nowrap;}
+.fp-rs-bot i{height:.42rem; background:rgba(120,100,60,.14); border-radius:99px; overflow:hidden;}
+.fp-rs-bot i b{display:block; height:100%; background:#8a6a2f; border-radius:99px;}
+.fp-rs.win .fp-rs-bot i b{background:#2D6A4F;}
+.fp-rs-bot span{font-weight:800; font-size:clamp(.6rem,.9vw,.72rem); color:var(--ink); text-align:right;}
+.fp-rr-note{font-size:clamp(.56rem,.84vw,.66rem); color:var(--ink3); margin-top:.35rem;}
 .fp-final-b{display:flex; gap:clamp(1rem,2.4vw,2rem); align-items:center; justify-content:center; flex-wrap:wrap; width:100%;}
 .fp-final-l{display:flex; flex-direction:column; align-items:center; gap:.5rem;}
 .fp-final-r{display:flex; flex-direction:column; align-items:center; gap:.7rem;}
@@ -2495,6 +2525,26 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     }
   }
 
+  /* every face-off: both items, the right answer, and how the class split */
+  var endView='board';
+  function roundsHTML(){
+    var n=count(), h='<div class="fp-rounds"><div class="fp-rr hd"><span>#</span><span>Left card</span><span>Right card</span></div>';
+    for(var q=0;q<n;q++){
+      var p=pairAt(q), sp=split(q), tot=sp[0]+sp[1], cor=correctSide(q), mine=HOST? null : ansOf(PK,q)||myAnsLocal(q);
+      h+='<div class="fp-rr"><span class="fp-rn">'+(q+1)+'</span>';
+      for(var side=0;side<2;side++){
+        var it=ITEMS[p[side]], share=tot? sp[side]/tot : 0, win=(side===cor);
+        h+='<div class="fp-rs'+(win?' win':'')+'"><b title="'+esc(it.plain)+'">'+(win? '<span class="fp-ok">&#10003;</span> ' : '')+esc(it.plain)
+          +(mine && mine.c===side? ' <span class="fp-you">you</span>' : '')+'</b>'
+          +'<em>'+fmtGal(it.gal)+' gal</em><i><b style="width:'+(share*100).toFixed(1)+'%"></b></i>'
+          +'<span>'+(tot? Math.round(share*100)+'%' : '—')+'</span></div>';
+      }
+      h+='</div>';
+    }
+    return h+'<div class="fp-rr-note">&#10003; = the smaller water footprint. Percent = share of scored players who picked that card.</div></div>';
+  }
+  function myAnsLocal(q){ var v=ls('fp-ans:'+GID+':'+gid()+':'+q); if(!v) return null; try{ return JSON.parse(v); }catch(e){ return null; } }
+
   function render(){
     var ph=phase();
     SEC.classList.toggle('fp-inplay', ph==='round' || ph==='ended');
@@ -2575,16 +2625,19 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
           stats+='</div>';
         }
       }
-      el.ended.innerHTML='<div class="fp-final"><div class="fp-final-h">'+TROPHY+'<div class="fp-final-t">Final Results</div></div>'
-        + '<div class="fp-final-b"><div class="fp-final-l">'+yours+boardHTML('Top '+topN()+' · Final', topN())+'</div>'
-        + ((stats || HOST) ? '<div class="fp-final-r">'+stats
-            + (HOST ? '<button class="fp-btn ghost" data-act="new">New game</button>' : '')+'</div>' : '')
-        + '</div></div>';
+      var views='<div class="fp-endviews">'+[['board','Leaderboard'],['rounds','Round by round']].map(function(v){
+          return '<button type="button" class="fp-ev'+(endView===v[0]?' on':'')+'" data-endview="'+v[0]+'">'+v[1]+'</button>'; }).join('')+'</div>';
+      var body = endView==='rounds'? roundsHTML()
+        : '<div class="fp-final-b"><div class="fp-final-l">'+yours+boardHTML('Top '+topN()+' · Final', topN())+'</div>'
+          + ((stats || HOST) ? '<div class="fp-final-r">'+stats+'</div>' : '')+'</div>';
+      el.ended.innerHTML='<div class="fp-final'+(endView==='rounds'?' rounds':'')+'"><div class="fp-final-h">'+TROPHY+'<div class="fp-final-t">Final Results</div>'+views+'</div>'
+        + body + (HOST ? '<div class="fp-row"><button class="fp-btn ghost" data-act="new">New game</button></div>' : '')+'</div>';
     }
   }
 
   SEC.addEventListener('click', function(e){
-    var t=e.target.closest('[data-act],[data-cnt],[data-mode],[data-pick]'); if(!t) return;
+    var t=e.target.closest('[data-act],[data-cnt],[data-mode],[data-pick],[data-endview]'); if(!t) return;
+    if(t.dataset.endview){ endView=t.dataset.endview; render(); return; }
     if(t.dataset.pick!==undefined){ pick(parseInt(t.dataset.pick,10)); return; }
     if(t.dataset.cnt!==undefined){ pickCount=parseInt(t.dataset.cnt,10); render(); return; }
     if(t.dataset.mode!==undefined){ if(t.dataset.mode==='named'){ nameFormOpen=true; render(); } else join(t.dataset.mode); return; }
