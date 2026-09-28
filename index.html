@@ -1233,6 +1233,45 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 
 
 /* ══════════ Ch 7 · Build a City's Water Supply ══════════ */
+/* the sample student screen */
+.wt-sample{position:absolute; inset:0; z-index:14; display:flex; align-items:center; justify-content:center;
+  background:rgba(59,50,34,.35); backdrop-filter:blur(2px);}
+.wt-sample[hidden]{display:none;}
+.wt-scard{width:min(78rem,96%); max-height:96%; display:flex; flex-direction:column; gap:.45rem; background:#fffdf6;
+  border:1px solid rgba(120,100,60,.4); border-radius:16px; padding:.75rem .9rem .8rem; box-shadow:0 18px 50px rgba(40,30,10,.32);}
+.wt-shead{display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;}
+.wt-sey{font-size:.62rem; font-weight:800; letter-spacing:.17em; text-transform:uppercase; color:#8a6a2f;}
+.wt-stitle{font-family:'Merriweather',Georgia,serif; font-style:italic; font-weight:900; color:#3b3222; font-size:clamp(1rem,1.8vw,1.35rem);}
+.wt-ssteps{display:flex; flex-wrap:wrap; gap:.3rem;}
+.wt-sframe{position:relative; height:min(62vh, 40rem); width:auto; max-width:100%; aspect-ratio:16/9; align-self:center;
+  overflow:hidden; border:1px solid rgba(120,100,60,.3); border-radius:10px; background:#f4ecda; flex:0 0 auto;}
+.wt-sframe iframe{position:absolute; left:0; top:0; width:1440px; height:810px; border:0; transform-origin:0 0; pointer-events:none;}
+.wt-sfoot{display:flex; align-items:center; gap:1rem;}
+.wt-scap{flex:1 1 auto; margin:0; font-family:'Merriweather',Georgia,serif; font-size:clamp(.74rem,1.15vw,.92rem); color:#3b3222; line-height:1.45;}
+.wt-snav{flex:0 0 auto; display:flex; align-items:center; gap:.5rem;}
+.wt-snum{font-size:.72rem; font-weight:700; color:#8a8069; min-width:4.2em; text-align:center;}
+.wt-budbar{height:7px; border-radius:4px; background:rgba(120,100,60,.15); overflow:hidden; margin:.1rem 0 .3rem;}
+.wt-budbar i{display:block; height:100%; background:linear-gradient(90deg,#2f7d6b,#c9a24a); border-radius:4px;}
+.wt-linkbtn{font:inherit; font-weight:700; color:#8a6a2f; background:none; border:0; padding:.1rem 0; cursor:pointer;
+  text-decoration:underline; text-underline-offset:2px; font-size:clamp(.66rem,1vw,.8rem);}
+.wt-assume-card{max-width:min(980px,94%); max-height:88%; display:flex; flex-direction:column;}
+.wt-assume-body{overflow:auto; padding:.4rem 1rem 1rem; font-size:clamp(.68rem,1.02vw,.82rem); line-height:1.45; color:#4a4030;}
+.wt-assume-body .ev-assume li{margin:.3rem 0;}
+.wt-cv-mapwrap{position:relative;}
+.wt-sqhit{fill:transparent; cursor:pointer; stroke:none;}
+.wt-sqhit:hover{fill:rgba(255,248,225,.25); stroke:#8a6a2f; stroke-width:1.5;}
+.wt-sqhit.on{fill:rgba(255,248,225,.18); stroke:#3b3222; stroke-width:3; stroke-dasharray:6 3;}
+.wt-sqhint{font-size:clamp(.56rem,.86vw,.66rem); color:#8a8069; font-style:italic; margin-top:.15rem;}
+.wt-sqpop{position:absolute; top:.4rem; right:.4rem; width:min(17rem,58%); background:#fffdf6; border:1px solid rgba(120,100,60,.4);
+  border-radius:10px; box-shadow:0 8px 24px rgba(40,30,10,.22); padding:.5rem .6rem; font-size:clamp(.6rem,.92vw,.74rem); color:#4a4030; z-index:5;}
+.wt-sqpop.l{right:auto; left:.4rem;}
+.wt-sqpop-h{display:flex; justify-content:space-between; align-items:flex-start; gap:.4rem; margin-bottom:.3rem;}
+.wt-sqpop-h b{display:block; font-family:'Merriweather',serif; font-size:1.12em; color:#3b3222;}
+.wt-sqpop-h em{display:block; font-style:normal; color:#8a8069; font-size:.9em;}
+.wt-sqrow{display:flex; justify-content:space-between; gap:.5rem; padding:.12rem 0; border-top:1px solid rgba(120,100,60,.15);}
+.wt-sqrow b{color:#3b3222; text-align:right;}
+.wt-sqnote{margin-top:.3rem; line-height:1.35;}
+.wt-sqfoot{margin-top:.3rem; color:#a09781; font-size:.88em;}
 .wt-scen{margin:.35rem 0 .55rem; padding:.45rem .65rem; border:1px solid rgba(138,106,47,.45); border-left:4px solid #8a6a2f;
   border-radius:8px; background:#fbf3df; font-size:clamp(.62rem,.95vw,.76rem); line-height:1.4; color:#5e5340;}
 .wt-scen b{color:#3b3222;}
@@ -3239,7 +3278,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     </g>
   </g>
 </svg>
-        <p class="cg-sub">Choose three policies, zone your city on the river, and decide how fast it grows. Then thirty years arrive, one at a time.</p>
+        <p class="cg-sub">Spend your policy budget, zone your city on the river, and decide how fast it grows. Then thirty years arrive, one at a time.</p>
       </div>
       <div class="cg-clockwrap" data-clockwrap hidden>
         <div class="cg-phase">Design</div>
@@ -3258,15 +3297,16 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
         </select></label>
       <label class="cg-set">Pace
         <select data-pace>
-          <option value="4" selected>4 s a year</option>
-          <option value="7">7 s a year</option>
-          <option value="0">I press Next</option>
+          <option value="4" selected>Fast</option>
+          <option value="7">Medium</option>
+          <option value="0">Manual</option>
         </select></label>
       <button class="cg-btn" type="button" data-start hidden>Start planning &#9654;</button>
       <button class="cg-btn" type="button" data-step hidden>Next year &#9654;</button>
       <button class="cg-btn ghost" type="button" data-pause hidden>Pause</button>
       <button class="cg-btn go" type="button" data-mega hidden>Megadrought &#9654;</button>
       <button class="cg-btn ghost" type="button" data-skip hidden>Skip ahead &#9654;</button>
+      <button class="cg-btn" type="button" data-samplebtn hidden>Sample student screen</button>
       <button class="cg-btn go" type="button" data-again hidden>Play again?</button>
       <button class="cg-btn" type="button" data-survey hidden>Survey</button>
       <button class="cg-btn ghost" type="button" data-surveyclose hidden>Close survey</button>
@@ -3316,6 +3356,24 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 
     <div class="wt-planner" data-planner hidden></div>
     <div class="wt-planner wt-cityview" data-cityview hidden></div>
+    <div class="wt-planner wt-assumeview" data-assumebox hidden></div>
+
+    <div class="wt-sample" data-sample hidden role="dialog" aria-label="Sample student screen">
+      <div class="wt-scard">
+        <div class="wt-shead">
+          <div><div class="wt-sey">Sample student screen</div><div class="wt-stitle">What students will see</div></div>
+          <button class="cg-btn ghost" type="button" data-sclose>Close &times;</button>
+        </div>
+        <div class="wt-ssteps" data-ssteps></div>
+        <div class="wt-sframe" data-sframe></div>
+        <div class="wt-sfoot">
+          <p class="wt-scap" data-scap></p>
+          <div class="wt-snav"><button class="cg-btn ghost" type="button" data-sprev>&#9664; Back</button>
+            <span class="wt-snum" data-snum></span>
+            <button class="cg-btn go" type="button" data-snext>Next &#9654;</button></div>
+        </div>
+      </div>
+    </div>
 
     <div class="wt-reveal" data-reveal hidden>
       <div class="wt-rvcard">
@@ -3402,7 +3460,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       Mayer et al. (2007), <em>J. Environ. Quality 36</em>: riparian buffers remove nitrogen, more consistently when wide.
       ADWR (2023): Phoenix AMA model found 4.86 million acre-feet of unmet groundwater demand over 100 years, halting new groundwater-based subdivisions.
       Williams, Cook &amp; Smerdon (2022), <em>Nature Climate Change 12</em>: the southwestern megadrought.
-      Town of Queen Creek&ndash;GSC Farm Colorado River transfer (ADWR, 2021). City of Phoenix Council, TSMC development agreement (Nov. 18, 2020).</div><div class="wt-ptab"><div class="wt-ptab-h">Parameters and where they come from. <b>Measured</b>: taken from a source. <b>Derived</b>: computed from sourced figures. <b>Assumed</b>: set for teaching.</div><table><thead><tr><th>Parameter</th><th>Value</th><th>Status</th><th>Basis</th></tr></thead><tbody><tr><td>Houses: water per square</td><td>178 AF/yr (480 homes)</td><td class="st d">Derived</td><td>Multi-City Water Use Study: about 350 gal/day per single-family home, 57% outdoors</td></tr><tr><td>Apartments: water per square</td><td>652 AF/yr (3,200 units)</td><td class="st d">Derived</td><td>Water Research Foundation: 182 gal/day per Phoenix multifamily unit</td></tr><tr><td>Shops &amp; offices, industry: water</td><td>150 and 640 AF/yr</td><td class="st a">Assumed</td><td>Teaching values scaled to typical commercial and industrial use</td></tr><tr><td>Alfalfa, vegetables, orchards</td><td>864, 624, 720 AF/yr (160 acres)</td><td class="st d">Derived</td><td>Univ. of Arizona (2023), Table C1: 5.4, about 3.9, about 4.5 AF per acre</td></tr><tr><td>Dairy</td><td>235 AF/yr (2,000 cows)</td><td class="st d">Derived</td><td>ADWR allotment: 105 gal per cow per day</td></tr><tr><td>Green park turf</td><td>368 AF/yr</td><td class="st d">Derived</td><td>ADWR turf allotment 4.6 AF/acre on half the square</td></tr><tr><td>Farm output</td><td>$0.4M to $12M per square</td><td class="st d">Derived</td><td>USDA NASS Arizona prices and yields (2022)</td></tr><tr><td>Construction income, output per job</td><td>NAHB per-home values; $120,000 per job</td><td class="st d">Derived</td><td>NAHB (2015); BEA/BLS Phoenix metro (2022)</td></tr><tr><td>Residential price elasticity</td><td>&minus;0.41</td><td class="st m">Measured</td><td>Dalhuisen et al. (2003) meta-analysis</td></tr><tr><td>Pumping cost</td><td>about $0.20 per AF per foot of lift</td><td class="st d">Derived</td><td>Hanson (UC ANR) energy per lift, at about $0.10/kWh</td></tr><tr><td>Incidental recharge</td><td>25% of farm water, 4% of city water</td><td class="st m">Measured</td><td>ADWR Phoenix AMA groundwater model (2024)</td></tr><tr><td>River: normal flow, rights</td><td>5,500 AF per city; 3,000 junior; +5,000 senior</td><td class="st a">Assumed</td><td>Set so that a class that claims heavily over-allocates the river</td></tr><tr><td>Wet and dry years</td><td>4-state Markov chain, 58% to 128% of normal</td><td class="st a">Assumed</td><td>Stylized; clustered like real river flows</td></tr><tr><td>Megadrought</td><td>22 years near 52% of normal</td><td class="st a">Assumed</td><td>Shaped on Williams, Cook &amp; Smerdon (2022), not a reconstruction</td></tr><tr><td>Aquifer</td><td>60,000 AF usable; 1,500 AF/yr recharge; fossil &times;0.2, fast &times;1.7</td><td class="st a">Assumed</td><td>Teaching values</td></tr><tr><td>Subsidence</td><td>below 20% of the aquifer; capacity drops to 70%</td><td class="st a">Assumed</td><td>Direction from USGS subsidence studies; sizes assumed</td></tr><tr><td>Confidence, moving away, sprawl, drilling</td><td>rates in the code</td><td class="st a">Assumed</td><td>Stylized behavioral rules, not estimated</td></tr><tr><td>Eutrophication</td><td>threshold and buffer trapping (65%)</td><td class="st a">Assumed</td><td>Direction from Mayer et al. (2007); sizes assumed</td></tr><tr><td>Policy effects</td><td>conservation &minus;30% outdoor, &minus;10% indoor; recycling 3,000 AF; storage 8,000 AF; permits &times;1.8; tax &times;1.2; chip plant &times;2 output, &times;1.6 water</td><td class="st a">Assumed</td><td>Teaching values in plausible ranges</td></tr><tr><td>Senior rights cost</td><td>$3.3M a year</td><td class="st d">Derived</td><td>Queen Creek paid $21M for 2,083 AF/yr of Colorado River rights (about $10,100/AF), annualized over 30 years at 5%</td></tr><tr><td>Chip plant cost</td><td>$13M a year</td><td class="st d">Derived</td><td>Phoenix approved $205M of infrastructure for TSMC (2020), annualized over 30 years at 5%</td></tr><tr><td>Other policy costs</td><td>$0.2M to $5M a year</td><td class="st a">Assumed</td><td>Rough annualized capital and program costs</td></tr><tr><td>Sustainability score</td><td>40% renewable share, 35% aquifer left, 25% recent reliability</td><td class="st a">Assumed</td><td>A teaching index</td></tr></tbody></table></div></div></details></div>
+      Town of Queen Creek&ndash;GSC Farm Colorado River transfer (ADWR, 2021). City of Phoenix Council, TSMC development agreement (Nov. 18, 2020).</div><div class="wt-ptab"><div class="wt-ptab-h">Parameters and where they come from. <b>Measured</b>: taken from a source. <b>Derived</b>: computed from sourced figures. <b>Assumed</b>: set for teaching.</div><table><thead><tr><th>Parameter</th><th>Value</th><th>Status</th><th>Basis</th></tr></thead><tbody><tr><td>Houses: water per square</td><td>178 AF/yr (480 homes)</td><td class="st d">Derived</td><td>Multi-City Water Use Study: about 350 gal/day per single-family home, 57% outdoors</td></tr><tr><td>Apartments: water per square</td><td>652 AF/yr (3,200 units)</td><td class="st d">Derived</td><td>Water Research Foundation: 182 gal/day per Phoenix multifamily unit</td></tr><tr><td>Shops &amp; offices, industry: water</td><td>150 and 640 AF/yr</td><td class="st a">Assumed</td><td>Teaching values scaled to typical commercial and industrial use</td></tr><tr><td>Alfalfa, vegetables, orchards</td><td>864, 624, 720 AF/yr (160 acres)</td><td class="st d">Derived</td><td>Univ. of Arizona (2023), Table C1: 5.4, about 3.9, about 4.5 AF per acre</td></tr><tr><td>Dairy</td><td>235 AF/yr (2,000 cows)</td><td class="st d">Derived</td><td>ADWR allotment: 105 gal per cow per day</td></tr><tr><td>Green park turf</td><td>368 AF/yr</td><td class="st d">Derived</td><td>ADWR turf allotment 4.6 AF/acre on half the square</td></tr><tr><td>Farm output</td><td>$0.4M to $12M per square</td><td class="st d">Derived</td><td>USDA NASS Arizona prices and yields (2022)</td></tr><tr><td>Construction income, output per job</td><td>NAHB per-home values; $120,000 per job</td><td class="st d">Derived</td><td>NAHB (2015); BEA/BLS Phoenix metro (2022)</td></tr><tr><td>Residential price elasticity</td><td>&minus;0.41</td><td class="st m">Measured</td><td>Dalhuisen et al. (2003) meta-analysis</td></tr><tr><td>Pumping cost</td><td>about $0.20 per AF per foot of lift</td><td class="st d">Derived</td><td>Hanson (UC ANR) energy per lift, at about $0.10/kWh</td></tr><tr><td>Incidental recharge</td><td>25% of farm water, 4% of city water</td><td class="st m">Measured</td><td>ADWR Phoenix AMA groundwater model (2024)</td></tr><tr><td>River: normal flow, rights</td><td>5,500 AF per city; 3,000 junior; +5,000 senior</td><td class="st a">Assumed</td><td>Set so that a class that claims heavily over-allocates the river</td></tr><tr><td>Wet and dry years</td><td>4-state Markov chain, 58% to 128% of normal</td><td class="st a">Assumed</td><td>Stylized; clustered like real river flows</td></tr><tr><td>Megadrought</td><td>22 years near 52% of normal</td><td class="st a">Assumed</td><td>Shaped on Williams, Cook &amp; Smerdon (2022), not a reconstruction</td></tr><tr><td>Aquifer</td><td>60,000 AF usable; 1,500 AF/yr recharge; fossil &times;0.2, fast &times;1.7</td><td class="st a">Assumed</td><td>Teaching values</td></tr><tr><td>Subsidence</td><td>below 20% of the aquifer; capacity drops to 70%</td><td class="st a">Assumed</td><td>Direction from USGS subsidence studies; sizes assumed</td></tr><tr><td>Confidence, moving away, sprawl, drilling</td><td>rates in the code</td><td class="st a">Assumed</td><td>Stylized behavioral rules, not estimated</td></tr><tr><td>Eutrophication</td><td>threshold and buffer trapping (65%)</td><td class="st a">Assumed</td><td>Direction from Mayer et al. (2007); sizes assumed</td></tr><tr><td>Policy effects</td><td>conservation &minus;30% outdoor, &minus;10% indoor; recycling 3,000 AF; storage 8,000 AF; permits &times;1.8; tax &times;1.2; chip plant &times;2 output, &times;1.6 water</td><td class="st a">Assumed</td><td>Teaching values in plausible ranges</td></tr><tr><td>Senior rights cost</td><td>$3.3M a year</td><td class="st d">Derived</td><td>Queen Creek paid $21M for 2,083 AF/yr of Colorado River rights (about $10,100/AF), annualized over 30 years at 5%</td></tr><tr><td>Chip plant cost</td><td>$9M a year</td><td class="st a">Assumed</td><td>Scaled down for a small city from Phoenix&rsquo;s $205M TSMC infrastructure package (2020), which annualizes to about $13M a year</td></tr><tr><td>Policy budget</td><td>$10M a year per city</td><td class="st a">Assumed</td><td>Set so a city can afford a few policies, not all of them</td></tr><tr><td>Other policy costs</td><td>$0.2M to $5M a year</td><td class="st a">Assumed</td><td>Rough annualized capital and program costs</td></tr><tr><td>Sustainability score</td><td>40% renewable share, 35% aquifer left, 25% recent reliability</td><td class="st a">Assumed</td><td>A teaching index</td></tr></tbody></table></div></div></details></div>
   </div>
   <div class="footer">© 2023 W. W. Norton &amp; Company, Inc.</div>
   <script>(function(){
@@ -3481,7 +3539,7 @@ var SRC=[
 var SKEYS=SRC.map(function(s){ return s.k; }), SRCBY={}; SRC.forEach(function(s){ SRCBY[s.k]=s; });
 
 /* ══ SUPPLY, in acre-feet a year (one acre-foot = 325,851 gallons) ══ */
-var RIVB=3000, RIVC=5000;       /* river rights: every city holds 3,000; the policy adds 5,000 */
+var RIVB=3000, RIVC=5000;       /* river rights: every city holds 3,000 (junior); buying senior rights adds 5,000 */
 var WELB=3000, WELC=5000;       /* well capacity: every city can pump 3,000; the policy adds 5,000 */
 var REUSEC=3000, STOREC=8000, RCHC=2500;
 var SHARE=5500;                 /* a normal river flow carries this much per city */
@@ -3490,7 +3548,8 @@ var NATR=1500;                  /* natural recharge into a renewable aquifer, a 
 var OK=0.95;
 
 /* ══ THE POLICY AGENDA: each city adopts exactly three of these ══ */
-var NPOL=3;
+/* each city gets a policy budget, in $ millions a year, and buys as many policies as it fits */
+var BUDGET=10;
 var POL=[
  {k:'river', n:'Buy senior river rights', cp:'Surface water', c:'#4f86b0', cost:3.3,
   d:'Buy 5,000 acre-feet a year of old, senior rights from farms. In a shortage, junior rights are cut first, so these hold up better.'},
@@ -3512,11 +3571,14 @@ var POL=[
   d:'Approve new homes and businesses quickly: the city builds 80% faster, and construction jobs boom.'},
  {k:'tax', n:'Business tax incentives', cp:'Economic growth', c:'#c47a2c', g:'econ', cost:5.0,
   d:'Tax breaks draw employers: shops, offices, and factories fill faster, and each job produces 20% more.'},
- {k:'tech', n:'Recruit a chip plant', cp:'Economic growth', c:'#5b4a8a', g:'econ', cost:13.0,
+ {k:'tech', n:'Recruit a chip plant', cp:'Economic growth', c:'#5b4a8a', g:'econ', cost:9.0,
   d:'High-paying tech manufacturing: industry output doubles and adds jobs, but chip fabs are thirsty and use 60% more water.'}
 ];
 /* each policy's annual cost, $ millions a year, is charged against the city's economic activity every year */
-function polCost(d){ var t=0; polList(d).forEach(function(k){ if(POLBY[k]) t+=POLBY[k].cost||0; }); return t; }
+function polsCost(pol){ var t=0; pol.forEach(function(k){ if(POLBY[k]) t+=POLBY[k].cost||0; }); return Math.round(t*10)/10; }
+function polCost(d){ return polsCost(polList(d)); }
+function fitsBudget(pol){ return polsCost(pol)<=BUDGET+1e-9; }
+function money1(v){ return '$'+(Math.round(v*10)/10).toFixed(1).replace(/\.0$/,'')+'M'; }
 var POLBY={}; POL.forEach(function(p){ POLBY[p.k]=p; });
 
 /* ══ THE CITY GRID: 8 by 6 squares, each a quarter section (160 acres), river running through ══ */
@@ -3555,8 +3617,8 @@ var ZGROUPS=[['Homes & business',['h','a','c','i']],['Agriculture',['f','v','o',
    and how much it builds on speculation when homes sit empty */
 var GROW=[
  {n:'Managed', d:'Build slowly and only on zoned land.', permits:0.35, spr:0,   drill:0,    tol:OK,   spec:0},
- {n:'Steady',  d:'Grow at a moderate pace.',            permits:0.7,  spr:0.3, drill:500,  tol:OK,   spec:0.1},
- {n:'Fast',    d:'Chase growth: jobs and homes first, even through a dry spell.', permits:1.2, spr:0.7, drill:1000, tol:0.9, spec:0.35},
+ {n:'Steady',  d:'Grow at a moderate pace, on zoned land only.', permits:0.7,  spr:0,   drill:500,  tol:OK,   spec:0.1},
+ {n:'Fast',    d:'Chase growth: jobs and homes first, even through a dry spell, spilling onto unused land.', permits:1.2, spr:0.35, drill:1000, tol:0.9, spec:0.35},
  {n:'Boom',    d:'Build as fast as possible, annex desert for subdivisions, and keep building through shortages.', permits:2.0, spr:1.4, drill:1500, tol:0.85, spec:0.6}
 ];
 var GCOL=['#2f7d6b','#4f86b0','#d08a2d','#b3412f'];
@@ -3619,7 +3681,7 @@ function cityType(z){
   if(ind/n>=0.2) return 'tech';
   return dense*1.4>=hs? 'metro' : 'suburb';
 }
-/* supply levels, from the three policies plus what every city starts with */
+/* supply levels, from the policies bought plus what every city starts with */
 function levels(pol){
   var s={river:2, wells:2, rch:0, reuse:0, cons:0, store:0, buf:0};
   pol.forEach(function(k){ if(k==='river'||k==='wells') s[k]+=3; else if(s[k]!==undefined) s[k]=3; });
@@ -3638,7 +3700,7 @@ function cleanOne(d, k){
   if(!d||typeof d!=='object') return null;
   var raw=typeof d.pol==='string'? d.pol.split(',') : (Array.isArray(d.pol)? d.pol : []), pol=[];
   raw.forEach(function(p){ if(POLBY[p] && pol.indexOf(p)<0) pol.push(p); });
-  if(pol.length!==NPOL) return null;
+  if(!fitsBudget(pol)) return null;
   var core=coreFor(coreSeed(k)), z0=String(d.z||''), z='';
   for(var i=0;i<NT;i++){
     var ch=z0.charAt(i);
@@ -4015,9 +4077,9 @@ function forecast(d){
   Object.keys(cd).forEach(function(k){ D[k]=cd[k]; }); D[PK]=d;
   var ks=Object.keys(D), claims=0, senC=0, junC=0;
   ks.forEach(function(k){ claims+=rivAF(D[k].s); senC+=senAF(D[k].s); junC+=RIVB; });
-  /* classmates still planning are assumed to claim a typical share, all of it junior */
-  var nAll=Math.max(ks.length, Object.keys(players()).length);
-  claims+=(nAll-ks.length)*SHARE; junC+=(nAll-ks.length)*RIVB;
+  /* classmates still planning are assumed to be typical: a junior right, and even odds of buying senior rights */
+  var nAll=Math.max(ks.length, Object.keys(players()).length), nU=nAll-ks.length;
+  claims+=nU*(RIVB+0.5*RIVC); junC+=nU*RIVB; senC+=nU*0.5*RIVC;
   var cap=Math.max(1,nAll)*SHARE, heat=[];
   for(var y=0;y<YEARS;y++) heat.push(1+0.05*y/(YEARS-1));
   var AL=FC_F.map(function(f){ return alloc(cap*f, senC, junC); }), an=alloc(cap*0.95, senC, junC);
@@ -5071,8 +5133,11 @@ function renderDesign(force){
   var d=myD, np=d.pol.length, st=planStats(d), h='';
   h+='<div class="wt-dsec"><div class="wt-namerow"><b>'+esc(d.nm)+'</b><button type="button" class="wt-mini" data-rename>New name &#8635;</button></div></div>';
   h+=WT_SCEN;
-  h+='<div class="wt-dsec"><div class="wt-dlbl"><span>1 · Policy agenda</span><span class="wt-pts'+(np===NPOL?' done':'')+'">'+np+' of '+NPOL+' chosen</span></div><div class="wt-pols">';
-  POL.forEach(function(p,pi){ var on=d.pol.indexOf(p.k)>-1, off=!on && np>=NPOL;
+  var spent=polCost(d), left=Math.round((BUDGET-spent)*10)/10;
+  h+='<div class="wt-dsec"><div class="wt-dlbl"><span>1 · Policy budget</span><span class="wt-pts'+(left<0.2?' done':'')+'">'+money1(spent)+' of '+money1(BUDGET)+' a year spent</span></div>'
+    +'<div class="wt-budbar"><i style="width:'+Math.min(100, spent/BUDGET*100).toFixed(1)+'%"></i></div>'
+    +'<div class="ev-hint">Buy as many policies as your '+money1(BUDGET)+' a year covers. What you don&rsquo;t spend stays in your city&rsquo;s economy.</div><div class="wt-pols">';
+  POL.forEach(function(p,pi){ var on=d.pol.indexOf(p.k)>-1, off=!on && p.cost>left+1e-9;
     if(pi===0) h+='<div class="wt-polgrp">Water policies</div>';
     if(p.g==='econ' && POL[pi-1].g!=='econ') h+='<div class="wt-polgrp">Economic growth policies</div>';
     h+='<button type="button" class="wt-pol'+(on?' on':'')+(off?' off':'')+'" data-pol="'+p.k+'" style="--c:'+p.c+'">'
@@ -5084,7 +5149,7 @@ function renderDesign(force){
     +'<em>'+(st.n? num(st.P*1000)+' people and '+num(st.J*1000)+' jobs when fully built · growth: '+GROW[d.g].n : 'Your town already stands on the river. Zone the land around it: homes, business, farms, parks, open land.')+'</em></span></button></div>';
   var locked=myDesign(), ok=lockable(d), same=locked && JSON.stringify(packDesign(locked))===JSON.stringify(packDesign(cleanOne(packDesign(d),PK)||d));
   h+='<button type="button" class="cg-btn go big" data-lock'+(ok?'':' disabled')+'>'+(same? 'Locked in &#10003;' : locked? 'Update my city' : 'Lock in my city')+'</button>'
-    +'<div class="ev-hint">'+(np<NPOL? 'Choose '+(NPOL-np)+' more polic'+(NPOL-np===1?'y':'ies')+'.' : !ok? 'Something in your plan is not valid.' : same? 'You can still change it until time runs out.' : 'Nobody knows the weather yet.')+'</div>';
+    +'<div class="ev-hint">'+(!ok? 'Something in your plan is not valid.' : same? 'You can still change it until time runs out.' : np? money1(left)+' a year left unspent. Nobody knows the weather yet.' : 'No policies yet: you can still lock in, but think about your water.')+'</div>';
   box.innerHTML=h;
   renderPlanner();
 }
@@ -5116,7 +5181,7 @@ function renderPlanner(force){
   h+='</div><div class="wt-pl-gd">'+esc(GROW[d.g].d)+(hasPol(d,'aws')? ' Your assured-supply rule will hold growth back whenever long-term water falls short.' : '')+'</div></div>';
   h+='<div class="wt-pl-sec wt-pl-fc" data-plfc></div></div></div>';
   var ok=lockable(d), locked=myDesign();
-  h+='<div class="wt-pl-foot"><span class="ev-hint">'+(d.pol.length<NPOL? 'You still need '+(NPOL-d.pol.length)+' more polic'+(NPOL-d.pol.length===1?'y':'ies')+' (close the planner to choose).' : ok? 'Your city can change until time runs out.' : 'Something in your plan is not valid.')+'</span>'
+  h+='<div class="wt-pl-foot"><span class="ev-hint">'+(!d.pol.length? 'No policies bought yet (close the planner to spend your '+money1(BUDGET)+').' : ok? 'Your city can change until time runs out.' : 'Something in your plan is not valid.')+'</span>'
     +'<button type="button" class="cg-btn go" data-lock'+(ok?'':' disabled')+'>'+(locked? 'Update my city' : 'Lock in my city')+'</button></div></div>';
   box.innerHTML=h;
   patchPlanner();
@@ -5440,6 +5505,58 @@ function openCity(k, y){
   renderCityView(true);
 }
 function cityYears(){ var now=idxNow(), out=[0]; [10,20,30].forEach(function(y){ if(y<=now) out.push(y); }); if(now%10 && out.indexOf(now)<0) out.push(now); return out; }
+/* one square of a city in a given year: what it is, how built and full it is, its water and output */
+var cvSq=null;
+function sqInfo(c, y, i){
+  var r=y? c.yrs[y-1] : null, ch=(r? r.z : c.d.z).charAt(i), Z=ZONES[ch], d=c.d, rows=[], note=[];
+  var row=Math.floor(i/COLS)+1, col=i%COLS+1, where='Row '+row+', column '+col+(NEAR[i]? ' · on the riverbank' : '');
+  if(ISRIV[i] || !Z) return {t:'The river', sub:where, rows:[['River water this year', r? pct(r.got/Math.max(1,r.ent))+' of your rights delivered' : 'your 3,000 acre-foot junior right'+(senAF(d.s)? ', plus 5,000 senior' : '')]],
+    note:[r && r.eut>0.35? 'The river here is eutrophic: nutrients from farm runoff feed algae, and oxygen runs low as they decay.' : 'Every city on the river shares it; upstream cities divert first.']};
+  var B=r? r.B[i] : (d.core[i]? 1 : 0), O=r? r.O[i] : (d.core[i]? 0.9 : 0), F=r? r.F[i] : 0;
+  var spr=c.sprawl.filter(function(e){ return e.i===i && (!y || e.y<=y); })[0];
+  if(d.core[i]) note.push('Part of the original town.');
+  if(spr) note.push('Was unused land; rezoned for subdivisions in year '+spr.y+' as the city sprawled.');
+  if(Z.kind==='res'||Z.kind==='job'){
+    rows.push(['Built', B<0.05? 'not yet (zoned)' : pct(B)]);
+    if(B>=0.05){
+      rows.push(['Occupied', pct(O)+' of what is built']);
+      if(Z.kind==='res') rows.push(['People living here', ppl(Z.pop*B*O)]);
+      rows.push(['Jobs here', ppl(Z.jobs*B*O)]);
+      rows.push(['Water use', 'about '+num(Z.w*B*O)+' acre-feet a year']);
+      rows.push(['Economic activity', 'about '+money(Z.gdp*B*O)+' a year']);
+      if(O<0.55) note.push('Mostly empty: families or businesses left after water trouble or a lack of jobs.');
+      else if(r && y>1 && B>c.yrs[y-2].B[i]+0.01) note.push('Under construction this year.');
+    } else note.push('Zoned for '+Z.n.toLowerCase()+'; builders have not reached it yet.');
+  } else if(Z.kind==='ag'){
+    rows.push(['Planted', pct(B*(1-F))]); if(F>0.02) rows.push(['Fallowed', pct(F)+' (cut for lack of water)']);
+    rows.push(['Water use', 'about '+num(Z.w*B*(1-F))+' acre-feet a year']);
+    rows.push(['Farm sales', 'about '+money(Z.gdp*B*(1-F))+' a year']);
+    if(NEAR[i] && Z.run) note.push(hasPol(d,'buf')? 'On the riverbank: the buffer law traps much of its fertilizer runoff.' : 'On the riverbank: its fertilizer and manure run off into the river unless buffers trap them.');
+  } else if(Z.kind==='park'){
+    rows.push(['Water use', 'about '+num(Z.w*B)+' acre-feet a year']);
+    note.push(ch==='p'? 'Grass and shade trees: cool, but thirsty, and most of the water is transpired.' : 'Native desert plants: a park on a fraction of the water.');
+  } else {
+    rows.push(['Water use', 'none']);
+    note.push(ch==='w'? 'Trees and wetland along the river trap runoff and sediment before they reach the water.'
+      : ch==='n'? 'Protected desert or forest: rain soaks in here and recharges the aquifer.'
+      : 'Open ground: storms soak in here. A growing city may build on it.');
+  }
+  return {t:Z.n, sub:Z.sub+' · '+where, rows:rows, note:note};
+}
+function sqPopHtml(c, y){
+  if(cvSq==null) return '<div class="wt-sqhint">Tap any square for details.</div>';
+  var f=sqInfo(c, y, cvSq);
+  return '<div class="wt-sqpop'+(cvSq%COLS>=COLS/2? ' l' : '')+'"><div class="wt-sqpop-h"><div><b>'+esc(f.t)+'</b><em>'+esc(f.sub)+'</em></div>'
+    +'<button type="button" class="wt-mini" data-sqclose>&times;</button></div>'
+    +f.rows.map(function(r){ return '<div class="wt-sqrow"><span>'+esc(r[0])+'</span><b>'+esc(r[1])+'</b></div>'; }).join('')
+    +f.note.map(function(t){ return '<div class="wt-sqnote">'+esc(t)+'</div>'; }).join('')
+    +(y? '<div class="wt-sqfoot">Year '+y+'. Rough figures for this square alone.</div>' : '')+'</div>';
+}
+function sqHits(){
+  var h='';
+  for(var i=0;i<NT;i++) h+='<rect class="wt-sqhit'+(cvSq===i?' on':'')+'" data-cvsq="'+i+'" x="'+((i%COLS)*GT+1)+'" y="'+(Math.floor(i/COLS)*GT+1)+'" width="'+(GT-2)+'" height="'+(GT-2)+'" rx="3"/>';
+  return h;
+}
 function renderCityView(force){
   var box=q('[data-cityview]');
   if(!cvKey || !nDesigns()){ box.hidden=true; return; }
@@ -5448,12 +5565,12 @@ function renderCityView(force){
   var ch= y? changesSince(c, y%10? y-(y%10) : prev, y) : {fresh:{}, aband:{}, nNew:0, nAb:0, nFal:0};
   var at= r? {B:r.B, O:r.O, F:r.F, prevB: y>1? c.yrs[y-2].B : null} : null;
   var map='<svg viewBox="-6 -6 '+(GW+12)+' '+(GH+12)+'" class="wt-cv-map" role="img" aria-label="'+esc(d.nm)+' in year '+y+'">'
-    +(r? gridSvg(r.z,{at:at, fresh:ch.fresh, aband:ch.aband, dry:Math.max(0,OK-r.met), eut:r.eut}) : gridSvg(d.z,{plan:d.core}))+'</svg>';
+    +(r? gridSvg(r.z,{at:at, fresh:ch.fresh, aband:ch.aband, dry:Math.max(0,OK-r.met), eut:r.eut}) : gridSvg(d.z,{plan:d.core}))+sqHits()+'</svg>';
   var h='<div class="wt-pl-card wt-cv-card"><div class="wt-pl-head"><div><div class="wt-pl-eyebrow">'+(cvKey===PK&&!HOST? 'Your city' : 'City view')+(cvKind==='mega'?' · megadrought':'')+'</div>'
     +'<div class="wt-pl-title">'+esc(d.nm)+'</div></div>'
     +'<div class="wt-cv-years">'+cityYears().map(function(yy){ return '<button type="button" class="ev-bandbtn'+(yy===y?' on':'')+'" data-cvyear="'+yy+'">Year '+yy+'</button>'; }).join('')+'</div>'
     +'<button type="button" class="cg-btn ghost" data-cvclose>Close</button></div>';
-  h+='<div class="wt-cv-body"><div class="wt-cv-mapcol">'+map
+  h+='<div class="wt-cv-body"><div class="wt-cv-mapcol"><div class="wt-cv-mapwrap">'+map+sqPopHtml(c, y)+'</div>'
     +'<div class="wt-cv-key"><span><i class="k-new"></i>New since year '+(y%10? y-(y%10) : prev)+'</span><span><i class="k-ab"></i>Mostly empty or abandoned</span>'
     +'<span><i class="k-zoned"></i>Zoned, not built yet</span><span><i class="k-fal"></i>Fallowed farm</span>'+(r && r.eut>0.2? '<span><i class="k-eu"></i>Algae bloom: eutrophication</span>' : '')+'</div>'
     +(r? budgetHtml(r, 'Water budget, year '+y) : '')+'</div>';
@@ -5560,25 +5677,37 @@ function finalHtml(){
   if(rb) h+=blk(bhead('','If the dice had rolled differently')
     +statRow('Class years with enough', rb.lo.toFixed(1)+'–'+rb.hi.toFixed(1), 'median '+rb.med.toFixed(1))
     +'<div class="ev-hint dim">The same plans, re-run '+rb.k+' times with the weather, the order along the river, and the basin&rsquo;s aquifer dealt again. One draw can flatter or punish a plan; this is the spread from luck alone. Compare plans by their typical result, not one run.</div>');
-  h+=blk(bhead('','Model assumptions & limits')+'<ul class="ev-assume">'
+  h+=blk(bhead('','Model assumptions & limits')+'<button type="button" class="wt-linkbtn" data-assume>How the model works, and what it leaves out &rsaquo;</button>');
+  return h;
+}
+/* the model's assumptions and limits, in a pop-up so the final screen stays short */
+function assumeHtml(){
+  return '<ul class="ev-assume">'
     +'<li>A stylized scenario game. Some coefficients are measured, many are derived or assumed (see the parameter table under &ldquo;Sources for the model&rdquo;), and nothing is calibrated to a real city. Rankings compare choices inside this model only; treat the people, jobs, and dollars as illustrative.</li>'
     +'<li>Economic activity is an index, not GDP: what occupied squares produce, farm sales, and local construction income, minus each policy&rsquo;s annual cost. Those pieces are not additive parts of GDP; read the index for direction, not dollars.</li>'
     +'<li>River rights: every city holds 3,000 acre-feet of junior rights; buying senior rights from farms adds 5,000. In a shortage, senior rights are served first, and juniors share what is left, with upstream cities diverting first. Real priority systems have many more classes.</li>'
     +'<li>The assured-supply rule is a simplified test (dependable supply plus a hundredth of the aquifer must cover demand plus new building). Arizona&rsquo;s legal test also requires a supply that is physically, continuously, and legally available for 100 years, adequate water quality, financial capability, and consistency with the management goal.</li>'
-    +'<li>Policies have rough annual costs (on each card), but no city budget limits them; three slots stand in for a council&rsquo;s limited capacity.</li>'
+    +'<li>Every city gets the same policy budget ($10M a year). Policy costs are rough annualized estimates; whatever a city leaves unspent stays in its economic activity.</li>'
     +'<li>Each square is 160 acres: 480 homes, or 3,200 apartments, or about 1,300 office and shop jobs, or 800 factory jobs, or a farm. Its water, output, and construction value scale with how much is built and occupied.</li>'
     +'<li>Shortages fall first on outdoor watering, then on farms (fallowed, as in Arizona&rsquo;s Colorado River cuts), then on homes and businesses.</li>'
     +'<li>People follow jobs and water: too few jobs empties homes; shortages and a falling aquifer shake confidence and drive people and businesses away. These behavioral rules are stylized, not estimated.</li>'
     +'<li>Water price rises with pumping depth and recycled water; demand responds with an elasticity of &minus;0.41. Wells lose capacity as the aquifer drains; below a fifth, the ground subsides for good.</li>'
     +'<li>One shared river, and one aquifer type shared by the whole basin, though each city pumps its own groundwater. River position and weather are dealt at random. No bargaining or transfers between cities.</li>'
     +'<li>Headline events are stylized versions of real ones; their sizes are set for teaching, not measured.</li>'
-    +'</ul>');
-  return h;
+    +'</ul>';
+}
+function openAssume(open){
+  var box=q('[data-assumebox]');
+  if(!open){ box.hidden=true; return; }
+  box.innerHTML='<div class="wt-pl-card wt-assume-card"><div class="wt-pl-head"><div><div class="wt-pl-eyebrow">About the model</div>'
+    +'<div class="wt-pl-title">Model assumptions &amp; limits</div></div><button type="button" class="cg-btn ghost" data-assumeclose>Close</button></div>'
+    +'<div class="wt-assume-body">'+WT_SCEN+assumeHtml()+'</div></div>';
+  box.hidden=false;
 }
 function renderReadout(){
   var box=q('[data-readout]'), ph=phase(), h='';
   if(ph==='idle'||ph==='lobby'){
-    h=blk(bhead('','How it works')+statRow('1 · Choose','3 policies')+statRow('2 · Zone','your city on a grid')+statRow('3 · Set','a growth pace')
+    h=blk(bhead('','How it works')+statRow('1 · Spend','$10M a year on policies')+statRow('2 · Zone','your city on a grid')+statRow('3 · Set','a growth pace')
           +statRow('4 · Watch','30 years, with check-ins')+statRow('5 · Survive','headlines &amp; a megadrought'))+WT_SCEN
       +(HOST? blk(statRow('Joined', Object.keys(players()).length)) : '');
   } else if(ph==='design'){
@@ -5667,6 +5796,64 @@ function drawStage(force){
   else chartTypes(svg, simulate('normal'), megaDone()? simulate('mega') : null, who);
 }
 
+/* ══ SAMPLE STUDENT SCREEN — for the instructor to walk the room through what
+   they will see, before anyone plays. Each step is a real frame of the
+   self-running demo (one student's view), frozen at the right moment. The demo
+   lives on the Game Demos site, which has no database, so nothing here can
+   touch the live class game. ══ */
+var SAMPLE_STEPS=[
+ {t:'Policy budget', b:5, cap:'Each student gets $10M a year to spend on policies: water supply, groundwater, conservation, pollution control, or economic growth. Cards they can no longer afford grey out, and whatever they leave unspent stays in their city’s economy.'},
+ {t:'Zone the city', b:11, cap:'The city planner. The student’s small river town is padlocked; they zone the land around it for homes, businesses, farms, parks, riparian buffers, or leave it open. The 30-year forecast on the right updates as they zone.'},
+ {t:'Growth pace', b:12, cap:'They choose how fast to grow: Managed, Steady, Fast, or Boom. Faster cities build more each year; Fast and Boom also spill onto land nobody zoned.'},
+ {t:'Dealing the basin', b:16, cap:'When planning time ends, the basin is dealt at random: each city’s place on the river, the snowpack, the heat, and the aquifer everyone shares. Nobody chooses these.'},
+ {t:'The years run', b:21, view:'city', cap:'Years arrive one at a time. The left panel is the student’s own city and water budget. The big map switches between the whole river basin and “My city,” which shows new building, empty squares, and algae in the river.'},
+ {t:'Year 10 check-in', b:26, cap:'The run stops at year 10: the top-10 lists for economic activity and sustainability, and where the student’s city ranks. It stops again at year 20.'},
+ {t:'Tap a square', b:26, cv:10, sq:21, cap:'Tapping their own map opens the city in that year. Tapping any square explains it: how much is built and occupied, its people, jobs, and water, or why it stands empty or fallowed.'},
+ {t:'Year 20', b:36, cap:'At year 20 the lists add which cities rose and fell the most since year 10: the boom-and-bust moment.'},
+ {t:'The end', b:80, cap:'At the end each student sees observations about their own city tied to the Midterm concepts, their badges, and the class results. The model’s assumptions are one tap away.'}
+];
+function sampleBase(){
+  /* the deck on this machine uses the local copy of the demo site; the published
+     deck uses the published one */
+  return /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
+    ? '/game-demos-web/water/' : 'https://ryanpcornell.github.io/sos110-game-demos/water/';
+}
+var sampleAt=0;
+function sampleScale(){
+  var box=q('[data-sframe]'), fr=box && box.querySelector('iframe');
+  if(fr) fr.style.transform='scale('+(box.clientWidth/1440).toFixed(4)+')';
+}
+function sampleShow(i){
+  sampleAt=(i+SAMPLE_STEPS.length)%SAMPLE_STEPS.length;
+  var st=SAMPLE_STEPS[sampleAt], box=q('[data-sframe]');
+  box.innerHTML='<iframe title="A sample student screen" loading="eager" src="'+sampleBase()+'?demo=1&freeze='+st.b+'&seed=137'
+    +(st.view? '&view='+st.view : '')+(st.cv!=null? '&cv='+st.cv : '')+(st.sq!=null? '&sq='+st.sq : '')+'&sample='+sampleAt+'"></iframe>';
+  sampleScale();
+  q('[data-scap]').textContent=st.cap;
+  q('[data-snum]').textContent=(sampleAt+1)+' of '+SAMPLE_STEPS.length;
+  Array.prototype.forEach.call(q('[data-ssteps]').children,function(b,j){ b.classList.toggle('on', j===sampleAt); });
+}
+function sampleOpen(){
+  var box=q('[data-sample]');
+  q('[data-ssteps]').innerHTML=SAMPLE_STEPS.map(function(st,j){ return '<button type="button" class="ev-bandbtn" data-sgo="'+j+'">'+(j+1)+' · '+esc(st.t)+'</button>'; }).join('');
+  box.hidden=false; sampleShow(0);
+}
+function sampleClose(){ var box=q('[data-sample]'); box.hidden=true; q('[data-sframe]').innerHTML=''; }
+q('[data-sample]').addEventListener('click',function(ev){
+  var b=ev.target.closest('button'); if(!b) { if(ev.target===this) sampleClose(); return; }
+  if(b.hasAttribute('data-sclose')) sampleClose();
+  else if(b.hasAttribute('data-snext')) sampleShow(sampleAt+1);
+  else if(b.hasAttribute('data-sprev')) sampleShow(sampleAt-1);
+  else if(b.dataset.sgo!==undefined) sampleShow(parseInt(b.dataset.sgo,10));
+});
+wrap.addEventListener('keydown',function(ev){
+  if(q('[data-sample]').hidden) return;
+  if(ev.key==='Escape') sampleClose();
+  else if(ev.key==='ArrowRight'){ ev.preventDefault(); ev.stopPropagation(); sampleShow(sampleAt+1); }
+  else if(ev.key==='ArrowLeft'){ ev.preventDefault(); ev.stopPropagation(); sampleShow(sampleAt-1); }
+});
+window.addEventListener('resize', sampleScale);
+
 /* ══ phase clock. Years advance at the instructor's pace; headline years and check-ins
    wait for the instructor to press Continue ══ */
 function paceSec(){ var p=state.pace; return p==null? 4 : +p; }
@@ -5739,6 +5926,7 @@ function render(){
   if(HOST){
     var hs=q('[data-hoststatus]');
     q('[data-start]').hidden = ph!=='lobby';
+    q('[data-samplebtn]').hidden = !(ph==='idle'||ph==='lobby'||ph==='design');
     var step=q('[data-step]'); step.hidden = !running;
     step.innerHTML = (held? 'Continue' : 'Next year')+' &#9654;';
     step.classList.toggle('go', held);
@@ -5764,7 +5952,7 @@ function render(){
     st.hidden=false;
     st.textContent = ph==='idle'? 'Waiting for the instructor.'
       : ph==='lobby'? (joined()? 'You are in. Planning opens shortly.' : 'Tap to join.')
-      : ph==='design'? (myDesign()? 'Locked in. You can still change it until time runs out.' : 'Choose three policies, then plan your city. Nobody knows the weather yet.')
+      : ph==='design'? (myDesign()? 'Locked in. You can still change it until time runs out.' : 'Spend your policy budget, then plan your city. Nobody knows the weather yet.')
       : ph==='reveal'? 'The basin is being dealt. Watch the screen.'
       : ph==='run'? (held? 'Paused for discussion. Look at the screen.' : 'The years are running. Plans are fixed now.')
       : ph==='discuss'? 'Thirty years are done. Look at how your city grew, and what it cost.'
@@ -5789,9 +5977,10 @@ q('[data-design]').addEventListener('click',function(ev){
   var b=ev.target.closest('button'); if(!b||!myD) return;
   var d=myD;
   if(b.dataset.pol){ var k=b.dataset.pol, at=d.pol.indexOf(k);
-    if(at>-1) d.pol.splice(at,1); else if(d.pol.length<NPOL) d.pol.push(k); else return;
-    /* the planner pops up the first time the agenda is complete */
-    if(d.pol.length===NPOL && !plannerAuto){ plannerAuto=true; plannerOpen=true; } }
+    if(at>-1) d.pol.splice(at,1); else if(fitsBudget(d.pol.concat([k]))) d.pol.push(k); else return;
+    /* the planner pops up the first time the budget can buy nothing more */
+    var rest=BUDGET-polCost(d), more=POL.some(function(p){ return d.pol.indexOf(p.k)<0 && p.cost<=rest+1e-9; });
+    if(!more && !plannerAuto){ plannerAuto=true; plannerOpen=true; } }
   else if(b.hasAttribute('data-rename')){ d.nr=(d.nr||0)+1; d.nm=cityName(PK+':'+gid()+':'+d.nr); }
   else if(b.hasAttribute('data-plan')){ plannerOpen=true; plannerAuto=true; }
   else if(b.hasAttribute('data-lock')){ lockIn(); return; }
@@ -5834,10 +6023,14 @@ q('[data-mine]').addEventListener('click',function(ev){
   quizAnswer(b.dataset.qk, parseInt(b.dataset.qa,10));
 });
 wrap.addEventListener('click',function(ev){
-  var t=ev.target.closest && ev.target.closest('[data-opencity],[data-cvyear],[data-cvclose],[data-repyear]'); if(!t) return;
-  if(t.dataset.opencity){ if(!HOST && t.dataset.opencity!==PK && !(phase()==='discuss'||phase()==='final')) return; openCity(t.dataset.opencity); }
+  var t=ev.target.closest && ev.target.closest('[data-opencity],[data-cvyear],[data-cvclose],[data-repyear],[data-cvsq],[data-sqclose],[data-assume],[data-assumeclose]'); if(!t) return;
+  if(t.dataset.cvsq!=null){ var sq=parseInt(t.dataset.cvsq,10); cvSq=(cvSq===sq? null : sq); renderCityView(true); return; }
+  if(t.hasAttribute('data-sqclose')){ cvSq=null; renderCityView(true); return; }
+  if(t.hasAttribute('data-assume')){ openAssume(true); return; }
+  if(t.hasAttribute('data-assumeclose')){ openAssume(false); return; }
+  if(t.dataset.opencity){ cvSq=null; if(!HOST && t.dataset.opencity!==PK && !(phase()==='discuss'||phase()==='final')) return; openCity(t.dataset.opencity); }
   else if(t.dataset.cvyear){ cvYear=parseInt(t.dataset.cvyear,10); renderCityView(true); }
-  else if(t.hasAttribute('data-cvclose')){ cvKey=null; renderCityView(); }
+  else if(t.hasAttribute('data-cvclose')){ cvKey=null; cvSq=null; renderCityView(); }
   else if(t.dataset.repyear){ repYear=parseInt(t.dataset.repyear,10); checkSig=''; renderCheck(); }
 });
 q('[data-readout]').addEventListener('click',function(ev){
@@ -5949,6 +6142,7 @@ function wireHost(){
   bar.querySelector('[data-open]').addEventListener('click',function(){
     backend.setDoc('polls',GID,{phase:'lobby', yr:0, myr:0, megaDone:0, players:{}, designs:{}, gameId:Date.now()%100000});
   });
+  bar.querySelector('[data-samplebtn]').addEventListener('click', sampleOpen);
   bar.querySelector('[data-start]').addEventListener('click',function(){
     if(!Object.keys(players()).length && !confirm('Nobody has joined yet. Start anyway?')) return;
     setPhase('design', mins()*60, {pace:parseFloat(bar.querySelector('[data-pace]').value)||0});
@@ -6018,7 +6212,7 @@ function demoRun(){
   var txt=bar.querySelector('.ev-demotxt'), rep=bar.querySelector('.ev-demobtn');
   rep.addEventListener('click',function(){ rep.hidden=true; step=0; lastCap=''; play(); });
   function doc(o){ backend.mergeDoc('polls',GID,o); }
-  /* the viewer's own city: three policies, then the planner, one batch of squares at a time */
+  /* the viewer's own city: policies within budget, then the planner, one batch of squares at a time */
   var MYZ=null;
   var BUILD=[['pol','river'],['pol','cons'],['pol','reuse'],['open'],
              ['zone',['h']],['zone',['a','c']],['zone',['i','v','k']],['zone',['p','x']],['zone',['w','n']],['g',2],['close']];
@@ -6033,7 +6227,7 @@ function demoRun(){
       else if(b[0]==='g') myD.g=b[1];
       else if(b[0]==='close') plannerOpen=false;
       renderDesign(true); renderPlanner(true); drawStage(true);
-    }, k<3? 'Each student picks three policies for their city.'
+    }, k<3? 'Each student spends a $10M-a-year policy budget.'
       : k<10? 'Then the city planner pops up: a grid with the river running through it. Zone each square, set a growth pace, and watch the 30-year forecast.'
       : 'Done. The city shows on the big screen with its agenda.'];
   }
@@ -6067,7 +6261,7 @@ function demoRun(){
   })(m);
   S.push([holdFor('mega',YEARS), function(){ doc({phase:'final', megaDone:1}); }, 'The Basin Awards: the most people with a reliable supply, and special awards.']);
   S.push([6500, function(){ tab='types'; drawStage(true); renderTabs(); }, 'Strategies: years with enough water by growth pace, policy, and river position.']);
-  S.push([6000, function(){ rep.hidden=false; }, 'Every student also sees their own badges and concept-check score.']);
+  S.push([6000, function(){ rep.hidden=false; }, 'Every student also sees their own badges and observations about their city.']);
   var WPM=190, lastCap='';
   function readMs(t){ return Math.round(750 + String(t).trim().split(/\s+/).length*(60000/WPM)); }
   function sameIdea(a,b){ return String(a).replace(/\d+/g,'#')===String(b).replace(/\d+/g,'#'); }
@@ -6081,6 +6275,11 @@ function demoRun(){
   if(FREEZE>=0){
     bar.hidden=true;
     for(var i=0;i<=Math.min(FREEZE,S.length-1);i++){ try{ S[i][1](); }catch(e){ console.error(e); } }
+    /* the sample student screen asks for a few views the script never shows on its own */
+    setTimeout(function(){
+      if(DEMOQ.get('view')==='city'){ stageView='city'; render(); drawStage(true); }
+      if(DEMOQ.has('cv')){ openCity(PK, parseInt(DEMOQ.get('cv'),10)); if(DEMOQ.has('sq')){ cvSq=parseInt(DEMOQ.get('sq'),10); renderCityView(true); } }
+    }, 700);
     return;
   }
   play();
