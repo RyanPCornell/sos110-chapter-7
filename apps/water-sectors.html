@@ -80,7 +80,7 @@ body.embed #donut{max-width:none !important; width:auto; height:100%; max-height
 <div class="wrap">
   <script>if(new URLSearchParams(location.search).get('embed')==='1')document.body.classList.add('embed');</script>
   <h1>Arizona's Water: Who Uses It?</h1>
-  <p class="lead">In a desert state, water tells a clear story: nearly three-quarters grows our food, while only a small slice reaches the homes we live in. Hover any slice to explore. (Municipal use is split into homes and everything else: schools, parks, and businesses.)</p>
+  <p class="lead">In a desert state, water tells a clear story: nearly three-quarters grows our food, while only a small slice reaches the homes we live in. Hover any slice to explore. The three sector shares are ADWR's; the split of municipal use into homes and everything else (schools, parks, and businesses) is illustrative.</p>
 
   <div class="toolbar">
     <div class="seg" id="viewSeg">
@@ -112,12 +112,12 @@ body.embed #donut{max-width:none !important; width:auto; height:100%; max-height
 // "other municipal" (commercial, institutional, parks).
 const ITEMS = [
   {name:"Agriculture",        pct:72, color:"#6f8a5a", amt:"~5.0 MAF", sub:false},
-  {name:"Residential (homes)",pct:15, color:"#3f6f8f", amt:"~1.1 MAF", sub:true},
-  {name:"Other municipal",    pct:7,  color:"#8fb0c4", amt:"~0.5 MAF", sub:true},
+  {name:"Residential (homes)",pct:15, color:"#3f6f8f", amt:"~1.1 MAF", sub:true, ill:true},
+  {name:"Other municipal",    pct:7,  color:"#8fb0c4", amt:"~0.5 MAF", sub:true, ill:true},
   {name:"Industrial",         pct:6,  color:"#c9a24a", amt:"~0.4 MAF", sub:false},
 ];
-const NOTE = "Roughly three-quarters of Arizona's water grows food. Homes and other municipal uses (schools, parks, businesses) make up about a fifth, and your household is only part of that.";
-const CITE = `<strong>Sources:</strong> sector shares from the <a href="https://www.azwater.gov/" target="_blank" rel="noopener">Arizona Department of Water Resources</a> (about 7.0 million acre-feet a year; agriculture 72%, municipal 22%, industrial 6%) and the University of Arizona MAP Dashboard, <a href="https://mapazdashboard.arizona.edu/article/arizonas-water-use-sector" target="_blank" rel="noopener">&ldquo;Water Use in Arizona by Sector&rdquo;</a>. The municipal split (residential about 70%) follows the ADWR/AMWUA Phoenix Metro <a href="https://www.azwater.gov/sites/default/files/2023-11/201902_CityofPhoenix_MultiCityWaterUseStudy_FinalPresentation.pdf" target="_blank" rel="noopener">Multi-City Water Use Study</a>. A teaching estimate; shares vary by year and region.`;
+const NOTE = "Official shares (ADWR): agriculture 72%, municipal 22%, industrial 6%. The 15% / 7% split of the municipal share into homes and other uses is an illustrative assumption, not an ADWR figure.";
+const CITE = `<strong>Sources:</strong> sector shares from the <a href="https://www.azwater.gov/" target="_blank" rel="noopener">Arizona Department of Water Resources</a> (about 7.0 million acre-feet a year; agriculture 72%, municipal 22%, industrial 6%) and the University of Arizona MAP Dashboard, <a href="https://mapazdashboard.arizona.edu/article/arizonas-water-use-sector" target="_blank" rel="noopener">&ldquo;Water Use in Arizona by Sector&rdquo;</a>. Those three shares describe statewide water use (about 7.0 million acre-feet in 2017) and vary by year and region. <strong>Illustrative:</strong> the split of municipal use into homes (about 70%) and other municipal uses (about 30%) is a teaching assumption, not an official statistic. For comparison, USGS estimated that about 80% of Arizona&rsquo;s public-supply deliveries went to domestic use in 2015.`;
 
 let view = "donut", hovered = null;
 
@@ -138,7 +138,7 @@ function render(){
   legend.innerHTML = ITEMS.map((it,i)=>`
     <div class="li ${hovered!==null&&hovered!==i?'dim':''}" data-i="${i}">
       <span class="sw" style="background:${it.color}"></span>
-      <span class="name">${it.name}${it.sub?'<span class="muni-tag">municipal</span>':''}</span>
+      <span class="name">${it.name}${it.sub?'<span class="muni-tag">municipal · illustrative</span>':''}</span>
       <span class="pct">${it.pct}%<span class="amt">${it.amt}</span></span>
     </div>`).join('');
   legend.querySelectorAll('.li').forEach(el=>{

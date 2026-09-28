@@ -97,13 +97,15 @@ body.embed .card .row{flex:1;}
 body.embed .chartbox{width:clamp(104px,34vh,190px); height:clamp(104px,34vh,190px);}
 body.embed .sliders{gap:clamp(.1rem,1.3vh,.55rem);}
 @media (max-width:760px){ .cols{grid-template-columns:1fr;} }
+.assume{display:inline;} .assume summary{display:inline; cursor:pointer; color:var(--bronze); font-weight:700;}
+.assume[open]{display:block; margin-top:.25rem;}
 </style>
 </head>
 <body>
 <script>if(new URLSearchParams(location.search).get('embed')==='1')document.body.classList.add('embed');</script>
 <div class="wrap">
   <h1>Water Usage Explorer</h1>
-  <p class="lead">Adjust how much water a typical household uses on the left. Because homes are part of the state's <b>municipal</b> demand, your changes flow through to <b>Arizona's statewide</b> water use on the right. Watch the <b>Residential (homes)</b> slice respond.</p>
+  <p class="lead">Adjust how much water a household uses on the left. Because homes are part of the state's <b>municipal</b> demand, the simplified model carries your changes through to <b>Arizona's statewide</b> deliveries on the right. Watch the <b>Residential (homes)</b> slice respond.</p>
 
   <div class="presets" id="presets">
     <span class="lbl">Try a change</span>
@@ -136,9 +138,13 @@ body.embed .sliders{gap:clamp(.1rem,1.3vh,.55rem);}
   <div class="cite">
     <strong>Sources:</strong> household end uses from U.S. EPA <a href="https://www.epa.gov/watersense/statistics-and-facts" target="_blank" rel="noopener">WaterSense</a>
     and the Water Research Foundation, <em>Residential End Uses of Water</em>; statewide shares from the
-    <a href="https://www.azwater.gov/" target="_blank" rel="noopener">Arizona Dept. of Water Resources</a>; residential about 70% of municipal per the ADWR/AMWUA
-    <a href="https://www.azwater.gov/sites/default/files/2023-11/201902_CityofPhoenix_MultiCityWaterUseStudy_FinalPresentation.pdf" target="_blank" rel="noopener">Multi-City Water Use Study</a>.
-    A teaching model.
+    <a href="https://www.azwater.gov/" target="_blank" rel="noopener">Arizona Dept. of Water Resources</a> (agriculture 72%, municipal 22%, industrial 6%).
+    A simplified teaching model.
+    <details class="assume"><summary>Assumptions</summary><strong>Not Arizona measurements:</strong> the 100 gallons per person per day baseline and its 30% outdoor share are generic teaching values, and the 70% residential share of municipal use is illustrative.
+    Presets: <em>WaterSense fixtures</em> scales each end use by the ratio of labeled to federal-standard flow (toilets 1.28 vs. 1.6 gal per flush, &minus;20%; showerheads 2.0 vs. 2.5 gpm, &minus;20%; faucets 1.5 vs. 2.2 gpm, &minus;32%) and assumes an ENERGY STAR clothes washer (about &minus;30%);
+    <em>Xeriscape</em> assumes desert landscaping cuts outdoor use by about three-quarters; <em>Fix all leaks</em> sets leaks to zero.
+    Indoor and outdoor savings are not equivalent for the basin: most indoor water returns as wastewater that can be treated and reused, while outdoor water is mostly lost to evaporation and transpiration. This model counts deliveries, not consumption.
+    </details>
   </div>
 </div>
 
@@ -163,9 +169,9 @@ const TOTAL_BASE = AGRI + (RESID_BASE+OTHER_MUNI) + INDUS; // 7.0
 
 let hh = {}; HH_BASE.forEach(c=> hh[c.key]=c.base);
 const PRESETS = {
-  watersense: {toilet:11, shower:9, faucet:9, washer:9},
-  xeriscape:  {outdoor:8},
-  leaks:      {leaks:1},
+  watersense: {toilet:14, shower:11, faucet:9, washer:8},   /* 17×0.8, 14×0.8, 13×0.68, 12×0.7 */
+  xeriscape:  {outdoor:8},                                  /* about −75% outdoors (assumption) */
+  leaks:      {leaks:0},
 };
 
 // ---- donut helper ----
@@ -225,7 +231,7 @@ function render(){
   const pctChange = (total-TOTAL_BASE)/TOTAL_BASE*100;
   document.getElementById('note').innerHTML = Math.abs(pctChange)<0.5
     ? `The average household. Homes are only part of <b>municipal</b> use (about a fifth of the state's water), so household changes move the statewide total modestly.`
-    : `If <b>every</b> household did this, Arizona would use <b>${fmt(Math.abs(pctChange),1)}% ${pctChange<0?'less':'more'}</b> water. Agriculture (72%) still dominates.`;
+    : `If <b>every</b> household did this, this simplified model estimates <b>${fmt(Math.abs(pctChange),1)}% ${pctChange<0?'lower':'higher'}</b> annual deliveries statewide, under these assumptions. Agriculture (72%) still dominates.`;
 }
 
 // ---- sliders (they double as the household legend) ----
