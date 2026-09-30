@@ -105,19 +105,19 @@ body.embed .sliders{gap:clamp(.1rem,1.3vh,.55rem);}
 <script>if(new URLSearchParams(location.search).get('embed')==='1')document.body.classList.add('embed');</script>
 <div class="wrap">
   <h1>Water Usage Explorer</h1>
-  <p class="lead">Adjust how much water a household uses on the left. Because homes are part of the state's <b>municipal</b> demand, the simplified model carries your changes through to <b>Arizona's statewide</b> deliveries on the right. Watch the <b>Residential (homes)</b> slice respond.</p>
+  <p class="lead">Adjust how much water a typical Phoenix-area home uses on the left. Because homes are part of the state's <b>municipal</b> demand, the simplified model carries your changes through to <b>Arizona's statewide</b> deliveries on the right. Watch the <b>Residential (homes)</b> slice respond.</p>
 
   <div class="presets" id="presets">
     <span class="lbl">Try a change</span>
     <button data-preset="watersense">WaterSense fixtures</button>
     <button data-preset="xeriscape">Xeriscape the yard</button>
     <button data-preset="leaks">Fix all leaks</button>
-    <button data-preset="reset" class="on">Average household</button>
+    <button data-preset="reset" class="on">Average Phoenix home</button>
   </div>
 
   <div class="cols">
     <section class="card">
-      <div class="lbl">Household water use <span>gallons per person, per day</span></div>
+      <div class="lbl">Household water use <span>gallons per single-family home, per day</span></div>
       <div class="row">
         <div class="chartbox"><svg id="hhDonut" viewBox="0 0 190 190"></svg><div class="center-num" id="hhCenter"></div></div>
         <div class="sliders" id="hhSliders"></div>
@@ -136,11 +136,11 @@ body.embed .sliders{gap:clamp(.1rem,1.3vh,.55rem);}
   </div>
 
   <div class="cite">
-    <strong>Sources:</strong> household end uses from U.S. EPA <a href="https://www.epa.gov/watersense/statistics-and-facts" target="_blank" rel="noopener">WaterSense</a>
-    and the Water Research Foundation, <em>Residential End Uses of Water</em>; statewide shares from the
+    <strong>Sources:</strong> household total and outdoor share from the City of Phoenix / ADWR <em>Phoenix Metropolitan Area Multi-City Water Use Study</em> (2019: about 350 gallons a day per single-family home, 57% outdoors, the same figures the city game on slide 26 uses);
+    indoor end uses from the Water Research Foundation, <em>Residential End Uses of Water, Version 2</em> (2016), and U.S. EPA <a href="https://www.epa.gov/watersense/statistics-and-facts" target="_blank" rel="noopener">WaterSense</a>; statewide shares from the
     <a href="https://www.azwater.gov/" target="_blank" rel="noopener">Arizona Dept. of Water Resources</a> (agriculture 72%, municipal 22%, industrial 6%).
     A simplified teaching model.
-    <details class="assume"><summary>Assumptions</summary><strong>Not Arizona measurements:</strong> the 100 gallons per person per day baseline and its 30% outdoor share are generic teaching values, and the 70% residential share of municipal use is illustrative.
+    <details class="assume"><summary>Assumptions</summary><strong>Baseline:</strong> 350 gallons a day per home, 200 outdoors (57%) and 150 indoors. The indoor 150 is split using national shares of indoor use (toilets 24%, showers and baths 23%, faucets 19%, clothes washers 17%, leaks 12%, other 6%), not Phoenix measurements. Leaks here are about 5% of all household use; separately, EPA estimates that fixing easily corrected leaks saves about 10% on a water bill. The 70% residential share of municipal use is illustrative.
     Presets: <em>WaterSense fixtures</em> scales each end use by the ratio of labeled to federal-standard flow (toilets 1.28 vs. 1.6 gal per flush, &minus;20%; showerheads 2.0 vs. 2.5 gpm, &minus;20%; faucets 1.5 vs. 2.2 gpm, &minus;32%) and assumes an ENERGY STAR clothes washer (about &minus;30%);
     <em>Xeriscape</em> assumes desert landscaping cuts outdoor use by about three-quarters; <em>Fix all leaks</em> sets leaks to zero.
     Indoor and outdoor savings are not equivalent for the basin: most indoor water returns as wastewater that can be treated and reused, while outdoor water is mostly lost to evaporation and transpiration. This model counts deliveries, not consumption.
@@ -149,17 +149,19 @@ body.embed .sliders{gap:clamp(.1rem,1.3vh,.55rem);}
 </div>
 
 <script>
-// ---- household model (gallons / person / day) ----
+// ---- household model (gallons / single-family home / day) ----
+// Phoenix Multi-City Water Use Study (2019): ~350 gal/day per home, 57% outdoors.
+// Indoor 150 split by WRF REU2016 indoor shares (24/23/19/17/12/6%).
 const HH_BASE = [
-  {key:"outdoor", name:"Outdoor / yard", base:30, max:50, color:"#7d9468"},
-  {key:"toilet",  name:"Toilet",         base:17, max:30, color:"#3f6f8f"},
-  {key:"shower",  name:"Shower & bath",  base:14, max:28, color:"#8fb0c4"},
-  {key:"faucet",  name:"Faucet",         base:13, max:26, color:"#5f7a6a"},
-  {key:"washer",  name:"Clothes washer", base:12, max:24, color:"#b3c4a2"},
-  {key:"leaks",   name:"Leaks",          base:8,  max:20, color:"#b5533c"},
-  {key:"other",   name:"Other",          base:6,  max:16, color:"#c9a24a"},
+  {key:"outdoor", name:"Outdoor / yard", base:200, max:320, color:"#7d9468"},
+  {key:"toilet",  name:"Toilet",         base:36, max:60, color:"#3f6f8f"},
+  {key:"shower",  name:"Shower & bath",  base:34, max:60, color:"#8fb0c4"},
+  {key:"faucet",  name:"Faucet",         base:28, max:50, color:"#5f7a6a"},
+  {key:"washer",  name:"Clothes washer", base:26, max:45, color:"#b3c4a2"},
+  {key:"leaks",   name:"Leaks",          base:18, max:40, color:"#b5533c"},
+  {key:"other",   name:"Other",          base:8,  max:20, color:"#c9a24a"},
 ];
-const HH_TOTAL_BASE = HH_BASE.reduce((s,c)=>s+c.base,0); // 100
+const HH_TOTAL_BASE = HH_BASE.reduce((s,c)=>s+c.base,0); // 350
 
 // ---- statewide model (million acre-feet / year) ----
 const AGRI = 5.04, INDUS = 0.42;
@@ -169,8 +171,8 @@ const TOTAL_BASE = AGRI + (RESID_BASE+OTHER_MUNI) + INDUS; // 7.0
 
 let hh = {}; HH_BASE.forEach(c=> hh[c.key]=c.base);
 const PRESETS = {
-  watersense: {toilet:14, shower:11, faucet:9, washer:8},   /* 17×0.8, 14×0.8, 13×0.68, 12×0.7 */
-  xeriscape:  {outdoor:8},                                  /* about −75% outdoors (assumption) */
+  watersense: {toilet:29, shower:27, faucet:19, washer:18}, /* 36×0.8, 34×0.8, 28×0.68, 26×0.7 */
+  xeriscape:  {outdoor:50},                                  /* about −75% outdoors (assumption) */
   leaks:      {leaks:0},
 };
 
@@ -203,7 +205,7 @@ function render(){
   const hhTotal = HH_BASE.reduce((s,c)=>s+hh[c.key],0);
   donut(document.getElementById('hhDonut'),
     HH_BASE.map(c=>({frac: hh[c.key]/Math.max(1,hhTotal), color:c.color, name:c.name, label: hh[c.key]+" gal"})));
-  document.getElementById('hhCenter').innerHTML = `<div class="big">${Math.round(hhTotal)}</div><div class="sub">gal / person<br>per day</div>`;
+  document.getElementById('hhCenter').innerHTML = `<div class="big">${Math.round(hhTotal)}</div><div class="sub">gal / home<br>per day</div>`;
 
   const resid = RESID_BASE * (hhTotal/HH_TOTAL_BASE);
   const muni = resid + OTHER_MUNI;
@@ -223,14 +225,14 @@ function render(){
       <span class="vl">${Math.round(it.val/total*100)}%</span></div>`).join('');
 
   document.getElementById('readout').innerHTML = `
-    <div class="r"><span>Household use</span><span class="v">${Math.round(hhTotal)} gal / person / day</span></div>
+    <div class="r"><span>Household use</span><span class="v">${Math.round(hhTotal)} gal / home / day</span></div>
     <div class="r"><span>Arizona residential demand</span>${valDelta(resid, RESID_BASE, "MAF")}</div>
     <div class="r"><span>Arizona municipal total</span>${valDelta(muni, RESID_BASE+OTHER_MUNI, "MAF")}</div>
     <div class="r tot"><span>Arizona statewide total</span>${valDelta(total, TOTAL_BASE, "MAF")}</div>`;
 
   const pctChange = (total-TOTAL_BASE)/TOTAL_BASE*100;
   document.getElementById('note').innerHTML = Math.abs(pctChange)<0.5
-    ? `The average household. Homes are only part of <b>municipal</b> use (about a fifth of the state's water), so household changes move the statewide total modestly.`
+    ? `The average Phoenix-area home. Homes are only part of <b>municipal</b> use (about a fifth of the state's water), so household changes move the statewide total modestly.`
     : `If <b>every</b> household did this, this simplified model estimates <b>${fmt(Math.abs(pctChange),1)}% ${pctChange<0?'lower':'higher'}</b> annual deliveries statewide, under these assumptions. Agriculture (72%) still dominates.`;
 }
 
@@ -239,7 +241,7 @@ const slWrap = document.getElementById('hhSliders');
 slWrap.innerHTML = HH_BASE.map(c=>`
   <div class="sl">
     <label title="${c.name}"><span class="sw" style="background:${c.color}"></span>${c.name}</label>
-    <input type="range" min="0" max="${c.max}" step="1" value="${c.base}" data-key="${c.key}" aria-label="${c.name}, gallons per person per day">
+    <input type="range" min="0" max="${c.max}" step="1" value="${c.base}" data-key="${c.key}" aria-label="${c.name}, gallons per home per day">
     <span class="val" id="val-${c.key}">${c.base} gal</span>
   </div>`).join('');
 // presets stack (fixtures + xeriscape + leaks), so each applied one stays lit
